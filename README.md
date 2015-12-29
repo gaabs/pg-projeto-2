@@ -32,3 +32,9 @@ Encontre L,R,V normalize
 
 ## Fotos ##
 https://goo.gl/photos/R9EoxUfP6e33dSZx8
+
+# video dos algoritmos ##
+https://www.facebook.com/l.php?u=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DjWaeoKI4cwY&h=2AQG0Lfik&s=1
+
+## phong em c++  ##
+http://www.ozone3d.net/tutorials/glsl_lighting_phong.php
