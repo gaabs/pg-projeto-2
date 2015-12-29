@@ -15,7 +15,6 @@ O usuário, através de arquivos-texto ou interface gráfica, entra com dados do
 ## Passos Gerais de Sílvio ##
 
 6 – Para cada triângulo:
-
 6.1 – Projeta seus vértices (P1’, P2’, P3’)
 
 6.2 – Algoritmo de pintura (scan-conversion)
