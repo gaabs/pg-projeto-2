@@ -31,9 +31,9 @@ public class main {
 		String CyCz = CxCyCz.substring(d+1);
 		d = CyCz.indexOf(" ");
 		double Cy = Integer.parseInt(CyCz.substring(0, d));
-		double Cz = Integer.parseInt(CyCz.substring(d));
+		double Cz = Integer.parseInt(CyCz.substring(d+1));
 		C = new Point(Cx,Cy,Cz);
-		
+		System.out.println(C.toString());
 		
 		}catch(Exception e){
 			e.printStackTrace();
