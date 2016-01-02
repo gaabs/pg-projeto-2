@@ -7,12 +7,12 @@ import java.util.ArrayList;
 public class main {
 	//camera
 	static Point C,N,V;//vetores
-	double hx,hy,d;
+	static double hx,hy,d;
 	//iluminação
-	double ka,kd,ks,Pl,Ia,Od,Il,n;
+	static double ka,kd,ks,Pl,Ia,Od,Il,n;
 	//objeto
-	ArrayList<Point> vertices = new ArrayList<Point>();
-	ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	static ArrayList<Point> vertices = new ArrayList<Point>();
+	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 	
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
@@ -26,14 +26,40 @@ public class main {
 		}
 		BufferedReader reader = new BufferedReader(new FileReader(arquivo));
 		String CxCyCz = reader.readLine();
-		int d = CxCyCz.indexOf(" ");
-		double Cx = Integer.parseInt(CxCyCz.substring(0, d));
-		String CyCz = CxCyCz.substring(d+1);
-		d = CyCz.indexOf(" ");
-		double Cy = Integer.parseInt(CyCz.substring(0, d));
-		double Cz = Integer.parseInt(CyCz.substring(d+1));
+		int e = CxCyCz.indexOf(" ");
+		double Cx = Double.parseDouble(CxCyCz.substring(0, e));
+		String CyCz = CxCyCz.substring(e+1);
+		e = CyCz.indexOf(" ");
+		double Cy = Double.parseDouble(CyCz.substring(0, e));
+		double Cz = Double.parseDouble(CyCz.substring(e+1));
 		C = new Point(Cx,Cy,Cz);
-		System.out.println(C.toString());
+		
+		String NxNyNz = reader.readLine();
+		e = NxNyNz.indexOf(" ");
+		double Nx = Double.parseDouble(NxNyNz.substring(0, e));
+		String NyNz = NxNyNz.substring(e+1);
+		e = NyNz.indexOf(" ");
+		double Ny = Double.parseDouble(NyNz.substring(0, e));
+		double Nz = Double.parseDouble(NyNz.substring(e+1));
+		N = new Point(Nx,Ny,Nz);
+
+		String VxVyVz = reader.readLine();
+		e = VxVyVz.indexOf(" ");
+		double Vx = Double.parseDouble(VxVyVz.substring(0, e));
+		String VyVz = VxVyVz.substring(e+1);
+		e = VyVz.indexOf(" ");
+		double Vy = Double.parseDouble(VyVz.substring(0, e));
+		double Vz = Double.parseDouble(VyVz.substring(e+1));
+		V = new Point(Vx,Vy,Vz);
+		
+		String dhxhy = reader.readLine();
+		e = dhxhy.indexOf(" ");
+		d = Double.parseDouble(dhxhy.substring(0, e));
+		String hxhy = dhxhy.substring(e+1);
+		e = hxhy.indexOf(" ");
+		hx = Double.parseDouble(hxhy.substring(0, e));
+		hy = Double.parseDouble(hxhy.substring(e+1));
+		
 		
 		}catch(Exception e){
 			e.printStackTrace();
