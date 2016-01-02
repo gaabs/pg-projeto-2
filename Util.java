@@ -36,13 +36,10 @@ public class Util {
 		return pontos;
 	}
 	
-	public static Point ortogonalizar(double x, double y, double z){
-		Point resp = new Point(x,y,z);
+	public static Point ortogonalizar(Point V, Point N){
+		Point V2 = V.subtract(N.multiply(V.dotProduct(N)/N.dotProduct(N)));
 		
-		/*V' = V - (<V, N>/<N, N>) * N*/
-		
-		
-		return resp;
+		return V2;
 	}
 	
 	public static double[] extract(String s){
