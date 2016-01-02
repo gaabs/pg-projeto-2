@@ -17,59 +17,48 @@ public class main {
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
 		 * 
-		 *  ler arquivo cfg
-		 *  */
+		 *  ler arquivo cfg*/
 		try{
 		File arquivo = new File("camera.cfg");
+		
 		if(!arquivo.exists()) {
 			arquivo.createNewFile();
 		}
+		
 		BufferedReader reader = new BufferedReader(new FileReader(arquivo));
-		String CxCyCz = reader.readLine();
-		int e = CxCyCz.indexOf(" ");
-		double Cx = Double.parseDouble(CxCyCz.substring(0, e));
-		String CyCz = CxCyCz.substring(e+1);
-		e = CyCz.indexOf(" ");
-		double Cy = Double.parseDouble(CyCz.substring(0, e));
-		double Cz = Double.parseDouble(CyCz.substring(e+1));
-		C = new Point(Cx,Cy,Cz);
 		
-		String NxNyNz = reader.readLine();
-		e = NxNyNz.indexOf(" ");
-		double Nx = Double.parseDouble(NxNyNz.substring(0, e));
-		String NyNz = NxNyNz.substring(e+1);
-		e = NyNz.indexOf(" ");
-		double Ny = Double.parseDouble(NyNz.substring(0, e));
-		double Nz = Double.parseDouble(NyNz.substring(e+1));
-		N = new Point(Nx,Ny,Nz);
+		//Vetor C
+		double[] xyz = Util.extract(reader.readLine());
+		C = new Point(xyz[0],xyz[1],xyz[2]);
+		
+		//Vetor N
+		xyz = Util.extract(reader.readLine());
+		N = new Point(xyz[0],xyz[1],xyz[2]);
 
-		String VxVyVz = reader.readLine();
-		e = VxVyVz.indexOf(" ");
-		double Vx = Double.parseDouble(VxVyVz.substring(0, e));
-		String VyVz = VxVyVz.substring(e+1);
-		e = VyVz.indexOf(" ");
-		double Vy = Double.parseDouble(VyVz.substring(0, e));
-		double Vz = Double.parseDouble(VyVz.substring(e+1));
-		V = new Point(Vx,Vy,Vz);
+		//Vetor V
+		xyz = Util.extract(reader.readLine());
+		V = new Point(xyz[0],xyz[1],xyz[2]);
 		
-		String dhxhy = reader.readLine();
-		e = dhxhy.indexOf(" ");
-		d = Double.parseDouble(dhxhy.substring(0, e));
-		String hxhy = dhxhy.substring(e+1);
-		e = hxhy.indexOf(" ");
-		hx = Double.parseDouble(hxhy.substring(0, e));
-		hy = Double.parseDouble(hxhy.substring(e+1));
-		
+		//d, hx, hy
+		xyz = Util.extract(reader.readLine());
+		d = xyz[0];
+		hx = xyz[1];
+		hy = xyz[2];
 		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
+		// ortogonalizando V
+		  
+		//Point[] pontos = Util.gramSchmidt(V.x,V.y,V.z);;
+		
+		
+		
+		
 		
 		/*
-		 *  ortogonalizando V
-		 *  
-		 *   
+		 *    
 		 *   
 		 *   
 		 *   
