@@ -14,6 +14,12 @@ O usuário, através de arquivos-texto ou interface gráfica, entra com dados do
 
 ## Passos Gerais de Sílvio ##
 
+1- "Calibrar" a câmera
+2- Converter as coordenadas
+3- calcular as normais nos triângulos
+4- Calcular as normais nos vértices
+5- zerar o zbuffer e tal?
+
 6 – Para cada triângulo:
 
 6.1 – Projeta seus vértices (P1’, P2’, P3’)
