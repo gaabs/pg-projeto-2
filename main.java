@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class main {
 	//camera
-	static Point C,N,V;//vetores
+	static Point C,N,V,Vo,No;//vetores
 	static double hx,hy,d;
 	//iluminação
 	static double ka,kd,ks,Pl,Ia,Od,Il,n;
@@ -49,21 +49,16 @@ public class main {
 			e.printStackTrace();
 		}
 		
-		// ortogonalizando V
+		// ortogonalizando V e N
 		  
-		//Point[] pontos = Util.gramSchmidt(V.x,V.y,V.z);;
+		Vo = Util.ortogonalizar(V, N);
+		No = N.divide(Math.sqrt(N.dotProduct(N)));
+		//gerando U (?) , 
+		 
 		
 		
 		
-		
-		
-		/*
-		 *    
-		 *   
-		 *   
-		 *   
-		 *   e gerando U (?) , 
-		 *   
+		/*   
 		 *   
 		 *   
 		 *   
