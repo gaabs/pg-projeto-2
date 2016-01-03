@@ -28,6 +28,7 @@ public class guiPhong extends JFrame{
 		Phong();
 	}
 	
+	
 	private static void Phong(){
 		
 	}
