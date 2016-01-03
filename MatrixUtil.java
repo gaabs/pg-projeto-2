@@ -205,7 +205,8 @@ public class MatrixUtil {
 			matriz[linha][i] *= mult;
 		}
 	}
-
+	
+	
 	public static String matrizToString(double[][] matriz, int m, int n) {
 		String s = "";
 		for(int i = 0; i < m; i++){

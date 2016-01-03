@@ -53,6 +53,25 @@ public class Point {
 		return ret;
 	}
 	
+	public Point produtoVetorial(Point N){
+		double[][] matriz = new double[3][3];
+		matriz[0][0]=1;
+		matriz[0][1]=1;
+		matriz[0][2]=1;
+		matriz[1][0]=x;
+		matriz[1][1]=y;
+		matriz[1][2]=z;
+		matriz[2][0]=N.x;
+		matriz[2][1]=N.y;
+		matriz[2][2]=N.z;		
+		double a1=matriz[1][0],	a2=matriz[1][1], a3=matriz[1][2],
+				b1=matriz[1][0], b2=matriz[1][1], b3=matriz[2][2];
+		
+		Point det = new Point(a2*b3 - a3*b2, a3*b1 - a1*b3, a1*b2 - a2*b1);
+		return det;
+		
+	}
+	
 	public String toString(){
 		return String.format("(%f,%f,%f)", x,y,z);
 	}

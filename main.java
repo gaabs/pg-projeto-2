@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class main {
 	//camera
-	static Point C,N,V,Vo,No;//vetores
+	static Point C,N,V,Vo,No,Vn,U;//vetores
 	static double hx,hy,d;
 	//iluminação
 	static double ka,kd,ks,Pl,Ia,Od,Il,n;
@@ -53,23 +53,14 @@ public class main {
 		  
 		Vo = Util.ortogonalizar(V, N);
 		No = N.divide(Math.sqrt(N.dotProduct(N)));
-		//gerando U (?) , 
-		 
-		
-		
+
+		// Normalizando V
+		Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
+				
+		//gerando U 
+		U = No.produtoVetorial(Vn);
 		
 		/*   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   e depois os normalizando, 
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
 		 *   fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 		 *   do objeto e da posição da fonte de luz PL,
 		 *   
