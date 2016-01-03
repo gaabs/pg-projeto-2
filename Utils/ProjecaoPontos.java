@@ -1,3 +1,5 @@
+package Utils;
+
 public class ProjecaoPontos extends MatrixUtil{
 	
 	public static double[][] projetar(double[][] matrizM, double[][] matrizD, int n, int D, int m) {

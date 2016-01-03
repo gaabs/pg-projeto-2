@@ -1,3 +1,4 @@
+package Utils;
 public class MatrixUtil {
 	//Verifica se matriz é nula
 	public static boolean nula(double[][] matriz, int m, int n){

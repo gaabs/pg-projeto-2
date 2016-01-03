@@ -1,7 +1,15 @@
+import gui.guiGouraud;
+import gui.guiPhong;
+
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import Utils.Util;
+import Basicas.Point;
+import Basicas.Triangulo;
 
 
 public class main {
@@ -142,45 +150,21 @@ public class main {
 
 		Pl = Util.convert(V, N, U, C, Pl);		
 
-
-
-		//gerando as normais dos triangulos 
-
-
-		//gerando as normais dos vertices
-
-
-		/*   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   e gerar as normais dos vértices (como recomendado em sala de aula).
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *  Cria-se uma Janela para o objeto apresentado por Gouraud e 
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *  Outra para Phong.
-		 *  
-		 *  
+		   
+		//Cria-se uma Janela para o objeto apresentado por Gouraud e 
+		//Outra para Phong.
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				guiPhong frame = new guiPhong();
+				frame.setVisible(true);
+				guiGouraud frame2 = new guiGouraud();
+				frame2.setVisible(true);
+			}
+		});
+		
+		
+		 /*  
 		 *  
 		 *  
 		 *  

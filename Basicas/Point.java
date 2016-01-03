@@ -1,6 +1,7 @@
+package Basicas;
 
 public class Point {
-	double x,y,z;
+	public double x,y,z;
 
 	public Point(){}
 
