@@ -12,6 +12,7 @@ import Utils.Util;
 import Basicas.Point3D;
 import Basicas.Point2D;
 import Basicas.Triangulo;
+import Basicas.Triangulo2D;
 
 
 public class main {
@@ -47,6 +48,7 @@ public class main {
 	
 	static ArrayList<Point3D> vertices = new ArrayList<Point3D>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	static ArrayList<Triangulo2D> triangulos2D = new ArrayList<Triangulo2D>();
 	static ArrayList<Point3D> Ntriangulos = new ArrayList<Point3D>();
 	static ArrayList<Point3D> Nvertices = new ArrayList<Point3D>();
 	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
@@ -164,6 +166,9 @@ public class main {
 						NverticesArray[(int) (pontos[j]-1)] = NverticesArray[(int) (pontos[j]-1)].add(nt);
 					}
 				}
+				
+				Triangulo2D t2 = new Triangulo2D(vertices2D.get((int) (pontos[0]-1)),vertices2D.get((int) (pontos[1]-1)),vertices2D.get((int) (pontos[2]-1)));
+				triangulos2D.add(t2);
 				
 			}
 
