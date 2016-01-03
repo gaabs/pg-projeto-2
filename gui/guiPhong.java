@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+import Basicas.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +30,22 @@ public class guiPhong extends JFrame{
 		Phong();
 	}
 	
+	private static void scanLine3D(ArrayList<Triangulo> t, ArrayList<Triangulo2D> t2){
+		
+		for(int i=0;i<t2.size();i++){
+			
+			
+			
+			
+		}
+		
+		
+		
+	}
+	
+	private static void pinte(Point2D[][] ret){
+		//pinta XP
+	}
 	
 	private static void Phong(){
 		

@@ -104,39 +104,21 @@ public class Util {
 		double yMax2 = Math.max(t.v3.y, t.v2.y);
 		
 		if(t.v1.y==yMax && t.v2.y==yMax2){
-			aux(ret,t.v1,t.v2,t.v3);			
+			ret=aux(ret,t.v1,t.v2,t.v3);			
 		}else if(t.v1.y==yMax && t.v3.y==yMax2){
-			aux(ret,t.v1,t.v3,t.v2);
+			ret=aux(ret,t.v1,t.v3,t.v2);
 		}else if(t.v2.y==yMax && t.v1.y==yMax2){
-			aux(ret,t.v2,t.v1,t.v3);
+			ret=aux(ret,t.v2,t.v1,t.v3);
 		}else if(t.v2.y==yMax && t.v3.y==yMax2){
-			aux(ret,t.v2,t.v3,t.v1);
+			ret=aux(ret,t.v2,t.v3,t.v1);
 		}else if(t.v3.y==yMax && t.v1.y==yMax2){
-			aux(ret,t.v3,t.v1,t.v2);
+			ret=aux(ret,t.v3,t.v1,t.v2);
 		}else{
-			aux(ret,t.v3,t.v2,t.v1);
+			ret=aux(ret,t.v3,t.v2,t.v1);
 		}
 
 		return ret;
 	}
-
-//	v1 eh o maior
-//
-//	v1=x1y1
-//	v2=x2y2
-//	v3=x3y3
-//
-//	v2 eh o maior
-//	v2=x1y1
-//	v1=x2y2
-//	v3=x3y3
-//
-//	v3 eh o maior
-//	v3=x1y1
-//	v1=x3y3
-//	v2=x2y2
-
-
 
 	public static Point2D[][] aux(Point2D[][] ret, Point2D L, Point2D M, Point2D S){
 		double a = (M.x - L.x)/(M.y - L.y);
