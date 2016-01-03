@@ -60,6 +60,8 @@ public class Util {
 	}
 	
 	public static void setAlfa(Point V, Point N, Point U){
+		alfa=new double[3][3];
+		
 		alfa[0][0]=U.x;
 		alfa[0][1]=U.y;
 		alfa[0][2]=U.z;

@@ -198,9 +198,9 @@ public class main {
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				guiPhong frame = new guiPhong();
+				guiPhong frame = new guiPhong(hx,hy);
 				frame.setVisible(true);
-				guiGouraud frame2 = new guiGouraud();
+				guiGouraud frame2 = new guiGouraud(hx,hy);
 				frame2.setVisible(true);
 			}
 		});
