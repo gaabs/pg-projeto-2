@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class main {
 	//camera
-	static Point C,N,V,Vo,No,Vn,U;//vetores
+	static Point C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
 	static double hx,hy,d;
 	//iluminação
-	static double ka,kd,ks,Pl,Ia,Od,Il,n;
+	static double ka,kd,ks,n;
 	//objeto
 	static ArrayList<Point> vertices = new ArrayList<Point>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
@@ -19,15 +19,16 @@ public class main {
 		 * 
 		 *  ler arquivo cfg*/
 		try{
-		File arquivo = new File("camera.cfg");
+		File camera = new File("camera.cfg");
 		
-		if(!arquivo.exists()) {
-			arquivo.createNewFile();
+		if(!camera.exists()) {
+			camera.createNewFile();
 		}
 		
-		BufferedReader reader = new BufferedReader(new FileReader(arquivo));
+		BufferedReader reader = new BufferedReader(new FileReader(camera));
 		
 		//Vetor C
+		//extract extrai 3 doubles de uma string e devolve um array com eles
 		double[] xyz = Util.extract(reader.readLine());
 		C = new Point(xyz[0],xyz[1],xyz[2]);
 		
@@ -44,6 +45,51 @@ public class main {
 		d = xyz[0];
 		hx = xyz[1];
 		hy = xyz[2];
+		
+		//abrindo objeto
+		File objeto = new File("objeto.byu");
+		
+		if(!objeto.exists()) {
+			objeto.createNewFile();
+		}
+		
+		reader = new BufferedReader(new FileReader(objeto));
+		
+		String s = reader.readLine();
+		int d = s.indexOf(" ");
+		int n = Integer.parseInt(s.substring(0,d));
+		int m = Integer.parseInt(s.substring(d+1));
+		for(int i=0;i<n;i++){
+			double[] pontos = Util.extract(reader.readLine());
+			Point p = new Point(pontos[0],pontos[1],pontos[2]);
+			vertices.add(p);
+		}
+		for(int i=0;i<m;i++){
+			double[] pontos = Util.extract(reader.readLine());
+			Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
+			triangulos.add(t);
+		}
+		
+		File Iluminacao = new File("Iluminacao.txt");
+		
+		if(!Iluminacao.exists()) {
+			Iluminacao.createNewFile();
+		}
+		
+		reader = new BufferedReader(new FileReader(Iluminacao));
+		
+		double[] luz = Util.extract(reader.readLine());
+		Pl = new Point(luz[0],luz[1],luz[2]);
+		ka = Double.parseDouble(reader.readLine());
+		double[] cor = Util.extract(reader.readLine());
+		Ia = new Point(cor[0],cor[1],cor[2]);
+		kd = Double.parseDouble(reader.readLine());
+		double[] dif = Util.extract(reader.readLine());
+		Od = new Point(dif[0],dif[1],dif[2]);
+		ks = Double.parseDouble(reader.readLine());
+		cor = Util.extract(reader.readLine());
+		Il = new Point(cor[0],cor[1],cor[2]);
+		n = Integer.parseInt(reader.readLine());
 		
 		}catch(Exception e){
 			e.printStackTrace();
