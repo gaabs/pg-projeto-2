@@ -38,9 +38,12 @@ public class guiPhong extends JFrame{
 		
 		//sem penetrações de triangulo
 		for(int i=0;i<t2.size();i++){
-			pinte(Util.scanLine(t2.get(t.get(i).indice)));
+			if(t2.get(t.get(i).indice).indice==t.get(i).indice){
+				pinte(Util.scanLine(t2.get(t.get(i).indice)));
+			}
 		}	
 	}
+	
 	
 	private static void pinte(Point2D[][] ret){
 		//pinta XP
