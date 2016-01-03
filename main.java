@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import Utils.ProjecaoPontos;
 import Utils.Util;
 import Basicas.Point;
+import Basicas.Point2D;
 import Basicas.Triangulo;
 
 
@@ -46,7 +48,9 @@ public class main {
 	static ArrayList<Point> vertices = new ArrayList<Point>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
-
+	static ArrayList<Point> Nvertices = new ArrayList<Point>();
+	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
+	
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
 		 * 
@@ -120,7 +124,7 @@ public class main {
 				vertices.add(p);
 			}
 			
-			Point[] Nvertices = new Point[ver];
+			Point[] NverticesArray = new Point[ver];
 			
 			for(int i=0;i<tri;i++){
 				double[] pontos = Util.extract(reader.readLine());
@@ -136,17 +140,27 @@ public class main {
 				triangulos.add(t);
 				Ntriangulos.add(nt);
 
-				//gerando normal parcial dos vertices deste triangulo
 				for(int j=0;j<3;j++){
-					if(	Nvertices[(int) (pontos[j]-1)]==null){
-						Nvertices[(int) (pontos[j]-1)]= nt;
+					//Para cada triângulo, calculam-se as projeções dos seus vértices,
+					
+					vertices2D.add(ProjecaoPontos.projetar2D(vertices.get((int)pontos[i]-1), d, hx, hy));
+					
+					//gerando normal parcial dos vertices deste triangulo	
+					if(	NverticesArray[(int) (pontos[j]-1)]==null){
+						NverticesArray[(int) (pontos[j]-1)]= nt;
 					}else{
-						Nvertices[(int) (pontos[j]-1)] = Nvertices[(int) (pontos[j]-1)].add(nt);
+						NverticesArray[(int) (pontos[j]-1)] = NverticesArray[(int) (pontos[j]-1)].add(nt);
 					}
 				}
-
+				
 			}
 
+			//deixando as normais dos vertices em uma var global
+			
+			for(int i=0;i<ver;i++){
+				Nvertices.add(NverticesArray[i]);
+			}
+			
 			
 			File Iluminacao = new File("Iluminacao.txt");
 
@@ -192,7 +206,6 @@ public class main {
 		});
 		
 		
-		 //Para cada triângulo, calculam-se as projeções dos seus vértices,
 		
 		//calculam-se as cores dos vértices (utilizando as normais dos vértices,
 		
