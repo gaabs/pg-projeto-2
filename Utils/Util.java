@@ -97,26 +97,11 @@ public class Util {
 
 	public static Point2D[][] scanLine(Triangulo2D t){
 		Point2D[][] ret = null;
-		double yMax = Math.max(Math.max(t.v1.y, t.v2.y), t.v3.y);
-		double yMin = Math.min(Math.min(t.v1.y, t.v2.y), t.v3.y);
-		int tam = (int)Math.ceil(yMax - yMin +1);
+		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point2D[tam][2];
-		double yMax2 = Math.max(t.v3.y, t.v2.y);
 		
-		if(t.v1.y==yMax && t.v2.y==yMax2){
-			ret=aux(ret,t.v1,t.v2,t.v3);			
-		}else if(t.v1.y==yMax && t.v3.y==yMax2){
-			ret=aux(ret,t.v1,t.v3,t.v2);
-		}else if(t.v2.y==yMax && t.v1.y==yMax2){
-			ret=aux(ret,t.v2,t.v1,t.v3);
-		}else if(t.v2.y==yMax && t.v3.y==yMax2){
-			ret=aux(ret,t.v2,t.v3,t.v1);
-		}else if(t.v3.y==yMax && t.v1.y==yMax2){
-			ret=aux(ret,t.v3,t.v1,t.v2);
-		}else{
-			ret=aux(ret,t.v3,t.v2,t.v1);
-		}
-
+		ret=aux(ret,t.v1,t.v2,t.v3);			
+		
 		return ret;
 	}
 

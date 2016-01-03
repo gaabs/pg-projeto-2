@@ -17,7 +17,7 @@ import Basicas.Triangulo2D;
 
 public class main {
 	//CAMERA
-	
+
 	//C->foco da camera
 	//N->vetor no eixo Z
 	//V->?
@@ -27,25 +27,25 @@ public class main {
 	//Ia -> vetor cor ambiental
 	//Il -> cor da fonte de luz
 	//Od -> vetor difuso
-	
+
 	static Point3D C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
 
 	//hx ->
 	//hy ->
 	//d -> distância do centro da camera ao plano de projeção
-	
+
 	static double hx,hy,d;
-	
+
 	//ILUMINAÇÃO
-	
+
 	//ka -> reflexao ambiental
 	//kd -> constante difusa
 	//ks -> coeficiente especular
 	//n  -> constante de rugosidade
 	static double ka,kd,ks,n;
-	
+
 	//OBJETO
-	
+
 	static ArrayList<Point3D> vertices = new ArrayList<Point3D>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 	static ArrayList<Triangulo2D> triangulos2D = new ArrayList<Triangulo2D>();
@@ -54,8 +54,8 @@ public class main {
 	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
 	static ArrayList<Point2D> vertices2DMapeados = new ArrayList<Point2D>();
 
-	
-	
+
+
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
 		 * 
@@ -102,9 +102,9 @@ public class main {
 			U = No.produtoVetorial(Vn);
 
 			//Setando matriz alfa
-			
+
 			Util.setAlfa(Vn, No, U);
-			
+
 			//abrindo objeto
 			File objeto = new File("objeto.byu");
 
@@ -128,12 +128,12 @@ public class main {
 				p=Util.convert(C, p);
 				vertices.add(p);
 			}
-			
+
 			Point3D[] NverticesArray = new Point3D[ver];
-			
+
 			for(int i=0;i<tri;i++){
 				double[] pontos = Util.extract(reader.readLine());
-				Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
+				Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)),i);
 
 
 				//gerando normal do triangulo
@@ -146,39 +146,55 @@ public class main {
 				Ntriangulos.add(nt);
 
 				for(int j=0;j<3;j++){
-					
+
 					//gerando normal parcial dos vertices deste triangulo	
 					if(	NverticesArray[(int) (pontos[j]-1)]==null){
 						NverticesArray[(int) (pontos[j]-1)]= nt;
 						//Para cada triângulo, calculam-se as projeções dos seus vértices,
-						
+
 						vertices2D.add(ProjecaoPontos.projetar2D(vertices.get((int)pontos[i]-1), d, hx, hy));
-						
+
 						//Calcula-se o mapeamento dele para o frame
-						
+
 						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1), d, hx, hy);
 						if(u!=null){
 							//mapeado
 							vertices2DMapeados.add(u);
 						}
-						
+
 					}else{
 						NverticesArray[(int) (pontos[j]-1)] = NverticesArray[(int) (pontos[j]-1)].add(nt);
 					}
 				}
-				
-				Triangulo2D t2 = new Triangulo2D(vertices2D.get((int) (pontos[0]-1)),vertices2D.get((int) (pontos[1]-1)),vertices2D.get((int) (pontos[2]-1)));
-				triangulos2D.add(t2);
-				
+
+				Triangulo2D t2 = new Triangulo2D(vertices2D.get((int) (pontos[0]-1)),vertices2D.get((int) (pontos[1]-1)),vertices2D.get((int) (pontos[2]-1)),i);
+				t2.ordenarY();
+				triangulos.get(i).ordenarY();
+				boolean ok=false;
+				for(int k=0;k<vertices2DMapeados.size();k++){
+					if(t2.v1==vertices2DMapeados.get(k)){
+						ok=true;
+						break;
+					}else if(t2.v2==vertices2DMapeados.get(k)){
+						ok=true;
+						break;
+					}else if(t2.v3==vertices2DMapeados.get(k)){
+						ok=true;
+						break;
+					}
+				}
+				if(ok){
+					triangulos2D.add(t2);
+				}
 			}
 
 			//deixando as normais dos vertices em uma var global
-			
+
 			for(int i=0;i<ver;i++){
 				Nvertices.add(NverticesArray[i]);
 			}
-			
-			
+
+
 			File Iluminacao = new File("Iluminacao.txt");
 
 			if(!Iluminacao.exists()) {
@@ -209,26 +225,26 @@ public class main {
 
 		Pl = Util.convert(C, Pl);		
 
-		   
+
 		//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 		//Outra para Phong.
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				guiPhong frame = new guiPhong(hx,hy);
+				guiPhong frame = new guiPhong(triangulos,triangulos2D);
 				frame.setVisible(true);
 				guiGouraud frame2 = new guiGouraud(hx,hy);
 				frame2.setVisible(true);
 			}
 		});
-		
-		
-		
+
+
+
 		//calculam-se as cores dos vértices (utilizando as normais dos vértices,
-		
+
 		//e calculando-se L, V e R e os substituindo na equação de iluminação) e 
 		//inicia-se a sua conversão por varredura.
-		
+
 		/*  Para cada pixel (x, yscan),
 		 *  calculam-se suas coordenadas baricêntricas com relação aos vértices projetados, 
 		 *  e multiplicam-se essas coordenadas pelos correspondentes vértices do triângulo 3D
