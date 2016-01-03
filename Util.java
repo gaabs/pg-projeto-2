@@ -76,8 +76,8 @@ public class Util {
 		m = MatrixUtil.multiplicar(m, m2, 3, 3, 1);
 		
 		p.x=m[0][0];
-		p.y=m[0][1];
-		p.z=m[0][2];
+		p.y=m[1][0];
+		p.z=m[2][0];
 		
 		return p;
 	}

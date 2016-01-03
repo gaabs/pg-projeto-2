@@ -12,7 +12,9 @@ public class main {
 	static double ka,kd,ks,n;
 	//objeto
 	static ArrayList<Point> vertices = new ArrayList<Point>();
+	static ArrayList<Point> Nvertices = new ArrayList<Point>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	static ArrayList<Triangulo> Ntriangulos = new ArrayList<Triangulo>();
 	
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
@@ -46,6 +48,19 @@ public class main {
 		hx = xyz[1];
 		hy = xyz[2];
 		
+		// ortogonalizando V e N
+		  
+		Vo = Util.ortogonalizar(V, N);
+		No = N.divide(Math.sqrt(N.dotProduct(N)));
+
+		// Normalizando V
+		
+		Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
+		
+		//gerando U 
+		
+		U = No.produtoVetorial(Vn);
+		
 		//abrindo objeto
 		File objeto = new File("objeto.byu");
 		
@@ -68,11 +83,17 @@ public class main {
 			Point p = new Point(pontos[0],pontos[1],pontos[2]);
 			p=Util.convert(V, N, U, C, p);
 			vertices.add(p);
+			//gerando as normais dos vertices
+			Point pn = p.multiply((1/Math.sqrt(p.dotProduct(p))));
+			Nvertices.add(pn);
 		}
 		for(int i=0;i<tri;i++){
 			double[] pontos = Util.extract(reader.readLine());
 			Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
 			triangulos.add(t);
+			//gerando as normais dos triangulos Passo 1
+			Triangulo tn = new Triangulo(Nvertices.get((int) (pontos[0]-1)),Nvertices.get((int) (pontos[1]-1)),Nvertices.get((int) (pontos[2]-1)));
+			Ntriangulos.add(tn);
 		}
 		
 		File Iluminacao = new File("Iluminacao.txt");
@@ -100,26 +121,19 @@ public class main {
 			e.printStackTrace();
 		}
 		
-		// ortogonalizando V e N
-		  
-		Vo = Util.ortogonalizar(V, N);
-		No = N.divide(Math.sqrt(N.dotProduct(N)));
-
-		// Normalizando V
-		Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
-				
-		//gerando U 
-		U = No.produtoVetorial(Vn);
-		
 		//fazer a mudança de coordenadas para o sistema de vista da posição
 		//da fonte de luz PL,
-		  
-		Pl = Util.convert(V, N, U, C, Pl);
+					  
+		Pl = Util.convert(V, N, U, C, Pl);		
+
+		//gerando as normais dos triangulos Passo 2
 		
-		//gerar as normais dos triângulos 
-		
-		
-		
+		for(int i=0;i<Ntriangulos.size();i++){
+			
+			
+			
+			
+		}
 		
 		
 		
