@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import Utils.ProjecaoPontos;
 import Utils.Util;
-import Basicas.Point;
+import Basicas.Point3D;
 import Basicas.Point2D;
 import Basicas.Triangulo;
 
@@ -27,7 +27,7 @@ public class main {
 	//Il -> cor da fonte de luz
 	//Od -> vetor difuso
 	
-	static Point C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
+	static Point3D C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
 
 	//hx ->
 	//hy ->
@@ -45,11 +45,14 @@ public class main {
 	
 	//OBJETO
 	
-	static ArrayList<Point> vertices = new ArrayList<Point>();
+	static ArrayList<Point3D> vertices = new ArrayList<Point3D>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
-	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
-	static ArrayList<Point> Nvertices = new ArrayList<Point>();
+	static ArrayList<Point3D> Ntriangulos = new ArrayList<Point3D>();
+	static ArrayList<Point3D> Nvertices = new ArrayList<Point3D>();
 	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
+	static ArrayList<Point2D> vertices2DMapeados = new ArrayList<Point2D>();
+
+	
 	
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
@@ -67,15 +70,15 @@ public class main {
 			//Vetor C
 			//extract extrai 3 doubles de uma string e devolve um array com eles
 			double[] xyz = Util.extract(reader.readLine());
-			C = new Point(xyz[0],xyz[1],xyz[2]);
+			C = new Point3D(xyz[0],xyz[1],xyz[2]);
 
 			//Vetor N
 			xyz = Util.extract(reader.readLine());
-			N = new Point(xyz[0],xyz[1],xyz[2]);
+			N = new Point3D(xyz[0],xyz[1],xyz[2]);
 
 			//Vetor V
 			xyz = Util.extract(reader.readLine());
-			V = new Point(xyz[0],xyz[1],xyz[2]);
+			V = new Point3D(xyz[0],xyz[1],xyz[2]);
 
 			//d, hx, hy
 			xyz = Util.extract(reader.readLine());
@@ -119,12 +122,12 @@ public class main {
 
 			for(int i=0;i<ver;i++){
 				double[] pontos = Util.extract(reader.readLine());
-				Point p = new Point(pontos[0],pontos[1],pontos[2]);
+				Point3D p = new Point3D(pontos[0],pontos[1],pontos[2]);
 				p=Util.convert(C, p);
 				vertices.add(p);
 			}
 			
-			Point[] NverticesArray = new Point[ver];
+			Point3D[] NverticesArray = new Point3D[ver];
 			
 			for(int i=0;i<tri;i++){
 				double[] pontos = Util.extract(reader.readLine());
@@ -132,22 +135,31 @@ public class main {
 
 
 				//gerando normal do triangulo
-				Point w1 = t.v2.subtract(t.v1);
-				Point w2 = t.v3.subtract(t.v1);
+				Point3D w1 = t.v2.subtract(t.v1);
+				Point3D w2 = t.v3.subtract(t.v1);
 
-				Point nt = w1.produtoVetorial(w2);
+				Point3D nt = w1.produtoVetorial(w2);
 
 				triangulos.add(t);
 				Ntriangulos.add(nt);
 
 				for(int j=0;j<3;j++){
-					//Para cada triângulo, calculam-se as projeções dos seus vértices,
-					
-					vertices2D.add(ProjecaoPontos.projetar2D(vertices.get((int)pontos[i]-1), d, hx, hy));
 					
 					//gerando normal parcial dos vertices deste triangulo	
 					if(	NverticesArray[(int) (pontos[j]-1)]==null){
 						NverticesArray[(int) (pontos[j]-1)]= nt;
+						//Para cada triângulo, calculam-se as projeções dos seus vértices,
+						
+						vertices2D.add(ProjecaoPontos.projetar2D(vertices.get((int)pontos[i]-1), d, hx, hy));
+						
+						//Calcula-se o mapeamento dele para o frame
+						
+						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1), d, hx, hy);
+						if(u!=null){
+							//mapeado
+							vertices2DMapeados.add(u);
+						}
+						
 					}else{
 						NverticesArray[(int) (pontos[j]-1)] = NverticesArray[(int) (pontos[j]-1)].add(nt);
 					}
@@ -171,16 +183,16 @@ public class main {
 			reader = new BufferedReader(new FileReader(Iluminacao));
 
 			double[] luz = Util.extract(reader.readLine());
-			Pl = new Point(luz[0],luz[1],luz[2]);
+			Pl = new Point3D(luz[0],luz[1],luz[2]);
 			ka = Double.parseDouble(reader.readLine());
 			double[] cor = Util.extract(reader.readLine());
-			Ia = new Point(cor[0],cor[1],cor[2]);
+			Ia = new Point3D(cor[0],cor[1],cor[2]);
 			kd = Double.parseDouble(reader.readLine());
 			double[] dif = Util.extract(reader.readLine());
-			Od = new Point(dif[0],dif[1],dif[2]);
+			Od = new Point3D(dif[0],dif[1],dif[2]);
 			ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
-			Il = new Point(cor[0],cor[1],cor[2]);
+			Il = new Point3D(cor[0],cor[1],cor[2]);
 			n = Integer.parseInt(reader.readLine());
 
 		}catch(Exception e){

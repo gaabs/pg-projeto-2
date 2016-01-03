@@ -1,15 +1,15 @@
 package Utils;
-import Basicas.Point;
+import Basicas.Point3D;
 
 
 public class Util {
 
 	public static double[][] alfa;
 	
-	public static Point[] gramSchmidt(Point v1, Point v2, Point v3){
-		Point[] pontos = new Point[8];
+	public static Point3D[] gramSchmidt(Point3D v1, Point3D v2, Point3D v3){
+		Point3D[] pontos = new Point3D[8];
 		
-		Point temp;
+		Point3D temp;
 		v2 = v2.subtract(v1.multiply(v2.dotProduct(v1)/v1.dotProduct(v1)));
 		temp = v2.multiply(v3.dotProduct(v2)/v2.dotProduct(v2));
 		temp = temp.add(v1.multiply(v3.dotProduct(v1)/v1.dotProduct(v1)));
@@ -26,13 +26,13 @@ public class Util {
 		v2 = v2.divide(Math.sqrt(v2.dotProduct(v2)));
 		v3 = v3.divide(Math.sqrt(v3.dotProduct(v3)));
 		
-		pontos[3]=new Point(-1,-1,-1);
+		pontos[3]=new Point3D(-1,-1,-1);
 		
 		pontos[4]=v1;
 		pontos[5]=v2;
 		pontos[6]=v3;
 		
-		pontos[7]=new Point(-1,-1,-1);
+		pontos[7]=new Point3D(-1,-1,-1);
 		
 		System.out.println("e1: " + v1);
 		System.out.println("e2: " + v2);
@@ -41,8 +41,8 @@ public class Util {
 		return pontos;
 	}
 	
-	public static Point ortogonalizar(Point V, Point N){
-		Point V2 = V.subtract(N.multiply(V.dotProduct(N)/N.dotProduct(N)));
+	public static Point3D ortogonalizar(Point3D V, Point3D N){
+		Point3D V2 = V.subtract(N.multiply(V.dotProduct(N)/N.dotProduct(N)));
 		
 		return V2;
 	}
@@ -59,7 +59,7 @@ public class Util {
 		return resp;
 	}
 	
-	public static void setAlfa(Point V, Point N, Point U){
+	public static void setAlfa(Point3D V, Point3D N, Point3D U){
 		alfa=new double[3][3];
 		
 		alfa[0][0]=U.x;
@@ -73,10 +73,9 @@ public class Util {
 		alfa[2][2]=N.z;
 	}
 	
-	public static Point convert(Point C, Point p){
-		//uvn
-		double[][] m = alfa;
+	public static Point3D convert(Point3D C, Point3D p){
 		
+		double[][] m = alfa;
 		
 		double[][] m2 = new double [3][1];
 		p=p.subtract(C);
@@ -94,9 +93,9 @@ public class Util {
 	}
 	
 	public static void main(String[] args) {
-		Point v1 = new Point(1,0,1);
-		Point v2 = new Point(0,1,1);
-		Point v3 = new Point(1,1,1);
+		Point3D v1 = new Point3D(1,0,1);
+		Point3D v2 = new Point3D(0,1,1);
+		Point3D v3 = new Point3D(1,1,1);
 		
 		gramSchmidt(v1,v2,v3);
 		

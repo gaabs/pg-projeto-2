@@ -7,6 +7,9 @@ import javax.swing.border.EmptyBorder;
 public class guiPhong extends JFrame{
 
 	private static JPanel contentPane;
+	public static int ResX = 432; 
+	public static int ResY = 421;
+	
 	
 	public guiPhong(double hx, double hy){
 		
