@@ -57,14 +57,19 @@ public class main {
 		
 		String s = reader.readLine();
 		int d = s.indexOf(" ");
-		int n = Integer.parseInt(s.substring(0,d));
-		int m = Integer.parseInt(s.substring(d+1));
-		for(int i=0;i<n;i++){
+		int ver = Integer.parseInt(s.substring(0,d));
+		int tri = Integer.parseInt(s.substring(d+1));
+		
+		//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
+		//do objeto
+		
+		for(int i=0;i<ver;i++){
 			double[] pontos = Util.extract(reader.readLine());
 			Point p = new Point(pontos[0],pontos[1],pontos[2]);
+			p=Util.convert(V, N, U, C, p);
 			vertices.add(p);
 		}
-		for(int i=0;i<m;i++){
+		for(int i=0;i<tri;i++){
 			double[] pontos = Util.extract(reader.readLine());
 			Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
 			triangulos.add(t);
@@ -106,23 +111,19 @@ public class main {
 		//gerando U 
 		U = No.produtoVetorial(Vn);
 		
+		//fazer a mudança de coordenadas para o sistema de vista da posição
+		//da fonte de luz PL,
+		  
+		Pl = Util.convert(V, N, U, C, Pl);
+		
+		//gerar as normais dos triângulos 
+		
+		
+		
+		
+		
+		
 		/*   
-		 *   fazer a mudança de coordenadas para o sistema de vista de todos os vértices
-		 *   do objeto e da posição da fonte de luz PL,
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   
-		 *   gerar as normais dos triângulos 
-		 *   
-		 *   
 		 *   
 		 *   
 		 *   
