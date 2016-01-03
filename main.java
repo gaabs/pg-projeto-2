@@ -13,12 +13,36 @@ import Basicas.Triangulo;
 
 
 public class main {
-	//camera
+	//CAMERA
+	
+	//C->foco da camera
+	//N->vetor no eixo Z
+	//V->?
+	//quando tem um 'o' junto da variável é pq é ortogonalizado
+	//quando tem um 'n' junto da variável é pq é normalizado(ou ortonormalizado)
+	//Pl -> Coordenadas do ponto de luz
+	//Ia -> vetor cor ambiental
+	//Il -> cor da fonte de luz
+	//Od -> vetor difuso
+	
 	static Point C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
+
+	//hx ->
+	//hy ->
+	//d -> distância do centro da camera ao plano de projeção
+	
 	static double hx,hy,d;
-	//iluminação
+	
+	//ILUMINAÇÃO
+	
+	//ka -> reflexao ambiental
+	//kd -> constante difusa
+	//ks -> coeficiente especular
+	//n  -> constante de rugosidade
 	static double ka,kd,ks,n;
-	//objeto
+	
+	//OBJETO
+	
 	static ArrayList<Point> vertices = new ArrayList<Point>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
@@ -68,6 +92,10 @@ public class main {
 
 			U = No.produtoVetorial(Vn);
 
+			//Setando matriz alfa
+			
+			Util.setAlfa(Vn, No, U);
+			
 			//abrindo objeto
 			File objeto = new File("objeto.byu");
 
@@ -88,7 +116,7 @@ public class main {
 			for(int i=0;i<ver;i++){
 				double[] pontos = Util.extract(reader.readLine());
 				Point p = new Point(pontos[0],pontos[1],pontos[2]);
-				p=Util.convert(V, N, U, C, p);
+				p=Util.convert(C, p);
 				vertices.add(p);
 			}
 			
@@ -148,7 +176,7 @@ public class main {
 		//fazer a mudança de coordenadas para o sistema de vista da posição
 		//da fonte de luz PL,
 
-		Pl = Util.convert(V, N, U, C, Pl);		
+		Pl = Util.convert(C, Pl);		
 
 		   
 		//Cria-se uma Janela para o objeto apresentado por Gouraud e 
@@ -164,45 +192,14 @@ public class main {
 		});
 		
 		
-		 /*  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  Para cada triângulo, calculam-se as projeções dos seus vértices, 
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  calculam-se as cores dos vértices (utilizando as normais dos vértices, 
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  e calculando-se L, V e R e os substituindo na equação de iluminação) e 
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  inicia-se a sua conversão por varredura.
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  
-		 *  Para cada pixel (x, yscan),
+		 //Para cada triângulo, calculam-se as projeções dos seus vértices,
+		
+		//calculam-se as cores dos vértices (utilizando as normais dos vértices,
+		
+		//e calculando-se L, V e R e os substituindo na equação de iluminação) e 
+		//inicia-se a sua conversão por varredura.
+		
+		/*  Para cada pixel (x, yscan),
 		 *  calculam-se suas coordenadas baricêntricas com relação aos vértices projetados, 
 		 *  e multiplicam-se essas coordenadas pelos correspondentes vértices do triângulo 3D
 		 *  original para se obter uma aproximação para o ponto 3D original correspondente

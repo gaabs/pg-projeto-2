@@ -4,6 +4,8 @@ import Basicas.Point;
 
 public class Util {
 
+	public static double[][] alfa;
+	
 	public static Point[] gramSchmidt(Point v1, Point v2, Point v3){
 		Point[] pontos = new Point[8];
 		
@@ -57,18 +59,22 @@ public class Util {
 		return resp;
 	}
 	
-	public static Point convert(Point V, Point N, Point U, Point C, Point p){
+	public static void setAlfa(Point V, Point N, Point U){
+		alfa[0][0]=U.x;
+		alfa[0][1]=U.y;
+		alfa[0][2]=U.z;
+		alfa[1][0]=V.x;
+		alfa[1][1]=V.y;
+		alfa[1][2]=V.z;
+		alfa[2][0]=N.x;
+		alfa[2][1]=N.y;
+		alfa[2][2]=N.z;
+	}
+	
+	public static Point convert(Point C, Point p){
 		//uvn
-		double[][] m = new double[3][3];
-		m[0][0]=U.x;
-		m[0][1]=U.y;
-		m[0][2]=U.z;
-		m[1][0]=V.x;
-		m[1][1]=V.y;
-		m[1][2]=V.z;
-		m[2][0]=N.x;
-		m[2][1]=N.y;
-		m[2][2]=N.z;
+		double[][] m = alfa;
+		
 		
 		double[][] m2 = new double [3][1];
 		p=p.subtract(C);
