@@ -1,8 +1,11 @@
 package Utils;
 
+import Basicas.Point;
+import Basicas.Point2D;
+
 public class ProjecaoPontos extends MatrixUtil{
 	
-	public static double[][] projetar(double[][] matrizM, double[][] matrizD, int n, int D, int m) {
+	/*public static double[][] projetar(double[][] matrizM, double[][] matrizD, int n, int D, int m) {
 		double[][] matrizDt = transpor(matrizD, n, D),
 				   matrizMt = transpor(matrizM, D, m),
 				   matrizMtM = multiplicar(matrizMt, matrizM, m, D, m),
@@ -14,7 +17,7 @@ public class ProjecaoPontos extends MatrixUtil{
 		return matrizResultadoTransposto;
 	}
 	
-	/*Há grande chance disto ai esta errado.
+	Há grande chance disto ai esta errado.
 	 * Sabendo disto é necessario q alguém traduza isso:
 	 * 
 	 * "Projetar cada ponto que a camera enxerga para as coordenadas da tela (x, y)
@@ -34,5 +37,16 @@ public class ProjecaoPontos extends MatrixUtil{
 	 * 
 	 * 
 	 * */
+	
+	public static Point2D projetar2D(Point p, double d, double  Hx,double  Hy){
+		
+		double x = (d/Hx)*(p.x/p.z);
+		double y = (d/Hy)*(p.y/p.z);
+		
+		Point2D p2 = new Point2D(x,y);
+		
+		
+		return p2;
+	}
 	
 }
