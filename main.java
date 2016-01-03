@@ -12,131 +12,144 @@ public class main {
 	static double ka,kd,ks,n;
 	//objeto
 	static ArrayList<Point> vertices = new ArrayList<Point>();
-	static ArrayList<Point> Nvertices = new ArrayList<Point>();
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
-	static ArrayList<Triangulo> Ntriangulos = new ArrayList<Triangulo>();
-	
+	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
+
 	public static void main(String[] args) {
 		/*O seu sistema começa preparando a câmera,
 		 * 
 		 *  ler arquivo cfg*/
 		try{
-		File camera = new File("camera.cfg");
-		
-		if(!camera.exists()) {
-			camera.createNewFile();
-		}
-		
-		BufferedReader reader = new BufferedReader(new FileReader(camera));
-		
-		//Vetor C
-		//extract extrai 3 doubles de uma string e devolve um array com eles
-		double[] xyz = Util.extract(reader.readLine());
-		C = new Point(xyz[0],xyz[1],xyz[2]);
-		
-		//Vetor N
-		xyz = Util.extract(reader.readLine());
-		N = new Point(xyz[0],xyz[1],xyz[2]);
+			File camera = new File("camera.cfg");
 
-		//Vetor V
-		xyz = Util.extract(reader.readLine());
-		V = new Point(xyz[0],xyz[1],xyz[2]);
-		
-		//d, hx, hy
-		xyz = Util.extract(reader.readLine());
-		d = xyz[0];
-		hx = xyz[1];
-		hy = xyz[2];
-		
-		// ortogonalizando V e N
-		  
-		Vo = Util.ortogonalizar(V, N);
-		No = N.divide(Math.sqrt(N.dotProduct(N)));
+			if(!camera.exists()) {
+				camera.createNewFile();
+			}
 
-		// Normalizando V
-		
-		Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
-		
-		//gerando U 
-		
-		U = No.produtoVetorial(Vn);
-		
-		//abrindo objeto
-		File objeto = new File("objeto.byu");
-		
-		if(!objeto.exists()) {
-			objeto.createNewFile();
-		}
-		
-		reader = new BufferedReader(new FileReader(objeto));
-		
-		String s = reader.readLine();
-		int d = s.indexOf(" ");
-		int ver = Integer.parseInt(s.substring(0,d));
-		int tri = Integer.parseInt(s.substring(d+1));
-		
-		//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
-		//do objeto
-		
-		for(int i=0;i<ver;i++){
-			double[] pontos = Util.extract(reader.readLine());
-			Point p = new Point(pontos[0],pontos[1],pontos[2]);
-			p=Util.convert(V, N, U, C, p);
-			vertices.add(p);
-			//gerando as normais dos vertices
-			Point pn = p.multiply((1/Math.sqrt(p.dotProduct(p))));
-			Nvertices.add(pn);
-		}
-		for(int i=0;i<tri;i++){
-			double[] pontos = Util.extract(reader.readLine());
-			Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
-			triangulos.add(t);
-			//gerando as normais dos triangulos Passo 1
-			Triangulo tn = new Triangulo(Nvertices.get((int) (pontos[0]-1)),Nvertices.get((int) (pontos[1]-1)),Nvertices.get((int) (pontos[2]-1)));
-			Ntriangulos.add(tn);
-		}
-		
-		File Iluminacao = new File("Iluminacao.txt");
-		
-		if(!Iluminacao.exists()) {
-			Iluminacao.createNewFile();
-		}
-		
-		reader = new BufferedReader(new FileReader(Iluminacao));
-		
-		double[] luz = Util.extract(reader.readLine());
-		Pl = new Point(luz[0],luz[1],luz[2]);
-		ka = Double.parseDouble(reader.readLine());
-		double[] cor = Util.extract(reader.readLine());
-		Ia = new Point(cor[0],cor[1],cor[2]);
-		kd = Double.parseDouble(reader.readLine());
-		double[] dif = Util.extract(reader.readLine());
-		Od = new Point(dif[0],dif[1],dif[2]);
-		ks = Double.parseDouble(reader.readLine());
-		cor = Util.extract(reader.readLine());
-		Il = new Point(cor[0],cor[1],cor[2]);
-		n = Integer.parseInt(reader.readLine());
-		
+			BufferedReader reader = new BufferedReader(new FileReader(camera));
+
+			//Vetor C
+			//extract extrai 3 doubles de uma string e devolve um array com eles
+			double[] xyz = Util.extract(reader.readLine());
+			C = new Point(xyz[0],xyz[1],xyz[2]);
+
+			//Vetor N
+			xyz = Util.extract(reader.readLine());
+			N = new Point(xyz[0],xyz[1],xyz[2]);
+
+			//Vetor V
+			xyz = Util.extract(reader.readLine());
+			V = new Point(xyz[0],xyz[1],xyz[2]);
+
+			//d, hx, hy
+			xyz = Util.extract(reader.readLine());
+			d = xyz[0];
+			hx = xyz[1];
+			hy = xyz[2];
+
+			// ortogonalizando V e N
+
+			Vo = Util.ortogonalizar(V, N);
+			No = N.divide(Math.sqrt(N.dotProduct(N)));
+
+			// Normalizando V
+
+			Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
+
+			//gerando U 
+
+			U = No.produtoVetorial(Vn);
+
+			//abrindo objeto
+			File objeto = new File("objeto.byu");
+
+			if(!objeto.exists()) {
+				objeto.createNewFile();
+			}
+
+			reader = new BufferedReader(new FileReader(objeto));
+
+			String s = reader.readLine();
+			int d = s.indexOf(" ");
+			int ver = Integer.parseInt(s.substring(0,d));
+			int tri = Integer.parseInt(s.substring(d+1));
+
+			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
+			//do objeto
+
+			for(int i=0;i<ver;i++){
+				double[] pontos = Util.extract(reader.readLine());
+				Point p = new Point(pontos[0],pontos[1],pontos[2]);
+				p=Util.convert(V, N, U, C, p);
+				vertices.add(p);
+			}
+			
+			Point[] Nvertices = new Point[ver];
+			
+			for(int i=0;i<tri;i++){
+				double[] pontos = Util.extract(reader.readLine());
+				Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)));
+
+
+				//gerando normal do triangulo
+				Point w1 = t.v2.subtract(t.v1);
+				Point w2 = t.v3.subtract(t.v1);
+
+				Point nt = w1.produtoVetorial(w2);
+
+				triangulos.add(t);
+				Ntriangulos.add(nt);
+
+				//gerando normal parcial dos vertices deste triangulo
+				for(int j=0;j<3;j++){
+					if(	Nvertices[(int) (pontos[j]-1)]==null){
+						Nvertices[(int) (pontos[j]-1)]= nt;
+					}else{
+						Nvertices[(int) (pontos[j]-1)] = Nvertices[(int) (pontos[j]-1)].add(nt);
+					}
+				}
+
+			}
+
+			
+			File Iluminacao = new File("Iluminacao.txt");
+
+			if(!Iluminacao.exists()) {
+				Iluminacao.createNewFile();
+			}
+
+			reader = new BufferedReader(new FileReader(Iluminacao));
+
+			double[] luz = Util.extract(reader.readLine());
+			Pl = new Point(luz[0],luz[1],luz[2]);
+			ka = Double.parseDouble(reader.readLine());
+			double[] cor = Util.extract(reader.readLine());
+			Ia = new Point(cor[0],cor[1],cor[2]);
+			kd = Double.parseDouble(reader.readLine());
+			double[] dif = Util.extract(reader.readLine());
+			Od = new Point(dif[0],dif[1],dif[2]);
+			ks = Double.parseDouble(reader.readLine());
+			cor = Util.extract(reader.readLine());
+			Il = new Point(cor[0],cor[1],cor[2]);
+			n = Integer.parseInt(reader.readLine());
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
+
 		//fazer a mudança de coordenadas para o sistema de vista da posição
 		//da fonte de luz PL,
-					  
+
 		Pl = Util.convert(V, N, U, C, Pl);		
 
-		//gerando as normais dos triangulos Passo 2
-		
-		for(int i=0;i<Ntriangulos.size();i++){
-			
-			
-			
-			
-		}
-		
-		
-		
+
+
+		//gerando as normais dos triangulos 
+
+
+		//gerando as normais dos vertices
+
+
 		/*   
 		 *   
 		 *   
