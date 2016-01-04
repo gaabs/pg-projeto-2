@@ -67,9 +67,7 @@ public class guiPhong extends JFrame{
 		Collections.sort(t);
 		//sem penetrações de triangulo
 		for(int i=0;i<t2.size();i++){
-			if(t2.get(t.get(i).indice).indice==t.get(i).indice){
-				pinte(Util.scanLine(t2.get(t.get(i).indice)),t.get(i).indice);
-			}
+			pinte(Util.scanLine(t2.get(t.get(i).indice)),t.get(i).indice);
 		}	
 		JOptionPane.showMessageDialog(null, new ImageIcon(objeto)); 
 	}
@@ -80,14 +78,15 @@ public class guiPhong extends JFrame{
 			for(double j=ret[i][0].x;j<ret[i][1].x;j++){
 				Point2D temp = new Point2D(j, ret[i][0].y);
 				if(temp.x>=100 && temp.x<=ResX && temp.y>=100 && temp.y<=ResY ){ 
-					int rgb = Color.RED.getRGB();
+					System.out.println("x: "+temp.x+" y: "+ temp.y);
+					int rgb = Color.GREEN.getRGB();
 					objeto.setRGB((int)temp.x, (int)temp.y, rgb);  
 				}
 			}
 		}
 	}
 
-	private static void Phong(ArrayList<Triangulo> t, ArrayList<Triangulo2D> t2,double d,double hx,double hy){
+	private static void Phong(){
 		//scanLine3D(t,t2,d,hx,hy);
 		//resto de phong;
 	}

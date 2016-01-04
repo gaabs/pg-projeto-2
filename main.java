@@ -98,7 +98,7 @@ public class main {
 
 			// Normalizando V
 
-			Vn=Vo.multiply((1/Math.sqrt(Vo.dotProduct(Vo))));
+			Vn=Vo.divide(Math.sqrt(Vo.dotProduct(Vo)));
 
 			//gerando U 
 
@@ -106,10 +106,10 @@ public class main {
 
 			//Setando matriz alfa
 
-			Util.setAlfa(Vn, No, U);
+			Util.setAlfa(U,Vn, No);
 
 			//abrindo objeto
-			File objeto = new File("objetoTeste.byu");
+			File objeto = new File("objeto.byu");
 
 			if(!objeto.exists()) {
 				objeto.createNewFile();
@@ -159,7 +159,7 @@ public class main {
 
 						//Calcula-se o mapeamento dele para o frame
 
-						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1), d, hx, hy);
+						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
 						vertices2DMapeados.add(u);
 						
 
@@ -217,7 +217,6 @@ public class main {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				System.out.println("criei o frame");
 				guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
 				frame.setVisible(true);
 				guiGouraud frame2 = new guiGouraud(hx,hy);

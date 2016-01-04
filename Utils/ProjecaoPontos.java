@@ -17,7 +17,7 @@ public class ProjecaoPontos extends MatrixUtil{
 		return p2;
 	}
 	
-	public static Point2D map2Screen(Point2D p, double d, double hx, double hy){
+	public static Point2D map2Screen(Point2D p){
 		Point2D p2  = null;
 		p2 = new Point2D(0,0);
 		p2.x = ((p.x+1)/2)*guiPhong.ResX;

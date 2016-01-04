@@ -47,6 +47,7 @@ public class Util {
 	public static Point3D ortogonalizar(Point3D V, Point3D N){
 		Point3D V2 = V.subtract(N.multiply(V.dotProduct(N)/N.dotProduct(N)));
 
+		
 		return V2;
 	}
 
@@ -73,8 +74,8 @@ public class Util {
 
 		return resp;
 	}
-	
-	public static void setAlfa(Point3D V, Point3D N, Point3D U){
+
+	public static void setAlfa(Point3D U, Point3D V,Point3D N){
 		alfa=new double[3][3];
 
 		alfa[0][0]=U.x;
@@ -108,12 +109,13 @@ public class Util {
 	}
 
 	public static Point2D[][] scanLine(Triangulo2D t){
+		t.ordenarY();
 		Point2D[][] ret = null;
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point2D[tam][2];
-		
+
 		ret=aux(ret,t.v1,t.v2,t.v3);			
-		
+
 		return ret;
 	}
 
@@ -129,8 +131,13 @@ public class Util {
 		for(double i=L.y;i>=M.y;i--, k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
-			ret[k][0] = new Point2D(xTemp, i);				
-			ret[k][1] = new Point2D(xTemp2, i);
+			if(xTemp>xTemp2){
+				ret[k][0] = new Point2D(xTemp2, i);				
+				ret[k][1] = new Point2D(xTemp, i);
+			}else{
+				ret[k][0] = new Point2D(xTemp, i);				
+				ret[k][1] = new Point2D(xTemp2, i);
+			}
 		}
 
 
@@ -142,8 +149,13 @@ public class Util {
 		for(double i=M.y;i>=S.y;i--,k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
-			ret[k][0] = new Point2D(xTemp, i);				
-			ret[k][1] = new Point2D(xTemp2, i);
+			if(xTemp>xTemp2){
+				ret[k][0] = new Point2D(xTemp2, i);				
+				ret[k][1] = new Point2D(xTemp, i);
+			}else{
+				ret[k][0] = new Point2D(xTemp, i);				
+				ret[k][1] = new Point2D(xTemp2, i);
+			}
 		}
 
 
