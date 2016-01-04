@@ -62,6 +62,18 @@ public class Util {
 		return resp;
 	}
 
+	public static int[] extractInt(String s){
+		int[] resp = new int[3];
+		int e = s.indexOf(" ");
+		resp[0] = Integer.parseInt(s.substring(0, e));
+		String s2 = s.substring(e+1);
+		e = s2.indexOf(" ");
+		resp[1] = Integer.parseInt(s2.substring(0, e));
+		resp[2] = Integer.parseInt(s2.substring(e+1));
+
+		return resp;
+	}
+	
 	public static void setAlfa(Point3D V, Point3D N, Point3D U){
 		alfa=new double[3][3];
 

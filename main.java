@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
 
 import Utils.ProjecaoPontos;
 import Utils.Util;
@@ -33,6 +35,7 @@ public class main {
 	//hx ->
 	//hy ->
 	//d -> distância do centro da camera ao plano de projeção
+
 
 	static double hx,hy,d;
 
@@ -106,25 +109,26 @@ public class main {
 			Util.setAlfa(Vn, No, U);
 
 			//abrindo objeto
-			File objeto = new File("objeto.byu");
+			File objeto = new File("objetoTeste.byu");
 
 			if(!objeto.exists()) {
 				objeto.createNewFile();
 			}
 
+			Scanner s = new Scanner(objeto).useLocale(Locale.ENGLISH);
 			reader = new BufferedReader(new FileReader(objeto));
 
-			String s = reader.readLine();
-			int d = s.indexOf(" ");
-			int ver = Integer.parseInt(s.substring(0,d));
-			int tri = Integer.parseInt(s.substring(d+1));
+			int ver = s.nextInt();
+			int tri = s.nextInt();
 
 			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 			//do objeto
 
 			for(int i=0;i<ver;i++){
-				double[] pontos = Util.extract(reader.readLine());
-				Point3D p = new Point3D(pontos[0],pontos[1],pontos[2]);
+				double d1 = s.nextDouble();
+				double d2 = s.nextDouble();
+				double d3 = s.nextDouble();
+				Point3D p = new Point3D(d1,d2,d3);
 				p=Util.convert(C, p);
 				vertices.add(p);
 			}
@@ -132,9 +136,8 @@ public class main {
 			Point3D[] NverticesArray = new Point3D[ver];
 
 			for(int i=0;i<tri;i++){
-				double[] pontos = Util.extract(reader.readLine());
-				Triangulo t = new Triangulo(vertices.get((int) (pontos[0]-1)),vertices.get((int) (pontos[1]-1)),vertices.get((int) (pontos[2]-1)),i);
-
+				int[] pontos = {s.nextInt(),s.nextInt(),s.nextInt()};
+				Triangulo t = new Triangulo(vertices.get((pontos[0]-1)),vertices.get((pontos[1]-1)),vertices.get((pontos[2]-1)),i);
 
 				//gerando normal do triangulo
 				Point3D w1 = t.v2.subtract(t.v1);
@@ -148,44 +151,27 @@ public class main {
 				for(int j=0;j<3;j++){
 
 					//gerando normal parcial dos vertices deste triangulo	
-					if(	NverticesArray[(int) (pontos[j]-1)]==null){
-						NverticesArray[(int) (pontos[j]-1)]= nt;
+					if(	NverticesArray[(pontos[j]-1)]==null){
+						NverticesArray[(pontos[j]-1)]= nt;
 						//Para cada triângulo, calculam-se as projeções dos seus vértices,
 
-						vertices2D.add(ProjecaoPontos.projetar2D(vertices.get((int)pontos[i]-1), d, hx, hy));
+						vertices2D.add(ProjecaoPontos.projetar2D(vertices.get(pontos[j]-1), d, hx, hy));
 
 						//Calcula-se o mapeamento dele para o frame
 
 						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1), d, hx, hy);
-						if(u!=null){
-							//mapeado
-							vertices2DMapeados.add(u);
-						}
+						vertices2DMapeados.add(u);
+						
 
 					}else{
-						NverticesArray[(int) (pontos[j]-1)] = NverticesArray[(int) (pontos[j]-1)].add(nt);
+						NverticesArray[(pontos[j]-1)] = NverticesArray[(pontos[j]-1)].add(nt);
 					}
 				}
-
-				Triangulo2D t2 = new Triangulo2D(vertices2D.get((int) (pontos[0]-1)),vertices2D.get((int) (pontos[1]-1)),vertices2D.get((int) (pontos[2]-1)),i);
+				Triangulo2D t2 =  new Triangulo2D(vertices2DMapeados.get(vertices2DMapeados.size()-3),vertices2DMapeados.get(vertices2DMapeados.size()-2),vertices2DMapeados.get(vertices2DMapeados.size()-1),i);
 				t2.ordenarY();
 				triangulos.get(i).ordenarY();
-				boolean ok=false;
-				for(int k=0;k<vertices2DMapeados.size();k++){
-					if(t2.v1==vertices2DMapeados.get(k)){
-						ok=true;
-						break;
-					}else if(t2.v2==vertices2DMapeados.get(k)){
-						ok=true;
-						break;
-					}else if(t2.v3==vertices2DMapeados.get(k)){
-						ok=true;
-						break;
-					}
-				}
-				if(ok){
-					triangulos2D.add(t2);
-				}
+				triangulos2D.add(t2);
+				
 			}
 
 			//deixando as normais dos vertices em uma var global
@@ -231,7 +217,8 @@ public class main {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				guiPhong frame = new guiPhong(triangulos,triangulos2D);
+				System.out.println("criei o frame");
+				guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
 				frame.setVisible(true);
 				guiGouraud frame2 = new guiGouraud(hx,hy);
 				frame2.setVisible(true);
