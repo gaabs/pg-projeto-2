@@ -131,13 +131,26 @@ public class main {
 				Point3D p = new Point3D(d1,d2,d3);
 				p=Util.convert(C, p);
 				vertices.add(p);
+				
+				// calculam-se as projeções dos seus vértices,
+				vertices2D.add(ProjecaoPontos.projetar2D(p, d, hx, hy));
+
+				//Calcula-se o mapeamento dele para o frame
+
+				Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
+				vertices2DMapeados.add(u);
 			}
 
 			Point3D[] NverticesArray = new Point3D[ver];
 
 			for(int i=0;i<tri;i++){
-				int[] pontos = {s.nextInt(),s.nextInt(),s.nextInt()};
-				Triangulo t = new Triangulo(vertices.get((pontos[0]-1)),vertices.get((pontos[1]-1)),vertices.get((pontos[2]-1)),i);
+				int v1,v2,v3;
+				v1 = s.nextInt() -1;
+				v2 = s.nextInt() -1;
+				v3 = s.nextInt() -1;
+				int pontos[] = {v1,v2,v3};
+				
+				Triangulo t = new Triangulo(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
 
 				//gerando normal do triangulo
 				Point3D w1 = t.v2.subtract(t.v1);
@@ -153,21 +166,11 @@ public class main {
 					//gerando normal parcial dos vertices deste triangulo	
 					if(	NverticesArray[(pontos[j]-1)]==null){
 						NverticesArray[(pontos[j]-1)]= nt;
-						//Para cada triângulo, calculam-se as projeções dos seus vértices,
-
-						vertices2D.add(ProjecaoPontos.projetar2D(vertices.get(pontos[j]-1), d, hx, hy));
-
-						//Calcula-se o mapeamento dele para o frame
-
-						Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
-						vertices2DMapeados.add(u);
-						
-
 					}else{
 						NverticesArray[(pontos[j]-1)] = NverticesArray[(pontos[j]-1)].add(nt);
 					}
 				}
-				Triangulo2D t2 =  new Triangulo2D(vertices2DMapeados.get(vertices2DMapeados.size()-3),vertices2DMapeados.get(vertices2DMapeados.size()-2),vertices2DMapeados.get(vertices2DMapeados.size()-1),i);
+				Triangulo2D t2 =  new Triangulo2D(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
 				t2.ordenarY();
 				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);

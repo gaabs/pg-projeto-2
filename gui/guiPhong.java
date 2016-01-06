@@ -78,7 +78,7 @@ public class guiPhong extends JFrame{
 			for(double j=ret[i][0].x;j<ret[i][1].x;j++){
 				Point2D temp = new Point2D(j, ret[i][0].y);
 				if(temp.x>=100 && temp.x<=ResX && temp.y>=100 && temp.y<=ResY ){ 
-					System.out.println("x: "+temp.x+" y: "+ temp.y);
+					//System.out.println("x: "+temp.x+" y: "+ temp.y);
 					int rgb = Color.GREEN.getRGB();
 					objeto.setRGB((int)temp.x, (int)temp.y, rgb);  
 				}
