@@ -120,10 +120,11 @@ public class Util {
 	}
 
 	public static Point2D[][] aux(Point2D[][] ret, Point2D L, Point2D M, Point2D S){
-		double a = (M.x - L.x)/(M.y - L.y);
+		double a = (M.y - L.y)/(M.x - L.x);
 		double b = M.y - a*M.x;
-
-		double a2 = (S.x - L.x)/(S.y - L.y);
+		
+		
+		double a2 = (S.y - L.y)/(S.x - L.x);
 		double b2 = S.x - a*S.x;
 
 
@@ -162,13 +163,35 @@ public class Util {
 		return ret;
 	}
 
-	public static void main(String[] args) {
-		Point3D v1 = new Point3D(1,0,1);
-		Point3D v2 = new Point3D(0,1,1);
-		Point3D v3 = new Point3D(1,1,1);
-
-		gramSchmidt(v1,v2,v3);
-
+	public static double area(Point2D a, Point2D b, Point2D c) {
+	    double scalar;
+	    scalar = a.x*b.y + a.y*c.x + b.x*c.y - b.y*c.x - a.y*b.x - a.x*c.y;
+	    if (scalar > 0)
+	        scalar /= 2;
+	    else scalar /= -2;
+	    return scalar;
 	}
-
+	 
+	public static double[] findBary( Point2D a, Point2D b, Point2D c, Point2D p) {
+		double total, alfa, beta, gama;
+	    total = area(a, b, c);
+	    alfa = area(p, c, b) / total;
+	    beta = area(p, c, a) / total;
+	    gama = (double)1 - beta - alfa;
+	    double[] ret = {alfa, beta, gama};
+	    return ret;
+	}
+	 
+	public static void findBaryNormal( Triangulo tri, Point3D p, Point3D vetor) {
+//	    Point3D temp1;
+//	    double alfa, beta, gama;
+//	    findBary(points[tri.v1].point, points[tri.v2].point, points[tri.v3].point, p, alfa, beta, gama);
+//	    scalarMultiply(vertexNormal[tri.v1], alfa, vetor);
+//	    scalarMultiply(vertexNormal[tri.v2], beta, temp1);
+//	    addPoint(vetor, temp1, vetor);
+//	    scalarMultiply(vertexNormal[tri.v3], gama, temp1);
+//	    addPoint(vetor, temp1, vetor);
+//	    normalizeVector(vetor);
+	}
+	
 }

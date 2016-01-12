@@ -3,12 +3,21 @@ package Basicas;
 public class Point3D {
 	public double x,y,z;
 	public int indice;
+	public Point3D normal;
 	public Point3D(){}
 
 	public Point3D(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		normal=null;
+	}
+	
+	public Point3D(double x, double y, double z, Point3D normal) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.normal=normal;
 	}
 	
 	public Point3D copy(){
@@ -18,13 +27,21 @@ public class Point3D {
 
 	public Point3D add(Point3D p2){
 		double x,y,z;
-		Point3D p;
-		
+		Point3D p,n;
+
 		x = this.x + p2.x;
 		y = this.y + p2.y;
 		z = this.z + p2.z;
+		if(this.normal==null){
+			n=p2.normal;
+		}else if(p2.normal==null){
+			n=this.normal;
+		}else{
+			n = this.normal.add(p2.normal);
+		}
 		
-		p = new Point3D(x, y, z);
+		
+		p = new Point3D(x, y, z, n);
 		return p;
 	}
 
@@ -34,13 +51,19 @@ public class Point3D {
 
 	public Point3D multiply(double k){
 		double x,y,z;
-		Point3D p;
+		Point3D p,n;
 		
 		x = this.x * k;
 		y = this.y * k;
 		z = this.z * k;
 		
-		p = new Point3D(x, y, z);
+		if(this.normal==null){
+			n=null;
+		}else{
+			n = this.normal.multiply(k);
+		}
+		
+		p = new Point3D(x, y, z, n);
 		return p;
 	}
 	

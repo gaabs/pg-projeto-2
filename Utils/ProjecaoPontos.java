@@ -3,6 +3,7 @@ package Utils;
 import gui.guiPhong;
 import Basicas.Point3D;
 import Basicas.Point2D;
+import Basicas.Triangulo;
 
 public class ProjecaoPontos extends MatrixUtil{
 	
@@ -27,7 +28,11 @@ public class ProjecaoPontos extends MatrixUtil{
 	}
 	
 	public static boolean isOnWindow(Point2D p, double d, double hx, double hy){
-		return (p.x<=d/hx && p.x>=-d/hx && p.y<=d/hy && p.y>=-d/hy);
+		//fiz uma mudança de acordo com romero sobre a janela de visualização
+		return (p.x<=hx && p.x>=-hx && p.y<=hy && p.y>=-hy);
 	}
+	
+	
+	
 	
 }

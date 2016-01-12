@@ -46,7 +46,7 @@ public class guiPhong extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, ResX, ResY);
 
-		z_buffer = new double[ResX][ResY];
+		z_buffer = new double[ResX+1][ResY+1];
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
@@ -77,10 +77,23 @@ public class guiPhong extends JFrame{
 		for(int i=0;i<ret.length-1;i++){
 			for(double j=ret[i][0].x;j<ret[i][1].x;j++){
 				Point2D temp = new Point2D(j, ret[i][0].y);
-				if(temp.x>=100 && temp.x<=ResX && temp.y>=100 && temp.y<=ResY ){ 
+				if(temp.x>=100 && temp.x<=ResX && temp.y>=100 && temp.y<=ResY ){
+					double[] bary = Util.findBary(t2.get(indice).v1, t2.get(indice).v2, t2.get(indice).v3, temp);
+					Point3D v1 = t.get(indice).v1;
+					Point3D v2 = t.get(indice).v2;
+					Point3D v3 = t.get(indice).v3;
+					Point3D p = v1.multiply(bary[0]).add(v2.multiply(bary[1])).add(v3.multiply(bary[2])); 
+					int x1 = (int) Math.round(temp.x);
+					int y1 = (int) Math.round(temp.y);
 					//System.out.println("x: "+temp.x+" y: "+ temp.y);
-					int rgb = Color.GREEN.getRGB();
-					objeto.setRGB((int)temp.x, (int)temp.y, rgb);  
+					if(z_buffer[x1][y1]>p.z){
+						z_buffer[x1][y1] = p.z;
+						int rgb = Color.GREEN.getRGB();
+						objeto.setRGB((int)temp.x, (int)temp.y, rgb);	
+					}
+					
+					  
+
 				}
 			}
 		}

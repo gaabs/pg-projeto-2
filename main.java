@@ -53,7 +53,6 @@ public class main {
 	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 	static ArrayList<Triangulo2D> triangulos2D = new ArrayList<Triangulo2D>();
 	static ArrayList<Point3D> Ntriangulos = new ArrayList<Point3D>();
-	static ArrayList<Point3D> Nvertices = new ArrayList<Point3D>();
 	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
 	static ArrayList<Point2D> vertices2DMapeados = new ArrayList<Point2D>();
 
@@ -130,6 +129,7 @@ public class main {
 				double d3 = s.nextDouble();
 				Point3D p = new Point3D(d1,d2,d3);
 				p=Util.convert(C, p);
+				p.indice=i;
 				vertices.add(p);
 				
 				// calculam-se as projeções dos seus vértices,
@@ -180,7 +180,11 @@ public class main {
 			//deixando as normais dos vertices em uma var global
 
 			for(int i=0;i<ver;i++){
-				Nvertices.add(NverticesArray[i]);
+				if(vertices.get(i).normal==null){
+					vertices.get(i).normal=NverticesArray[i];
+				}else{
+					vertices.get(i).normal.add(NverticesArray[i]);
+				}
 			}
 
 
