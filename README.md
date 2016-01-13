@@ -39,6 +39,7 @@ O usuário, através de arquivos-texto ou interface gráfica, entra com dados do
 Eq de iluminação: N = a*N1 + b*N2 + c*N3
 
 Encontre L,R,V normalize
+https://drive.google.com/file/d/0B0KLPymSzrIQWGpfN3ptZU5mbWs/view
 
 ## Fotos ##
 https://goo.gl/photos/R9EoxUfP6e33dSZx8
