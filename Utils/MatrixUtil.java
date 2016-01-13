@@ -44,6 +44,8 @@ public class MatrixUtil {
 	public static double[][] multiplicar(double[][] matriz1, double[][] matriz2, int n, int D, int m){
 		double[][] matriz = new double[n][m];
 		double valor = 0;
+
+		
 		for(int i = 0; i < n; i++){
 			for(int j = 0; j < m; j++){
 				for(int k = 0; k < D; k++){

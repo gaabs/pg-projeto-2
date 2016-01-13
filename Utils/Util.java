@@ -95,6 +95,7 @@ public class Util {
 
 		double[][] m2 = new double [3][1];
 		p=p.subtract(C);
+		System.out.println("Ponto depois de subtraido por "+C+" fica: "+p.toString());
 		m2[0][0]=p.x;
 		m2[1][0]=p.y;
 		m2[2][0]=p.z;
@@ -125,19 +126,19 @@ public class Util {
 		
 		
 		double a2 = (S.y - L.y)/(S.x - L.x);
-		double b2 = S.x - a*S.x;
+		double b2 = S.y - a2*S.x;
 
 
 		int k=0;
-		for(double i=L.y;i>=M.y;i--, k++){
+		for(double i=M.y;i<=L.y;i++, k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point2D(xTemp2, i);				
-				ret[k][1] = new Point2D(xTemp, i);
+				ret[k][0] = new Point2D(Math.floor(xTemp2), i);				
+				ret[k][1] = new Point2D(Math.ceil(xTemp), i);
 			}else{
-				ret[k][0] = new Point2D(xTemp, i);				
-				ret[k][1] = new Point2D(xTemp2, i);
+				ret[k][0] = new Point2D(Math.floor(xTemp), i);				
+				ret[k][1] = new Point2D(Math.ceil(xTemp2), i);
 			}
 		}
 
@@ -147,15 +148,15 @@ public class Util {
 
 
 
-		for(double i=M.y;i>=S.y;i--,k++){
+		for(double i=S.y;i<=M.y;i++,k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point2D(xTemp2, i);				
-				ret[k][1] = new Point2D(xTemp, i);
+				ret[k][0] = new Point2D(Math.floor(xTemp2), i);				
+				ret[k][1] = new Point2D(Math.ceil(xTemp), i);
 			}else{
-				ret[k][0] = new Point2D(xTemp, i);				
-				ret[k][1] = new Point2D(xTemp2, i);
+				ret[k][0] = new Point2D(Math.floor(xTemp), i);				
+				ret[k][1] = new Point2D(Math.ceil(xTemp2), i);
 			}
 		}
 

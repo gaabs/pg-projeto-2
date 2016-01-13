@@ -58,7 +58,8 @@ public class main {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
+		
 		/*O seu sistema começa preparando a câmera,
 		 * 
 		 *  ler arquivo cfg*/
@@ -79,11 +80,13 @@ public class main {
 			//Vetor N
 			xyz = Util.extract(reader.readLine());
 			N = new Point3D(xyz[0],xyz[1],xyz[2]);
+			System.out.println("N entrada: " + N);
 
 			//Vetor V
 			xyz = Util.extract(reader.readLine());
 			V = new Point3D(xyz[0],xyz[1],xyz[2]);
-
+			System.out.println("V entrada: " + V);
+			
 			//d, hx, hy
 			xyz = Util.extract(reader.readLine());
 			d = xyz[0];
@@ -94,22 +97,28 @@ public class main {
 
 			Vo = Util.ortogonalizar(V, N);
 			No = N.divide(Math.sqrt(N.dotProduct(N)));
+			
+			System.out.println("N ortogonalizado: " + No);
 
 			// Normalizando V
 
 			Vn=Vo.normalize();
+			
+			System.out.println("V ortogonalizado e normalizado: " + Vn);
 
 			//gerando U 
 
 			U = No.produtoVetorial(Vn);
-
+			System.out.println("U gerado: " + U);
+			
+			
 			//Setando matriz alfa
 
 			Util.setAlfa(U,Vn, No);
 
 			//abrindo objeto
 			File objeto = new File("objeto.byu");
-
+			System.out.println("abrindo objeto");
 			if(!objeto.exists()) {
 				objeto.createNewFile();
 			}
@@ -122,24 +131,32 @@ public class main {
 
 			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 			//do objeto
+			
+			System.out.println();
 
 			for(int i=0;i<ver;i++){
 				double d1 = s.nextDouble();
 				double d2 = s.nextDouble();
 				double d3 = s.nextDouble();
 				Point3D p = new Point3D(d1,d2,d3);
+				System.out.println("lendo ponto "+i+": "+p.toString());
 				p=Util.convert(C, p);
+				System.out.println("lendo ponto "+i+" convertido para a Camera: "+p.toString());
 				p.indice=i;
 				vertices.add(p);
 				
 				// calculam-se as projeções dos seus vértices,
 				vertices2D.add(ProjecaoPontos.projetar2D(p, d, hx, hy));
-
+				System.out.println("lendo ponto "+i+" convertido em 2D: "+vertices2D.get(vertices2D.size()-1));
 				//Calcula-se o mapeamento dele para o frame
 
 				Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
 				vertices2DMapeados.add(u);
+				System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
+
 			}
+			
+			System.out.println();
 
 			Point3D[] NverticesArray = new Point3D[ver];
 
@@ -157,17 +174,19 @@ public class main {
 				Point3D w2 = t.v3.subtract(t.v1);
 
 				Point3D nt = w1.produtoVetorial(w2);
-
+				
+				//nt = nt.normalize();
+				
 				triangulos.add(t);
 				Ntriangulos.add(nt);
 
 				for(int j=0;j<3;j++){
 
 					//gerando normal parcial dos vertices deste triangulo	
-					if(	NverticesArray[(pontos[j]-1)]==null){
-						NverticesArray[(pontos[j]-1)]= nt;
+					if(	NverticesArray[(pontos[j])]==null){
+						NverticesArray[(pontos[j])]= nt;
 					}else{
-						NverticesArray[(pontos[j]-1)] = NverticesArray[(pontos[j]-1)].add(nt);
+						NverticesArray[(pontos[j])] = NverticesArray[(pontos[j])].add(nt);
 					}
 				}
 				Triangulo2D t2 =  new Triangulo2D(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
@@ -176,6 +195,8 @@ public class main {
 				triangulos2D.add(t2);
 				
 			}
+			
+			//System.exit(1);
 
 			//deixando as normais dos vertices em uma var global
 

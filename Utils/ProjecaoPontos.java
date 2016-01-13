@@ -1,5 +1,7 @@
 package Utils;
 
+import java.awt.Insets;
+
 import gui.guiPhong;
 import Basicas.Point3D;
 import Basicas.Point2D;
