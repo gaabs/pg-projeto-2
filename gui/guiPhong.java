@@ -97,7 +97,7 @@ public class guiPhong extends JFrame{
 						if(z_buffer[x1][y1]>p.z&&p.z>=0){
 							z_buffer[x1][y1] = p.z;
 							int rgb = Color.GREEN.getRGB();
-							objeto.setRGB((int)temp.x, (int)temp.y, rgb);	
+							objeto.setRGB(x1, y1, rgb);	
 						}
 
 

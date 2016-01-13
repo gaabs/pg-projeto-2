@@ -112,6 +112,8 @@ public class Util {
 	public static Point2D[][] scanLine(Triangulo2D t){
 		t.ordenarY();
 		Point2D[][] ret = null;
+		int minY = (int) Math.round(t.v3.y);
+		int maxY = (int) Math.round(t.v1.y);
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point2D[tam][2];
 
