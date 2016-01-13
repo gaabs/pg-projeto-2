@@ -36,12 +36,12 @@ public class guiPhong extends JFrame{
 	public static int ResY = 571;
 	public static double[][] z_buffer;
 	static BufferedImage objeto;
-	public static ArrayList<Triangulo3D> t;
-	public static ArrayList<Triangulo2D> t2;
+	public static ArrayList<Triangulo> t;
+	public static ArrayList<Triangulo> t2;
 	public static double d, hx, hy;
 	public static Insets insets; 
 
-	public guiPhong(ArrayList<Triangulo3D> t, ArrayList<Triangulo2D> t2,double d,double hx,double hy){
+	public guiPhong(ArrayList<Triangulo> t, ArrayList<Triangulo> t2,double d,double hx,double hy){
 
 		super("Phong");
 		
@@ -79,18 +79,18 @@ public class guiPhong extends JFrame{
 	}
 
 
-	private static void pinte(Point2D[][] ret, int indice, int k){
+	private static void pinte(Point[][] ret, int indice, int k){
 		for(int i=0;i<ret.length;i++){
 			if(ret[i][0]!=null){
 				System.out.println("x_min: "+ret[i][0].x+" x_max:"+ret[i][1].x+" y: "+ret[i][0].y);
 				for(double j=ret[i][0].x;j<=ret[i][1].x;j++){
-					Point2D temp = new Point2D(j, ret[i][0].y);
+					Point temp = new Point(j, ret[i][0].y);
 					if(temp.x>=0 && temp.x<=ResX && temp.y>=0 && temp.y<=ResY ){
 						double[] bary = Util.findBary(t2.get(indice).v1, t2.get(indice).v2, t2.get(indice).v3, temp);
-						Point3D v1 = t.get(indice).v1;
-						Point3D v2 = t.get(indice).v2;
-						Point3D v3 = t.get(indice).v3;
-						Point3D p = v1.multiply(bary[0]).add(v2.multiply(bary[1])).add(v3.multiply(bary[2])); 
+						Point v1 = t.get(indice).v1;
+						Point v2 = t.get(indice).v2;
+						Point v3 = t.get(indice).v3;
+						Point p = v1.multiply(bary[0]).add(v2.multiply(bary[1])).add(v3.multiply(bary[2])); 
 						int x1 = (int) Math.round(temp.x);
 						int y1 = (int) Math.round(temp.y);
 						//System.out.println("x: "+temp.x+" y: "+ temp.y);

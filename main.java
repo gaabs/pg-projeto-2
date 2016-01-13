@@ -11,10 +11,10 @@ import java.util.Scanner;
 
 import Utils.ProjecaoPontos;
 import Utils.Util;
-import Basicas.Point3D;
-import Basicas.Point2D;
-import Basicas.Triangulo3D;
-import Basicas.Triangulo2D;
+import Basicas.Point;
+import Basicas.Point;
+import Basicas.Triangulo;
+import Basicas.Triangulo;
 
 
 public class main {
@@ -30,7 +30,7 @@ public class main {
 	//Il -> cor da fonte de luz
 	//Od -> vetor difuso
 
-	static Point3D C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
+	static Point C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
 
 	//hx ->
 	//hy ->
@@ -49,12 +49,12 @@ public class main {
 
 	//OBJETO
 
-	static ArrayList<Point3D> vertices = new ArrayList<Point3D>();
-	static ArrayList<Triangulo3D> triangulos = new ArrayList<Triangulo3D>();
-	static ArrayList<Triangulo2D> triangulos2D = new ArrayList<Triangulo2D>();
-	static ArrayList<Point3D> Ntriangulos = new ArrayList<Point3D>();
-	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
-	static ArrayList<Point2D> vertices2DMapeados = new ArrayList<Point2D>();
+	static ArrayList<Point> vertices = new ArrayList<Point>();
+	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	static ArrayList<Triangulo> triangulos2D = new ArrayList<Triangulo>();
+	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
+	static ArrayList<Point> vertices2D = new ArrayList<Point>();
+	static ArrayList<Point> vertices2DMapeados = new ArrayList<Point>();
 
 
 
@@ -75,16 +75,16 @@ public class main {
 			//Vetor C
 			//extract extrai 3 doubles de uma string e devolve um array com eles
 			double[] xyz = Util.extract(reader.readLine());
-			C = new Point3D(xyz[0],xyz[1],xyz[2]);
+			C = new Point(xyz[0],xyz[1],xyz[2]);
 
 			//Vetor N
 			xyz = Util.extract(reader.readLine());
-			N = new Point3D(xyz[0],xyz[1],xyz[2]);
+			N = new Point(xyz[0],xyz[1],xyz[2]);
 			System.out.println("N entrada: " + N);
 
 			//Vetor V
 			xyz = Util.extract(reader.readLine());
-			V = new Point3D(xyz[0],xyz[1],xyz[2]);
+			V = new Point(xyz[0],xyz[1],xyz[2]);
 			System.out.println("V entrada: " + V);
 			
 			//d, hx, hy
@@ -138,7 +138,7 @@ public class main {
 				double d1 = s.nextDouble();
 				double d2 = s.nextDouble();
 				double d3 = s.nextDouble();
-				Point3D p = new Point3D(d1,d2,d3);
+				Point p = new Point(d1,d2,d3);
 				System.out.println("lendo ponto "+i+": "+p.toString());
 				p=Util.convert(C, p);
 				System.out.println("lendo ponto "+i+" convertido para a Camera: "+p.toString());
@@ -150,7 +150,7 @@ public class main {
 				System.out.println("lendo ponto "+i+" convertido em 2D: "+vertices2D.get(vertices2D.size()-1));
 				//Calcula-se o mapeamento dele para o frame
 
-				Point2D u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
+				Point u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
 				vertices2DMapeados.add(u);
 				System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
 
@@ -158,7 +158,7 @@ public class main {
 			
 			System.out.println();
 
-			Point3D[] NverticesArray = new Point3D[ver];
+			Point[] NverticesArray = new Point[ver];
 
 			for(int i=0;i<tri;i++){
 				int v1,v2,v3;
@@ -167,13 +167,13 @@ public class main {
 				v3 = s.nextInt() -1;
 				int pontos[] = {v1,v2,v3};
 				
-				Triangulo3D t = new Triangulo3D(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
+				Triangulo t = new Triangulo(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
 
 				//gerando normal do triangulo
-				Point3D w1 = t.v2.subtract(t.v1);
-				Point3D w2 = t.v3.subtract(t.v1);
+				Point w1 = t.v2.subtract(t.v1);
+				Point w2 = t.v3.subtract(t.v1);
 
-				Point3D nt = w1.produtoVetorial(w2);
+				Point nt = w1.produtoVetorial(w2);
 				
 				//nt = nt.normalize();
 				
@@ -189,7 +189,7 @@ public class main {
 						NverticesArray[(pontos[j])] = NverticesArray[(pontos[j])].add(nt);
 					}
 				}
-				Triangulo2D t2 =  new Triangulo2D(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
+				Triangulo t2 =  new Triangulo(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
 				t2.ordenarY();
 				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);
@@ -218,16 +218,16 @@ public class main {
 			reader = new BufferedReader(new FileReader(Iluminacao));
 
 			double[] luz = Util.extract(reader.readLine());
-			Pl = new Point3D(luz[0],luz[1],luz[2]);
+			Pl = new Point(luz[0],luz[1],luz[2]);
 			ka = Double.parseDouble(reader.readLine());
 			double[] cor = Util.extract(reader.readLine());
-			Ia = new Point3D(cor[0],cor[1],cor[2]);
+			Ia = new Point(cor[0],cor[1],cor[2]);
 			kd = Double.parseDouble(reader.readLine());
 			double[] dif = Util.extract(reader.readLine());
-			Od = new Point3D(dif[0],dif[1],dif[2]);
+			Od = new Point(dif[0],dif[1],dif[2]);
 			ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
-			Il = new Point3D(cor[0],cor[1],cor[2]);
+			Il = new Point(cor[0],cor[1],cor[2]);
 			n = Integer.parseInt(reader.readLine());
 
 		}catch(Exception e){

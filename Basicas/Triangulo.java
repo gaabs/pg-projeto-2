@@ -1,11 +1,11 @@
 package Basicas;
 
 
-public class Triangulo3D implements Comparable<Triangulo3D>{
-	public Point3D v1,v2,v3;
+public class Triangulo implements Comparable<Triangulo>{
+	public Point v1,v2,v3;
 	public int indice;
 	
-	public Triangulo3D(Point3D v1,Point3D v2,Point3D v3, int indice){
+	public Triangulo(Point v1,Point v2,Point v3, int indice){
 		this.v1=v1;
 		this.v2=v2;
 		this.v3=v3;
@@ -13,7 +13,7 @@ public class Triangulo3D implements Comparable<Triangulo3D>{
 	}
 
 	public void ordenarX(){
-		Point3D temp=null;
+		Point temp=null;
 		if(v1.x<v2.x){
 			temp=v1;
 			v1=v2;
@@ -29,12 +29,10 @@ public class Triangulo3D implements Comparable<Triangulo3D>{
 			v2=v3;
 			v3=temp;
 		}
-		
 	}
 
-
 	public void ordenarY(){
-		Point3D temp=null;
+		Point temp=null;
 		if(v1.y<v2.y){
 			temp=v1;
 			v1=v2;
@@ -53,7 +51,7 @@ public class Triangulo3D implements Comparable<Triangulo3D>{
 	}
 	
 	public void ordenarZ(){
-		Point3D temp=null;
+		Point temp=null;
 		if(v1.z<v2.z){
 			temp=v1;
 			v1=v2;
@@ -71,12 +69,11 @@ public class Triangulo3D implements Comparable<Triangulo3D>{
 		}
 	}
 
-	public int compareTo(Triangulo3D t) {
+	public int compareTo(Triangulo t) {
 		ordenarZ();
 		t.ordenarZ();
 		if(v1.z>t.v1.z) return 1;
 		if(v1.z<t.v1.z) return -1;
-		
 		
 		return 0;
 	}
