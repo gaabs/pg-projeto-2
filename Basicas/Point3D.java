@@ -25,6 +25,11 @@ public class Point3D {
 		return p;
 	}
 
+	public Point3D normalize(){
+		Point3D Vn=this.divide(Math.sqrt(this.dotProduct(this)));
+		return Vn;
+	}
+	
 	public Point3D add(Point3D p2){
 		double x,y,z;
 		Point3D p,n;

@@ -3,7 +3,7 @@ package Utils;
 import gui.guiPhong;
 import Basicas.Point3D;
 import Basicas.Point2D;
-import Basicas.Triangulo;
+import Basicas.Triangulo3D;
 
 public class ProjecaoPontos extends MatrixUtil{
 	

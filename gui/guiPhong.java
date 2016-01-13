@@ -35,11 +35,11 @@ public class guiPhong extends JFrame{
 	public static int ResY = 421;
 	public static double[][] z_buffer;
 	static BufferedImage objeto;
-	public static ArrayList<Triangulo> t;
+	public static ArrayList<Triangulo3D> t;
 	public static ArrayList<Triangulo2D> t2;
 	public static double d, hx, hy;
 
-	public guiPhong(ArrayList<Triangulo> t, ArrayList<Triangulo2D> t2,double d,double hx,double hy){
+	public guiPhong(ArrayList<Triangulo3D> t, ArrayList<Triangulo2D> t2,double d,double hx,double hy){
 
 		super("Phong");
 		objeto = new BufferedImage(ResX, ResY, BufferedImage.TYPE_INT_ARGB); 

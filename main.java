@@ -13,7 +13,7 @@ import Utils.ProjecaoPontos;
 import Utils.Util;
 import Basicas.Point3D;
 import Basicas.Point2D;
-import Basicas.Triangulo;
+import Basicas.Triangulo3D;
 import Basicas.Triangulo2D;
 
 
@@ -50,7 +50,7 @@ public class main {
 	//OBJETO
 
 	static ArrayList<Point3D> vertices = new ArrayList<Point3D>();
-	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	static ArrayList<Triangulo3D> triangulos = new ArrayList<Triangulo3D>();
 	static ArrayList<Triangulo2D> triangulos2D = new ArrayList<Triangulo2D>();
 	static ArrayList<Point3D> Ntriangulos = new ArrayList<Point3D>();
 	static ArrayList<Point2D> vertices2D = new ArrayList<Point2D>();
@@ -97,7 +97,7 @@ public class main {
 
 			// Normalizando V
 
-			Vn=Vo.divide(Math.sqrt(Vo.dotProduct(Vo)));
+			Vn=Vo.normalize();
 
 			//gerando U 
 
@@ -150,7 +150,7 @@ public class main {
 				v3 = s.nextInt() -1;
 				int pontos[] = {v1,v2,v3};
 				
-				Triangulo t = new Triangulo(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
+				Triangulo3D t = new Triangulo3D(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
 
 				//gerando normal do triangulo
 				Point3D w1 = t.v2.subtract(t.v1);

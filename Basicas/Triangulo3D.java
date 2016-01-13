@@ -1,11 +1,11 @@
 package Basicas;
 
 
-public class Triangulo implements Comparable<Triangulo>{
+public class Triangulo3D implements Comparable<Triangulo3D>{
 	public Point3D v1,v2,v3;
 	public int indice;
 	
-	public Triangulo(Point3D v1,Point3D v2,Point3D v3, int indice){
+	public Triangulo3D(Point3D v1,Point3D v2,Point3D v3, int indice){
 		this.v1=v1;
 		this.v2=v2;
 		this.v3=v3;
@@ -71,7 +71,7 @@ public class Triangulo implements Comparable<Triangulo>{
 		}
 	}
 
-	public int compareTo(Triangulo t) {
+	public int compareTo(Triangulo3D t) {
 		ordenarZ();
 		t.ordenarZ();
 		if(v1.z>t.v1.z) return 1;

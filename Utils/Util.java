@@ -1,7 +1,7 @@
 package Utils;
 import Basicas.Point2D;
 import Basicas.Point3D;
-import Basicas.Triangulo;
+import Basicas.Triangulo3D;
 import Basicas.Triangulo2D;
 
 
@@ -142,7 +142,7 @@ public class Util {
 		}
 
 
-		a = (M.x - S.x)/(M.y - S.y);
+		a = (M.y - S.y)/(M.x - S.x);
 		b = M.y - a*M.x;
 
 
@@ -182,16 +182,21 @@ public class Util {
 	    return ret;
 	}
 	 
-	public static void findBaryNormal( Triangulo tri, Point3D p, Point3D vetor) {
-//	    Point3D temp1;
-//	    double alfa, beta, gama;
-//	    findBary(points[tri.v1].point, points[tri.v2].point, points[tri.v3].point, p, alfa, beta, gama);
-//	    scalarMultiply(vertexNormal[tri.v1], alfa, vetor);
-//	    scalarMultiply(vertexNormal[tri.v2], beta, temp1);
-//	    addPoint(vetor, temp1, vetor);
-//	    scalarMultiply(vertexNormal[tri.v3], gama, temp1);
-//	    addPoint(vetor, temp1, vetor);
-//	    normalizeVector(vetor);
+	public static Point3D findBaryNormal(Triangulo2D tri2D, Triangulo3D tri3D, Point2D p) {
+	    Point3D temp1, vetor;
+	    double alfa, beta, gama;
+	    double bary[] = findBary(tri2D.v1, tri2D.v2, tri2D.v3, p);
+	    alfa = bary[0];
+	    beta = bary[1];
+	    gama = bary[2];
+	    vetor = tri3D.v1.normal.multiply(alfa);
+	    temp1 = tri3D.v2.normal.multiply(beta);
+	    vetor.add(temp1);
+	    temp1 = tri3D.v3.normal.multiply(gama);
+	    vetor.add(temp1);
+	    vetor=vetor.normalize();
+	    
+	    return vetor;
 	}
 	
 }
