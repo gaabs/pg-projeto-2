@@ -1,3 +1,5 @@
+import entidades.Point;
+import entidades.Triangulo;
 import gui.guiGouraud;
 import gui.guiPhong;
 
@@ -9,12 +11,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-import Utils.ProjecaoPontos;
-import Utils.Util;
-import Basicas.Point;
-import Basicas.Point;
-import Basicas.Triangulo;
-import Basicas.Triangulo;
+import util.ProjecaoPontos;
+import util.Util;
 
 
 public class main {

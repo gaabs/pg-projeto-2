@@ -1,4 +1,4 @@
-package Basicas;
+package entidades;
 
 
 public class Triangulo implements Comparable<Triangulo>{

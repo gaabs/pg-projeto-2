@@ -1,4 +1,4 @@
-package Utils;
+package util;
 public class MatrixUtil {
 	//Verifica se matriz é nula
 	public static boolean nula(double[][] matriz, int m, int n){
@@ -8,7 +8,6 @@ public class MatrixUtil {
 					return false;
 			}
 		}
-
 		return true;
 	}
 
@@ -41,7 +40,7 @@ public class MatrixUtil {
 	}
 
 	//Multiplica duas matrizes
-	public static double[][] multiplicar(double[][] matriz1, double[][] matriz2, int n, int D, int m){
+	public static double[][] multiplicarMatrizes(double[][] matriz1, double[][] matriz2, int n, int D, int m){
 		double[][] matriz = new double[n][m];
 		double valor = 0;
 

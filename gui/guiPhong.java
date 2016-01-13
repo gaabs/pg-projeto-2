@@ -18,16 +18,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import Basicas.*;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Utils.ProjecaoPontos;
-import Utils.Util;
+import util.ProjecaoPontos;
+import util.Util;
+import entidades.*;
 
 public class guiPhong extends JFrame{
 
@@ -82,7 +81,7 @@ public class guiPhong extends JFrame{
 	private static void pinte(Point[][] ret, int indice, int k){
 		for(int i=0;i<ret.length;i++){
 			if(ret[i][0]!=null){
-				System.out.println("x_min: "+ret[i][0].x+" x_max:"+ret[i][1].x+" y: "+ret[i][0].y);
+				//System.out.println("x_min: "+ret[i][0].x+" x_max:"+ret[i][1].x+" y: "+ret[i][0].y);
 				for(double j=ret[i][0].x;j<=ret[i][1].x;j++){
 					Point temp = new Point(j, ret[i][0].y);
 					if(temp.x>=0 && temp.x<=ResX && temp.y>=0 && temp.y<=ResY ){

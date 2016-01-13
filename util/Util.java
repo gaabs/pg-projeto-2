@@ -1,8 +1,6 @@
-package Utils;
-import Basicas.Point;
-import Basicas.Point;
-import Basicas.Triangulo;
-import Basicas.Triangulo;
+package util;
+import entidades.Point;
+import entidades.Triangulo;
 
 
 public class Util {
@@ -46,7 +44,6 @@ public class Util {
 
 	public static Point ortogonalizar(Point V, Point N){
 		Point V2 = V.subtract(N.multiply(V.dotProduct(N)/N.dotProduct(N)));
-
 		
 		return V2;
 	}
@@ -100,7 +97,7 @@ public class Util {
 		m2[1][0]=p.y;
 		m2[2][0]=p.z;
 
-		m = MatrixUtil.multiplicar(m, m2, 3, 3, 1);
+		m = multiplicarMatrizes(m, m2);
 
 		p.x=m[0][0];
 		p.y=m[1][0];
@@ -173,6 +170,29 @@ public class Util {
 	        scalar /= 2;
 	    else scalar /= -2;
 	    return scalar;
+	}
+	
+	public static double[][] multiplicarMatrizes(double[][] matriz1, double[][] matriz2){
+		double valor = 0;
+		
+		int linhas1,linhas2,colunas1,colunas2;
+		linhas1 = matriz1.length;
+		colunas1 = linhas2 = matriz2.length;
+		colunas2 = matriz2[0].length;
+		
+		double[][] matriz = new double[linhas1][colunas2];
+		
+		for(int i = 0; i < linhas1; i++){
+			for(int j = 0; j < colunas2; j++){
+				for(int k = 0; k < colunas1; k++){
+					valor += matriz1[i][k] * matriz2[k][j];
+				}
+				matriz[i][j] = valor;
+				valor = 0;
+			}
+		}
+
+		return matriz;
 	}
 	 
 	public static double[] findBary( Point a, Point b, Point c, Point p) {

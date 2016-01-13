@@ -1,4 +1,4 @@
-package Basicas;
+package entidades;
 
 public class Point {
 	public double x,y,z;

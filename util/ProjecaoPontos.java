@@ -1,11 +1,10 @@
-package Utils;
+package util;
 
 import java.awt.Insets;
 
+import entidades.Point;
+import entidades.Triangulo;
 import gui.guiPhong;
-import Basicas.Point;
-import Basicas.Point;
-import Basicas.Triangulo;
 
 public class ProjecaoPontos extends MatrixUtil{
 	
