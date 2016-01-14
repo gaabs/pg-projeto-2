@@ -1,7 +1,6 @@
+package gui;
 import entidades.Point;
 import entidades.Triangulo;
-import gui.guiGouraud;
-import gui.guiPhong;
 
 import java.awt.EventQueue;
 import java.io.BufferedReader;
@@ -15,49 +14,52 @@ import util.ProjecaoPontos;
 import util.Util;
 
 
-public class main {
-	//CAMERA
-
-	//C->foco da camera
-	//N->vetor no eixo Z
-	//V->?
-	//quando tem um 'o' junto da variável é pq é ortogonalizado
-	//quando tem um 'n' junto da variável é pq é normalizado(ou ortonormalizado)
-	//Pl -> Coordenadas do ponto de luz
-	//Ia -> vetor cor ambiental
-	//Il -> cor da fonte de luz
-	//Od -> vetor difuso
-
-	static Point C,N,V,Vo,No,Vn,U,Pl,Ia,Il,Od;//vetores
-
-	//hx ->
-	//hy ->
-	//d -> distância do centro da camera ao plano de projeção
-
-
-	static double hx,hy,d;
-
-	//ILUMINAÇÃO
-
-	//ka -> reflexao ambiental
-	//kd -> constante difusa
-	//ks -> coeficiente especular
-	//n  -> constante de rugosidade
-	static double ka,kd,ks,n;
+public class Main {
 
 	//OBJETO
 
-	static ArrayList<Point> vertices = new ArrayList<Point>();
-	static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
-	static ArrayList<Triangulo> triangulos2D = new ArrayList<Triangulo>();
-	static ArrayList<Point> Ntriangulos = new ArrayList<Point>();
-	static ArrayList<Point> vertices2D = new ArrayList<Point>();
-	static ArrayList<Point> vertices2DMapeados = new ArrayList<Point>();
+	static long tempo = System.nanoTime();
 
 
+	public static void main(String[] args) {
+		//CAMERA
 
-	public static void main(String[] args) {	
+		Point C;
+		Point N;
+		Point V;
+		Point Vo,No,Vn,U; 
+		Point Pl;
+		Point Ia;
+		Point Il;
+		Point Od;
 		
+		//C->foco da camera
+		//N->vetor no eixo Z
+		//V->?
+		//quando tem um 'o' junto da variável é pq é ortogonalizado
+		//quando tem um 'n' junto da variável é pq é normalizado(ou ortonormalizado)
+		//Pl -> Coordenadas do ponto de luz
+		//Ia -> vetor cor ambiental
+		//Il -> cor da fonte de luz
+		//Od -> vetor difuso
+
+		double hx;
+		double hy;
+		double d; // distância do centro da camera ao plano de projeção		
+		
+		//ILUMINAÇÃO
+		double ka; // reflexao ambiental
+		double kd; // constante difusa
+		double ks; // coeficiente especular
+		double n; // constante de rugosidade
+		
+		ArrayList<Point> vertices = new ArrayList<Point>();
+		ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+		ArrayList<Triangulo> triangulos2D = new ArrayList<Triangulo>();
+		ArrayList<Point> Ntriangulos = new ArrayList<Point>();
+		ArrayList<Point> vertices2D = new ArrayList<Point>();
+		ArrayList<Point> vertices2DMapeados = new ArrayList<Point>();
+
 		/*O seu sistema começa preparando a câmera,
 		 * 
 		 *  ler arquivo cfg*/
@@ -78,13 +80,13 @@ public class main {
 			//Vetor N
 			xyz = Util.extract(reader.readLine());
 			N = new Point(xyz[0],xyz[1],xyz[2]);
-			System.out.println("N entrada: " + N);
+			//System.out.println("N entrada: " + N);
 
 			//Vetor V
 			xyz = Util.extract(reader.readLine());
 			V = new Point(xyz[0],xyz[1],xyz[2]);
-			System.out.println("V entrada: " + V);
-			
+			//System.out.println("V entrada: " + V);
+
 			//d, hx, hy
 			xyz = Util.extract(reader.readLine());
 			d = xyz[0];
@@ -95,21 +97,21 @@ public class main {
 
 			Vo = Util.ortogonalizar(V, N);
 			No = N.divide(Math.sqrt(N.dotProduct(N)));
-			
-			System.out.println("N ortogonalizado: " + No);
+
+			//System.out.println("N ortogonalizado: " + No);
 
 			// Normalizando V
 
 			Vn=Vo.normalize();
-			
-			System.out.println("V ortogonalizado e normalizado: " + Vn);
+
+			//System.out.println("V ortogonalizado e normalizado: " + Vn);
 
 			//gerando U 
 
 			U = No.produtoVetorial(Vn);
 			System.out.println("U gerado: " + U);
-			
-			
+
+
 			//Setando matriz alfa
 
 			Util.setAlfa(U,Vn, No);
@@ -121,7 +123,10 @@ public class main {
 				objeto.createNewFile();
 			}
 
-			Scanner s = new Scanner(objeto).useLocale(Locale.ENGLISH);
+			Scanner s = new Scanner(objeto);
+			s.useLocale(Locale.ENGLISH);
+
+			reader.close();
 			reader = new BufferedReader(new FileReader(objeto));
 
 			int ver = s.nextInt();
@@ -129,7 +134,7 @@ public class main {
 
 			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 			//do objeto
-			
+
 			System.out.println();
 
 			for(int i=0;i<ver;i++){
@@ -137,24 +142,24 @@ public class main {
 				double d2 = s.nextDouble();
 				double d3 = s.nextDouble();
 				Point p = new Point(d1,d2,d3);
-				System.out.println("lendo ponto "+i+": "+p.toString());
+				//System.out.println("lendo ponto "+i+": "+p.toString());
 				p=Util.convert(C, p);
-				System.out.println("lendo ponto "+i+" convertido para a Camera: "+p.toString());
+				//System.out.println("lendo ponto "+i+" convertido para a Camera: "+p.toString());
 				p.indice=i;
 				vertices.add(p);
-				
+
 				// calculam-se as projeções dos seus vértices,
 				vertices2D.add(ProjecaoPontos.projetar2D(p, d, hx, hy));
-				System.out.println("lendo ponto "+i+" convertido em 2D: "+vertices2D.get(vertices2D.size()-1));
+				//System.out.println("lendo ponto "+i+" convertido em 2D: "+vertices2D.get(vertices2D.size()-1));
 				//Calcula-se o mapeamento dele para o frame
 
 				Point u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
 				vertices2DMapeados.add(u);
-				System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
+				//System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
 
 			}
-			
-			System.out.println();
+
+			//System.out.println();
 
 			Point[] NverticesArray = new Point[ver];
 
@@ -164,7 +169,7 @@ public class main {
 				v2 = s.nextInt() -1;
 				v3 = s.nextInt() -1;
 				int pontos[] = {v1,v2,v3};
-				
+
 				Triangulo t = new Triangulo(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
 
 				//gerando normal do triangulo
@@ -172,9 +177,9 @@ public class main {
 				Point w2 = t.v3.subtract(t.v1);
 
 				Point nt = w1.produtoVetorial(w2);
-				
+
 				//nt = nt.normalize();
-				
+
 				triangulos.add(t);
 				Ntriangulos.add(nt);
 
@@ -191,9 +196,9 @@ public class main {
 				t2.ordenarY();
 				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);
-				
 			}
-			
+			s.close();
+
 			//System.exit(1);
 
 			//deixando as normais dos vertices em uma var global
@@ -213,6 +218,7 @@ public class main {
 				Iluminacao.createNewFile();
 			}
 
+			reader.close();
 			reader = new BufferedReader(new FileReader(Iluminacao));
 
 			double[] luz = Util.extract(reader.readLine());
@@ -227,28 +233,26 @@ public class main {
 			cor = Util.extract(reader.readLine());
 			Il = new Point(cor[0],cor[1],cor[2]);
 			n = Integer.parseInt(reader.readLine());
+			reader.close();
+
+			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);
+			
+			//fazer a mudança de coordenadas para o sistema de vista da posição
+			//da fonte de luz PL,
+
+			Pl = Util.convert(C, Pl);		
+
+			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
+			//Outra para Phong.
+			guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
+
+			frame.setVisible(true);
+			guiGouraud frame2 = new guiGouraud(hx,hy);
+			frame2.setVisible(true);
 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
-		//fazer a mudança de coordenadas para o sistema de vista da posição
-		//da fonte de luz PL,
-
-		Pl = Util.convert(C, Pl);		
-
-
-		//Cria-se uma Janela para o objeto apresentado por Gouraud e 
-		//Outra para Phong.
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
-				frame.setVisible(true);
-				guiGouraud frame2 = new guiGouraud(hx,hy);
-				frame2.setVisible(true);
-			}
-		});
 
 
 

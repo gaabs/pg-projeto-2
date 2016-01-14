@@ -5,7 +5,6 @@ public class Point {
 	public int indice;
 	public Point normal;
 	public boolean is3D;
-	
 	public Point(){}
 
 	// Construtor 3D

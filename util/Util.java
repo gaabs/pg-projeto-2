@@ -92,7 +92,7 @@ public class Util {
 
 		double[][] m2 = new double [3][1];
 		p=p.subtract(C);
-		System.out.println("Ponto depois de subtraido por "+C+" fica: "+p.toString());
+		//System.out.println("Ponto depois de subtraido por "+C+" fica: "+p.toString());
 		m2[0][0]=p.x;
 		m2[1][0]=p.y;
 		m2[2][0]=p.z;
@@ -162,15 +162,6 @@ public class Util {
 
 		return ret;
 	}
-
-	public static double area(Point a, Point b, Point c) {
-	    double scalar;
-	    scalar = a.x*b.y + a.y*c.x + b.x*c.y - b.y*c.x - a.y*b.x - a.x*c.y;
-	    if (scalar > 0)
-	        scalar /= 2;
-	    else scalar /= -2;
-	    return scalar;
-	}
 	
 	public static double[][] multiplicarMatrizes(double[][] matriz1, double[][] matriz2){
 		double valor = 0;
@@ -195,20 +186,10 @@ public class Util {
 		return matriz;
 	}
 	 
-	public static double[] findBary( Point a, Point b, Point c, Point p) {
-		double total, alfa, beta, gama;
-	    total = area(a, b, c);
-	    alfa = area(p, c, b) / total;
-	    beta = area(p, c, a) / total;
-	    gama = (double)1 - beta - alfa;
-	    double[] ret = {alfa, beta, gama};
-	    return ret;
-	}
-	 
 	public static Point findBaryNormal(Triangulo tri2D, Triangulo tri3D, Point p) {
 	    Point temp1, vetor;
 	    double alfa, beta, gama;
-	    double bary[] = findBary(tri2D.v1, tri2D.v2, tri2D.v3, p);
+	    double bary[] = tri2D.getBaryCoefs(p);
 	    alfa = bary[0];
 	    beta = bary[1];
 	    gama = bary[2];
