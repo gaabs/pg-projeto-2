@@ -68,7 +68,7 @@ public class Util {
 		e = s2.indexOf(" ");
 		resp[1] = Integer.parseInt(s2.substring(0, e));
 		resp[2] = Integer.parseInt(s2.substring(e+1));
-
+		
 		return resp;
 	}
 
@@ -109,8 +109,6 @@ public class Util {
 	public static Point[][] scanLine(Triangulo t){
 		t.ordenarY();
 		Point[][] ret = null;
-		int minY = (int) Math.round(t.v3.y);
-		int maxY = (int) Math.round(t.v1.y);
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point[tam][2];
 
@@ -162,13 +160,13 @@ public class Util {
 
 		return ret;
 	}
-	
+	//metodo inutil? n ja tem um em MatrixUtil.m
 	public static double[][] multiplicarMatrizes(double[][] matriz1, double[][] matriz2){
 		double valor = 0;
-		
-		int linhas1,linhas2,colunas1,colunas2;
+		//tirei linhas 2... era inutil
+		int linhas1,colunas1,colunas2;
 		linhas1 = matriz1.length;
-		colunas1 = linhas2 = matriz2.length;
+		colunas1  = matriz2.length;
 		colunas2 = matriz2[0].length;
 		
 		double[][] matriz = new double[linhas1][colunas2];
