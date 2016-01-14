@@ -49,3 +49,6 @@ https://www.facebook.com/l.php?u=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DjWa
 
 ## phong em c++  ##
 http://www.ozone3d.net/tutorials/glsl_lighting_phong.php
+
+## Doc ##
+https://docs.google.com/a/cin.ufpe.br/document/d/1eoEjO1kXH-ojvuYePSWOWiahZ0JDqbQUIh9cams9nyw/edit?usp=drive_web
