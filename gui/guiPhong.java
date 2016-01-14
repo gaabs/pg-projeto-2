@@ -38,7 +38,7 @@ public class guiPhong extends JFrame{
 	public ArrayList<Triangulo> t2;
 	public double d, hx, hy;
 	
-	public static int ResX = 794; // isso não devia ser estático
+	public static int ResX = 794; // Gio: isso não devia ser estático; Maia: Porquê?
 	public static int ResY = 571;
 
 	public guiPhong(ArrayList<Triangulo> t, ArrayList<Triangulo> t2,double d,double hx,double hy){
@@ -69,7 +69,7 @@ public class guiPhong extends JFrame{
 		this.add(panel);
 		
 		panel.add(new JLabel(new ImageIcon(objeto)));
-		pack();
+		pack();//não conheço esse metodo
 		//JOptionPane.showMessageDialog(null, new ImageIcon(objeto));
 	}
 
@@ -89,16 +89,16 @@ public class guiPhong extends JFrame{
 			if(intervalos[i][0]!=null){
 				//System.out.println("x_min: "+ret[i][0].x+" x_max:"+ret[i][1].x+" y: "+ret[i][0].y);
 				for(double j=intervalos[i][0].x;j<=intervalos[i][1].x;j++){
-					Point temp = new Point(j, intervalos[i][0].y);
-					if(temp.x>=0 && temp.x<=ResX && temp.y>=0 && temp.y<=ResY ){
-						double[] bary = t2.get(indice).getBaryCoefs(temp);
+					Point pixel = new Point(j, intervalos[i][0].y);
+					if(pixel.x>=0 && pixel.x<=ResX && pixel.y>=0 && pixel.y<=ResY ){
+						double[] bary = t2.get(indice).getBaryCoefs(pixel);
 						Point v1 = t.get(indice).v1;
 						Point v2 = t.get(indice).v2;
 						Point v3 = t.get(indice).v3;
 						Point p = v1.multiply(bary[0]).add(v2.multiply(bary[1])).add(v3.multiply(bary[2])); 
-						int x1 = (int) Math.round(temp.x);
-						int y1 = (int) Math.round(temp.y);
-						//System.out.println("x: "+temp.x+" y: "+ temp.y);
+						int x1 = (int) Math.round(pixel.x);
+						int y1 = (int) Math.round(pixel.y);
+						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
 							z_buffer[x1][y1] = p.z;
 							int rgb = Color.GREEN.getRGB();

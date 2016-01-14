@@ -1,9 +1,6 @@
 package util;
 
-import java.awt.Insets;
-
 import entidades.Point;
-import entidades.Triangulo;
 import gui.guiPhong;
 
 public class ProjecaoPontos extends MatrixUtil{
@@ -28,6 +25,7 @@ public class ProjecaoPontos extends MatrixUtil{
 		return p2;
 	}
 	
+	//metodo inutil VV
 	public static boolean isOnWindow(Point p, double d, double hx, double hy){
 		//fiz uma mudança de acordo com romero sobre a janela de visualização
 		return (p.x<=hx && p.x>=-hx && p.y<=hy && p.y>=-hy);

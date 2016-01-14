@@ -93,6 +93,8 @@ public class Main {
 			hx = xyz[1];
 			hy = xyz[2];
 
+			//processo gramSchmidt:
+			
 			// ortogonalizando V e N
 
 			Vo = Util.ortogonalizar(V, N);
@@ -117,8 +119,8 @@ public class Main {
 			Util.setAlfa(U,Vn, No);
 
 			//abrindo objeto
+			//System.out.println("abrindo objeto");
 			File objeto = new File("objeto.byu");
-			System.out.println("abrindo objeto");
 			if(!objeto.exists()) {
 				objeto.createNewFile();
 			}
@@ -134,8 +136,6 @@ public class Main {
 
 			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 			//do objeto
-
-			System.out.println();
 
 			for(int i=0;i<ver;i++){
 				double d1 = s.nextDouble();
@@ -159,10 +159,7 @@ public class Main {
 
 			}
 
-			//System.out.println();
-
-			Point[] NverticesArray = new Point[ver];
-
+			//lendo triangulos
 			for(int i=0;i<tri;i++){
 				int v1,v2,v3;
 				v1 = s.nextInt() -1;
@@ -186,10 +183,10 @@ public class Main {
 				for(int j=0;j<3;j++){
 
 					//gerando normal parcial dos vertices deste triangulo	
-					if(	NverticesArray[(pontos[j])]==null){
-						NverticesArray[(pontos[j])]= nt;
+					if(	vertices.get(pontos[j]).normal==null){
+						vertices.get(pontos[j]).normal= nt;
 					}else{
-						NverticesArray[(pontos[j])] = NverticesArray[(pontos[j])].add(nt);
+						vertices.get(pontos[j]).normal = vertices.get(pontos[j]).normal.add(nt);
 					}
 				}
 				Triangulo t2 =  new Triangulo(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
@@ -201,18 +198,7 @@ public class Main {
 
 			//System.exit(1);
 
-			//deixando as normais dos vertices em uma var global
-
-			for(int i=0;i<ver;i++){
-				if(vertices.get(i).normal==null){
-					vertices.get(i).normal=NverticesArray[i];
-				}else{
-					vertices.get(i).normal.add(NverticesArray[i]);
-				}
-			}
-
-
-			File Iluminacao = new File("Iluminacao.txt");
+				File Iluminacao = new File("Iluminacao.txt");
 
 			if(!Iluminacao.exists()) {
 				Iluminacao.createNewFile();
