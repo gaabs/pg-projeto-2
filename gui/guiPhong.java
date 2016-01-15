@@ -37,7 +37,6 @@ public class guiPhong extends JFrame{
 	public ArrayList<Triangulo> t;
 	public ArrayList<Triangulo> t2;
 	public double d, hx, hy;
-	
 	public static int ResX = 794; // Gio: isso não devia ser estático; Maia: Porquê?
 	public static int ResY = 571;
 
@@ -101,6 +100,18 @@ public class guiPhong extends JFrame{
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
 							z_buffer[x1][y1] = p.z;
+							Iluminacao.Ia=Iluminacao.Ia.normalize();
+							Iluminacao.Il=Iluminacao.Il.normalize();
+							Iluminacao.Od=Iluminacao.Od.normalize();
+							p=p.normalize();
+							p.normal=p.normal.normalize();
+							Point L = p.subtract(Iluminacao.Pl).normalize();
+							Point Id = Iluminacao.Il.multiply(L.dotProduct(p.normal)*Iluminacao.kd*Iluminacao.Od.norma());							
+							Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
+							Point lambda = Iluminacao.Ia.multiply(Iluminacao.ka).add(Iluminacao.Od.multiply(Iluminacao.kd*L.dotProduct(p.normal)+Iluminacao.ks*R.dotProduct(Camera.V.normalize()))).normalize();
+							if(lambda.x>255||lambda.y>255||lambda.z>255||lambda.x<0||lambda.y<0||lambda.z<0){
+								System.err.println("deu merda");
+							}
 							int rgb = Color.GREEN.getRGB();
 							objeto.setRGB(x1, y1, rgb);	
 						}

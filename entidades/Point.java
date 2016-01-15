@@ -32,10 +32,14 @@ public class Point {
 	}
 
 	public Point normalize(){
-		Point Vn=this.divide(Math.sqrt(this.dotProduct(this)));
+		Point Vn=this.divide(this.norma());
 		return Vn;
 	}
 
+	public double norma(){
+		return Math.sqrt(this.dotProduct(this));
+	}
+	
 	public Point add(Point p2){
 		double x,y,z;
 		Point p,n;

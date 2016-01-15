@@ -1,6 +1,5 @@
 package gui;
-import entidades.Point;
-import entidades.Triangulo;
+import entidades.*;
 
 import java.awt.EventQueue;
 import java.io.BufferedReader;
@@ -24,10 +23,6 @@ public class Main {
 	public static void main(String[] args) {
 		//CAMERA
 
-		Point C;
-		Point N;
-		Point V;
-		Point Vo,No,Vn,U; 
 		Point Pl;
 		Point Ia;
 		Point Il;
@@ -75,16 +70,16 @@ public class Main {
 			//Vetor C
 			//extract extrai 3 doubles de uma string e devolve um array com eles
 			double[] xyz = Util.extract(reader.readLine());
-			C = new Point(xyz[0],xyz[1],xyz[2]);
+			Camera.C = new Point(xyz[0],xyz[1],xyz[2]);
 
 			//Vetor N
 			xyz = Util.extract(reader.readLine());
-			N = new Point(xyz[0],xyz[1],xyz[2]);
+			Camera.N = new Point(xyz[0],xyz[1],xyz[2]);
 			//System.out.println("N entrada: " + N);
 
 			//Vetor V
 			xyz = Util.extract(reader.readLine());
-			V = new Point(xyz[0],xyz[1],xyz[2]);
+			Camera.V = new Point(xyz[0],xyz[1],xyz[2]);
 			//System.out.println("V entrada: " + V);
 
 			//d, hx, hy
@@ -97,26 +92,26 @@ public class Main {
 			
 			// ortogonalizando V e N
 
-			Vo = Util.ortogonalizar(V, N);
-			No = N.divide(Math.sqrt(N.dotProduct(N)));
+			Camera.Vo = Util.ortogonalizar(Camera.V, Camera.N);
+			Camera.No = Camera.N.divide(Math.sqrt(Camera.N.dotProduct(Camera.N)));
 
 			//System.out.println("N ortogonalizado: " + No);
 
 			// Normalizando V
 
-			Vn=Vo.normalize();
+			Camera.Vn=Camera.Vo.normalize();
 
 			//System.out.println("V ortogonalizado e normalizado: " + Vn);
 
 			//gerando U 
 
-			U = No.produtoVetorial(Vn);
-			System.out.println("U gerado: " + U);
+			Camera.U = Camera.No.produtoVetorial(Camera.Vn);
+			System.out.println("U gerado: " + Camera.U);
 
 
 			//Setando matriz alfa
 
-			Util.setAlfa(U,Vn, No);
+			Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
 
 			//abrindo objeto
 			//System.out.println("abrindo objeto");
@@ -143,7 +138,7 @@ public class Main {
 				double d3 = s.nextDouble();
 				Point p = new Point(d1,d2,d3);
 				//System.out.println("lendo ponto "+i+": "+p.toString());
-				p=Util.convert(C, p);
+				p=Util.convert(Camera.C, p);
 				//System.out.println("lendo ponto "+i+" convertido para a Camera: "+p.toString());
 				p.indice=i;
 				vertices.add(p);
@@ -198,27 +193,27 @@ public class Main {
 
 			//System.exit(1);
 
-				File Iluminacao = new File("Iluminacao.txt");
+				File iluminacaoEntrada = new File("Iluminacao.txt");
 
-			if(!Iluminacao.exists()) {
-				Iluminacao.createNewFile();
+			if(!iluminacaoEntrada.exists()) {
+				iluminacaoEntrada.createNewFile();
 			}
 
 			reader.close();
-			reader = new BufferedReader(new FileReader(Iluminacao));
+			reader = new BufferedReader(new FileReader(iluminacaoEntrada));
 
 			double[] luz = Util.extract(reader.readLine());
-			Pl = new Point(luz[0],luz[1],luz[2]);
-			ka = Double.parseDouble(reader.readLine());
+			Iluminacao.Pl = new Point(luz[0],luz[1],luz[2]);
+			Iluminacao.ka = Double.parseDouble(reader.readLine());
 			double[] cor = Util.extract(reader.readLine());
-			Ia = new Point(cor[0],cor[1],cor[2]);
-			kd = Double.parseDouble(reader.readLine());
+			Iluminacao.Ia = new Point(cor[0],cor[1],cor[2]);
+			Iluminacao.kd = Double.parseDouble(reader.readLine());
 			double[] dif = Util.extract(reader.readLine());
-			Od = new Point(dif[0],dif[1],dif[2]);
-			ks = Double.parseDouble(reader.readLine());
+			Iluminacao.Od = new Point(dif[0],dif[1],dif[2]);
+			Iluminacao.ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
-			Il = new Point(cor[0],cor[1],cor[2]);
-			n = Integer.parseInt(reader.readLine());
+			Iluminacao.Il = new Point(cor[0],cor[1],cor[2]);
+			Iluminacao.n = Integer.parseInt(reader.readLine());
 			reader.close();
 
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);
@@ -226,7 +221,7 @@ public class Main {
 			//fazer a mudança de coordenadas para o sistema de vista da posição
 			//da fonte de luz PL,
 
-			Pl = Util.convert(C, Pl);		
+			Iluminacao.Pl = Util.convert(Camera.C, Iluminacao.Pl);		
 
 			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 			//Outra para Phong.
