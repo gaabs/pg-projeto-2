@@ -106,8 +106,8 @@ public class Util {
 		return p;
 	}
 
-	public static Point[][] scanLine(Triangulo t){
-		t.ordenarY();
+	public static Point[][] scanLine(Triangulo ti){
+		Triangulo t = ti.ordenarY();
 		Point[][] ret = null;
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point[tam][2];

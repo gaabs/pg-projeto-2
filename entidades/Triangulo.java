@@ -6,7 +6,7 @@ public class Triangulo implements Comparable<Triangulo>{
 	public int indice;
 	public double area;
 	public boolean isAreaCalculated;
-	
+
 	public Triangulo(Point v1,Point v2,Point v3, int indice){
 		this.v1=v1;
 		this.v2=v2;
@@ -14,34 +14,34 @@ public class Triangulo implements Comparable<Triangulo>{
 		this.indice=indice;
 		this.isAreaCalculated = false;
 	}
-	
+
 	public Triangulo(Point v1,Point v2,Point v3){
 		this.v1=v1;
 		this.v2=v2;
 		this.v3=v3;
 		this.isAreaCalculated = false;
 	}
-	
+
 	public double getArea(){
 		if (!isAreaCalculated){
-		    area = v1.x*v2.y + v1.y*v3.x + v2.x*v3.y - v2.y*v3.x - v1.y*v2.x - v1.x*v3.y;
-		    if (area > 0)
-		    	area /= 2;
-		    else area /= -2;
-		    
-		    isAreaCalculated = true;
+			area = v1.x*v2.y + v1.y*v3.x + v2.x*v3.y - v2.y*v3.x - v1.y*v2.x - v1.x*v3.y;
+			if (area > 0)
+				area /= 2;
+			else area /= -2;
+
+			isAreaCalculated = true;
 		}
 		return area;
 	}
-	
+
 	public double[] getBaryCoefs(Point p) {
 		double total, alfa, beta, gama;
-	    total = getArea();
-	    alfa = new Triangulo(p, v3, v2).getArea() / total;
-	    beta = new Triangulo(p, v3, v1).getArea() / total;
-	    gama = (double)1 - beta - alfa;
-	    double[] ret = {alfa, beta, gama};
-	    return ret;
+		total = getArea();
+		alfa = new Triangulo(p, v3, v2).getArea() / total;
+		beta = new Triangulo(p, v3, v1).getArea() / total;
+		gama = (double)1 - beta - alfa;
+		double[] ret = {alfa, beta, gama};
+		return ret;
 	}
 
 	public void ordenarX(){
@@ -63,7 +63,11 @@ public class Triangulo implements Comparable<Triangulo>{
 		}
 	}
 
-	public void ordenarY(){
+	public Triangulo ordenarY(){
+		Point v1,v2,v3;
+		v1 = this.v1.copy();
+		v2 = this.v2.copy();
+		v3 = this.v3.copy();
 		Point temp=null;
 		if(v1.y<v2.y){
 			temp=v1;
@@ -80,8 +84,10 @@ public class Triangulo implements Comparable<Triangulo>{
 			v2=v3;
 			v3=temp;
 		}
+
+		return new Triangulo(v1, v2, v3);
 	}
-	
+
 	public void ordenarZ(){
 		Point temp=null;
 		if(v1.z<v2.z){
@@ -106,7 +112,7 @@ public class Triangulo implements Comparable<Triangulo>{
 		t.ordenarZ();
 		if(v1.z>t.v1.z) return 1;
 		if(v1.z<t.v1.z) return -1;
-		
+
 		return 0;
 	}
 }
