@@ -101,6 +101,13 @@ public class Point {
 		return det;	
 	}
 
+	public Point kronecker(Point p2){
+		p2.x = this.x*p2.x;
+		p2.y = this.y*p2.y;
+		p2.z = this.z*p2.z;
+		return p2;
+	}
+	
 	public String toString(){
 		return String.format("(%f||%f||%f)", x,y,z);
 	}

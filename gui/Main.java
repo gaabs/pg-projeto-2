@@ -27,7 +27,7 @@ public class Main {
 		Point Ia;
 		Point Il;
 		Point Od;
-		
+
 		//C->foco da camera
 		//N->vetor no eixo Z
 		//V->?
@@ -41,13 +41,13 @@ public class Main {
 		double hx;
 		double hy;
 		double d; // distância do centro da camera ao plano de projeção		
-		
+
 		//ILUMINAÇÃO
 		double ka; // reflexao ambiental
 		double kd; // constante difusa
 		double ks; // coeficiente especular
 		double n; // constante de rugosidade
-		
+
 		ArrayList<Point> vertices = new ArrayList<Point>();
 		ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
 		ArrayList<Triangulo> triangulos2D = new ArrayList<Triangulo>();
@@ -89,7 +89,7 @@ public class Main {
 			hy = xyz[2];
 
 			//processo gramSchmidt:
-			
+
 			// ortogonalizando V e N
 
 			Camera.Vo = Util.ortogonalizar(Camera.V, Camera.N);
@@ -170,7 +170,7 @@ public class Main {
 
 				Point nt = w1.produtoVetorial(w2);
 
-				//nt = nt.normalize();
+				nt = nt.normalize(); // n sei se precisa
 
 				triangulos.add(t);
 				Ntriangulos.add(nt);
@@ -191,9 +191,14 @@ public class Main {
 			}
 			s.close();
 
-			//System.exit(1);
 
-				File iluminacaoEntrada = new File("Iluminacao.txt");
+			for(int i=0;i<ver;i++){
+				vertices.get(i).normal=vertices.get(i).normal.normalize(); // n sei se precisa
+				//System.out.printf("Normal normalizada do vértice %d: %s\n",i,vertices.get(i).normal);
+			}
+			//			System.exit(1);
+
+			File iluminacaoEntrada = new File("Iluminacao.txt");
 
 			if(!iluminacaoEntrada.exists()) {
 				iluminacaoEntrada.createNewFile();
@@ -213,11 +218,12 @@ public class Main {
 			Iluminacao.ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
 			Iluminacao.Il = new Point(cor[0],cor[1],cor[2]);
+			System.out.println(Iluminacao.Il);
 			Iluminacao.n = Integer.parseInt(reader.readLine());
 			reader.close();
 
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);
-			
+
 			//fazer a mudança de coordenadas para o sistema de vista da posição
 			//da fonte de luz PL,
 
