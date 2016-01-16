@@ -1,7 +1,6 @@
 package gui;
 import entidades.*;
 
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -185,8 +184,8 @@ public class Main {
 					}
 				}
 				Triangulo t2 =  new Triangulo(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
-				t2.ordenarY();
-				triangulos.get(i).ordenarY();
+//				t2.ordenarY();
+//				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);
 			}
 			s.close();
@@ -234,7 +233,7 @@ public class Main {
 			guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
 
 			frame.setVisible(true);
-			guiGouraud frame2 = new guiGouraud(hx,hy);
+			Gouraud frame2 = new Gouraud(triangulos,triangulos2D);
 			frame2.setVisible(true);
 
 		}catch(Exception e){

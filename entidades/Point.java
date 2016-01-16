@@ -1,33 +1,37 @@
 package entidades;
 
+import java.awt.Container;
+
 public class Point {
 	public double x,y,z;
 	public int indice;
 	public Point normal;
 	public boolean is3D;
+	public Point color;
 	public Point(){}
 
 	// Construtor 3D
-	public Point(double x, double y, double z, Point normal) {
+	public Point(double x, double y, double z, Point normal, Point color) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.normal=normal;
 		this.is3D = true;
+		this.color = color;
 	}
 	
 	public Point(double x, double y, double z) {
-		this(x,y,z,null);
+		this(x,y,z,null,null);
 	}
 	
 	// Construtor 2D
 	public Point(double x, double y) {
-		this(x,y,0,null);
+		this(x,y,0,null,null);
 		this.is3D = false;
 	}
 
 	public Point copy(){
-		Point p = new Point(x,y,z,normal);
+		Point p = new Point(x,y,z,normal,color);
 		return p;
 	}
 
@@ -42,20 +46,29 @@ public class Point {
 	
 	public Point add(Point p2){
 		double x,y,z;
-		Point p,n;
+		Point p, normal, color;
 
 		x = this.x + p2.x;
 		y = this.y + p2.y;
 		z = this.z + p2.z;
+		
 		if(this.normal==null){
-			n=p2.normal;
+			normal=p2.normal;
 		}else if(p2.normal==null){
-			n=this.normal;
+			normal=this.normal;
 		}else{
-			n = this.normal.add(p2.normal);
+			normal = this.normal.add(p2.normal);
+		}
+		
+		if(this.color==null){
+			color=p2.color;
+		}else if(p2.color==null){
+			color=this.color;
+		}else{
+			color = this.color.add(p2.color);
 		}
 
-		p = new Point(x, y, z, n);
+		p = new Point(x, y, z, normal,color);
 		return p;
 	}
 
@@ -65,24 +78,32 @@ public class Point {
 
 	public Point multiply(double k){
 		double x,y,z;
-		Point p,n;
+		Point p,normal;
 
 		x = this.x * k;
 		y = this.y * k;
 		z = this.z * k;
 
 		if(this.normal==null){
-			n=null;
+			normal=null;
 		}else{
-			n = this.normal.multiply(k);
+			normal = this.normal.multiply(k);
 		}
 
-		p = new Point(x, y, z, n);
+		p = new Point(x, y, z, normal, this.color);
 		return p;
 	}
 
 	public Point divide(double k){
 		return this.multiply(1/k);
+	}
+	
+	public Point multiplyWithColor(double k) {
+		if (this.color == null) this.color = getColor();
+		Point p = multiply(k);
+		
+		p.color = p.color.multiply(k);
+		return p;
 	}
 
 	// Produto interno ou escalar
@@ -111,5 +132,19 @@ public class Point {
 	public String toString(){
 		return String.format("(%f||%f||%f)", x,y,z);
 	}
+
+	public Point getColor(){
+		Point p = this;
+		Point L = p.subtract(Iluminacao.Pl).normalize();
+		Point VdoPonto = p.subtract(Camera.C).normalize();
+		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
+		Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
+		Point Ie = Iluminacao.Il.multiply(Math.abs(R.dotProduct(VdoPonto))*Iluminacao.ks);
+		// Ka??
+		Point I = Iluminacao.Ia.add(Id).add(Ie);
+		return I;
+	}
+	
+
 
 }

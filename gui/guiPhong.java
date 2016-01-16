@@ -1,39 +1,24 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.ImageObserver;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
-import util.ProjecaoPontos;
 import util.Util;
-import entidades.*;
+import entidades.Camera;
+import entidades.Iluminacao;
+import entidades.Point;
+import entidades.Triangulo;
 
 public class guiPhong extends JFrame{
 
@@ -42,9 +27,9 @@ public class guiPhong extends JFrame{
 	BufferedImage objeto;
 	public ArrayList<Triangulo> t;
 	public ArrayList<Triangulo> t2;
-	public double d, hx, hy;
-	public static int ResX = 794; // Gio: isso não devia ser estático; Maia: Porquê?
-	public static int ResY = 571;
+	public double d, hx, hy; // não estamos usando essas variáveis nessa classe
+	public static int ResX = 640; // Gio: isso não devia ser estático; Maia: Porquê? //Gio: pq não faz sentido outra classe chamar a GUI. A gui mandaria seus atributos
+	public static int ResY = 480;
 	int qtdPontos =0;
 	File debug;
 	BufferedWriter writer;
@@ -58,7 +43,7 @@ public class guiPhong extends JFrame{
 
 		objeto = new BufferedImage(ResX+1, ResY+1, BufferedImage.TYPE_INT_ARGB); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, ResX, ResY);
+		setBounds(800, 0, ResX, ResY);
 
 		z_buffer = new double[ResX+1][ResY+1];
 		for (double[] row: z_buffer)
