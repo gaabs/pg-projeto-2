@@ -67,6 +67,8 @@ public class Point {
 		}else{
 			color = this.color.add(p2.color);
 		}
+		
+		//if (color != null) color.trucateColor();
 
 		p = new Point(x, y, z, normal,color);
 		return p;
@@ -103,6 +105,7 @@ public class Point {
 		Point p = multiply(k);
 		
 		p.color = p.color.multiply(k);
+		p.trucateColor();
 		return p;
 	}
 
@@ -142,7 +145,21 @@ public class Point {
 		Point Ie = Iluminacao.Il.multiply(Math.abs(R.dotProduct(VdoPonto))*Iluminacao.ks);
 		// Ka??
 		Point I = Iluminacao.Ia.add(Id).add(Ie);
+		
+		I.trucateColor();
+		
 		return I;
+	}
+	
+	public void trucateColor(){
+		Point I = this;
+		
+		if(I.x>255)	I.x=255;
+		if(I.x<0)	I.x=0;
+		if(I.y>255)	I.y=255;
+		if(I.y<0)	I.y=0;
+		if(I.z>255)	I.z=255;
+		if(I.z<0)	I.z=0;
 	}
 	
 
