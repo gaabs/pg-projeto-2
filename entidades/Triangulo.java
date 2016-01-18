@@ -37,6 +37,7 @@ public class Triangulo implements Comparable<Triangulo>{
 	public double[] getBaryCoefs(Point p) {
 		double total, alfa, beta, gama;
 		total = getArea();
+		//System.out.printf("v1:%s v2:%s v3:%s p:%s\n",v1,v2,v3,p);
 		alfa = new Triangulo(p, v3, v2).getArea() / total;
 		beta = new Triangulo(p, v3, v1).getArea() / total;
 		gama = (double)1 - beta - alfa;

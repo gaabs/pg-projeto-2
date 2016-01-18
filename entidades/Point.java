@@ -1,7 +1,5 @@
 package entidades;
 
-import java.awt.Container;
-
 public class Point {
 	public double x,y,z;
 	public int indice;
@@ -32,6 +30,7 @@ public class Point {
 
 	public Point copy(){
 		Point p = new Point(x,y,z,normal,color);
+		p.indice = this.indice;
 		return p;
 	}
 
@@ -93,6 +92,7 @@ public class Point {
 		}
 
 		p = new Point(x, y, z, normal, this.color);
+		p.indice = this.indice;
 		return p;
 	}
 
@@ -138,6 +138,7 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
+		//p.normal = p.normal.normalize();
 		Point L = p.subtract(Iluminacao.Pl).normalize();
 		Point VdoPonto = p.subtract(Camera.C).normalize();
 		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
@@ -155,11 +156,8 @@ public class Point {
 		Point I = this;
 		
 		if(I.x>255)	I.x=255;
-		if(I.x<0)	I.x=0;
 		if(I.y>255)	I.y=255;
-		if(I.y<0)	I.y=0;
 		if(I.z>255)	I.z=255;
-		if(I.z<0)	I.z=0;
 	}
 	
 

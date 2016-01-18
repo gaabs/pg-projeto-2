@@ -82,14 +82,15 @@ public class Gouraud extends JFrame{
 					if(pixel.x>=0 && pixel.x<=ResX && pixel.y>=0 && pixel.y<=ResY ){
 						double[] bary = t2.get(indice).getBaryCoefs(pixel);
 						Point v1 = t.get(indice).v1;
+						
 						v1 = v1.multiplyWithColor(bary[0]);
 						Point v2 = t.get(indice).v2;
 						v2 = v2.multiplyWithColor(bary[1]);
 						Point v3 = t.get(indice).v3;
 						v3 = v3.multiplyWithColor(bary[2]);
-						System.out.println("v1: " + v1);
-						System.out.println("v2: " + v2);
-						System.out.println("v3: " + v3);
+//						System.out.println("v1: " + v1.color);
+//						System.out.println("v2: " + v2.color);
+//						System.out.println("v3: " + v3.color);
 						Point p = v1.add(v2).add(v3); 
 						int x1 = (int) Math.round(pixel.x);
 						int y1 = (int) Math.round(pixel.y);

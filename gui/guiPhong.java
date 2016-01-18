@@ -47,11 +47,6 @@ public class guiPhong extends JFrame{
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
-		//		contentPane = new JPanel();
-		//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//		setContentPane(contentPane);
-		//		contentPane.setLayout(null);
-
 		this.t=t;
 		this.t2=t2;
 		this.d=d;
@@ -89,6 +84,7 @@ public class guiPhong extends JFrame{
 					Point pixel = new Point(j, intervalos[i][0].y);
 					if(pixel.x>=0 && pixel.x<=ResX && pixel.y>=0 && pixel.y<=ResY ){
 						double[] bary = t2.get(indice).getBaryCoefs(pixel);
+						
 						Point v1 = t.get(indice).v1;
 						Point v2 = t.get(indice).v2;
 						Point v3 = t.get(indice).v3;
@@ -101,9 +97,6 @@ public class guiPhong extends JFrame{
 							//							cor final:
 							//							I = Ia + Ie + Id
 							//							Id = <L, N> * Kd * Od * Il
-
-
-
 
 							z_buffer[x1][y1] = p.z;
 							//Iluminacao.Il=Iluminacao.Il.normalize();
