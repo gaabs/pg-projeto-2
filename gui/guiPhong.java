@@ -2,9 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +13,6 @@ import javax.swing.JPanel;
 
 import util.Debug;
 import util.Util;
-import entidades.Camera;
-import entidades.Iluminacao;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -93,11 +88,6 @@ public class guiPhong extends JFrame{
 						int y1 = (int) Math.round(pixel.y);
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
-
-							//							cor final:
-							//							I = Ia + Ie + Id
-							//							Id = <L, N> * Kd * Od * Il
-
 							z_buffer[x1][y1] = p.z;
 
 							// Ka??
@@ -105,11 +95,10 @@ public class guiPhong extends JFrame{
 							p.trucateColor();
 									
 							Point I = p.color;
-
 							int r,g,b;
-							r = (int) Math.round(I.x); 
-							g = (int) Math.round(I.y); 
-							b = (int) Math.round(I.z); 
+							r = (int) Math.round(p.color.x); 
+							g = (int) Math.round(p.color.y); 
+							b = (int) Math.round(p.color.z); 
 							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
@@ -125,7 +114,6 @@ public class guiPhong extends JFrame{
 //								debug.write("Ie: "+Ie+"\n");
 								debug.write("I: "+I+"\n");
 								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
-								
 								
 							}catch(Exception e){
 								System.out.println(e.getStackTrace());
