@@ -138,7 +138,8 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
-		//p.normal = p.normal.normalize();
+		p.normal = p.normal.normalize();
+		Iluminacao.Od = Iluminacao.Od.normalize();
 		Point L = p.subtract(Iluminacao.Pl).normalize();
 		Point VdoPonto = p.subtract(Camera.C).normalize();
 		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						

@@ -99,37 +99,12 @@ public class guiPhong extends JFrame{
 							//							Id = <L, N> * Kd * Od * Il
 
 							z_buffer[x1][y1] = p.z;
-							//Iluminacao.Il=Iluminacao.Il.normalize();
-							Iluminacao.Od=Iluminacao.Od.normalize();
-							//p=p.normalize();
-							p.normal=p.normal.normalize();
-							Point L = p.subtract(Iluminacao.Pl).normalize();
-							Point VdoPonto = p.subtract(Camera.C).normalize();
-							//Point VdoPonto = p.multiply(-1).normalize();
-							Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
-							Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
-							Point lambda = Iluminacao.Ia.multiply(Iluminacao.ka).add(Iluminacao.Od.multiply(Iluminacao.kd*L.dotProduct(p.normal)+Iluminacao.ks*R.dotProduct(VdoPonto.normalize()))).normalize();
-							Point Ie = Iluminacao.Il.multiply(Math.abs(R.dotProduct(VdoPonto))*Iluminacao.ks);
 
 							// Ka??
-							Point I = Iluminacao.Ia.add(Id).add(Ie);
-							//							if(lambda.x>255||lambda.y>255||lambda.z>255||lambda.x<0||lambda.y<0||lambda.z<0){
-							//								System.err.println("deu merda");
-							//							}
-
-							//						System.out.printf("Ia: %s Ie:%s Id:%s\n",Iluminacao.Ia, Ie, Id);
-							if(I.x>255){
-								I.x=255;
-							}
-							if(I.y>255){
-								I.y=255;
-							}
-							if(I.z>255){
-								I.z=255;
-							}
-
-							//							System.out.printf("Il(%f,%f,%f) kd:%f Od.norma: %f rgb(%f,%f,%f) ", Iluminacao.Il.x, Iluminacao.Il.y, Iluminacao.Il.z, Iluminacao.kd, Iluminacao.Od.norma(), Id.x,Id.y,Id.z);
-							//							System.out.printf("Produto escalar <L,P.normal>: %f\n", L.dotProduct(p.normal));
+							p.color = p.getColor();
+							p.trucateColor();
+									
+							Point I = p.color;
 
 							int r,g,b;
 							r = (int) Math.round(I.x); 
@@ -143,11 +118,11 @@ public class guiPhong extends JFrame{
 								debug.write("x1: "+x1+"y1: "+y1+"\n");
 								debug.write("p: "+p+"\n");
 								debug.write("Pnormal: "+p.normal+"\n");
-								debug.write("L: "+L+"\n");
-								debug.write("V do Ponto: " + VdoPonto+"\n");
-								debug.write("R: "+R+"\n");
-								debug.write("Id: "+Id+"\n");
-								debug.write("Ie: "+Ie+"\n");
+//								debug.write("L: "+L+"\n");
+//								debug.write("V do Ponto: " + VdoPonto+"\n");
+//								debug.write("R: "+R+"\n");
+//								debug.write("Id: "+Id+"\n");
+//								debug.write("Ie: "+Ie+"\n");
 								debug.write("I: "+I+"\n");
 								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
 								

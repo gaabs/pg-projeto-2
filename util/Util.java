@@ -131,11 +131,11 @@ public class Util {
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point(Math.round(xTemp2), i);				
-				ret[k][1] = new Point(Math.round(xTemp), i);
+				ret[k][0] = new Point(Math.floor(xTemp2), i);				
+				ret[k][1] = new Point(Math.ceil(xTemp), i);
 			}else{
-				ret[k][0] = new Point(Math.round(xTemp), i);				
-				ret[k][1] = new Point(Math.round(xTemp2), i);
+				ret[k][0] = new Point(Math.floor(xTemp), i);				
+				ret[k][1] = new Point(Math.ceil(xTemp2), i);
 			}
 		}
 
@@ -147,11 +147,11 @@ public class Util {
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point(Math.round(xTemp2), i);				
-				ret[k][1] = new Point(Math.round(xTemp), i);
+				ret[k][0] = new Point(Math.floor(xTemp2), i);				
+				ret[k][1] = new Point(Math.ceil(xTemp), i);
 			}else{
-				ret[k][0] = new Point(Math.round(xTemp), i);				
-				ret[k][1] = new Point(Math.round(xTemp2), i);
+				ret[k][0] = new Point(Math.floor(xTemp), i);				
+				ret[k][1] = new Point(Math.ceil(xTemp2), i);
 			}
 		}
 
