@@ -93,65 +93,28 @@ public class guiPhong extends JFrame{
 						int y1 = (int) Math.round(pixel.y);
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
-
-							//							cor final:
-							//							I = Ia + Ie + Id
-							//							Id = <L, N> * Kd * Od * Il
-
 							z_buffer[x1][y1] = p.z;
-							//Iluminacao.Il=Iluminacao.Il.normalize();
-							Iluminacao.Od=Iluminacao.Od.normalize();
-							//p=p.normalize();
-							p.normal=p.normal.normalize();
-							Point L = p.subtract(Iluminacao.Pl).normalize();
-							Point VdoPonto = p.subtract(Camera.C).normalize();
-							//Point VdoPonto = p.multiply(-1).normalize();
-							Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
-							Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
-							Point lambda = Iluminacao.Ia.multiply(Iluminacao.ka).add(Iluminacao.Od.multiply(Iluminacao.kd*L.dotProduct(p.normal)+Iluminacao.ks*R.dotProduct(VdoPonto.normalize()))).normalize();
-							Point Ie = Iluminacao.Il.multiply(Math.abs(R.dotProduct(VdoPonto))*Iluminacao.ks);
-
-							// Ka??
-							Point I = Iluminacao.Ia.add(Id).add(Ie);
-							if(I.x>255){
-								I.x=255;
-							}
-							if(I.y>255){
-								I.y=255;
-							}
-							if(I.z>255){
-								I.z=255;
-							}
-
-							//							System.out.printf("Il(%f,%f,%f) kd:%f Od.norma: %f rgb(%f,%f,%f) ", Iluminacao.Il.x, Iluminacao.Il.y, Iluminacao.Il.z, Iluminacao.kd, Iluminacao.Od.norma(), Id.x,Id.y,Id.z);
-							//							System.out.printf("Produto escalar <L,P.normal>: %f\n", L.dotProduct(p.normal));
 							p.color = p.getColor();
-							int r,g,b,r2,g2,b2;
-							r = (int) Math.round(I.x); 
-							g = (int) Math.round(I.y); 
-							b = (int) Math.round(I.z); 
-							r2 = (int) Math.round(p.color.x); 
-							g2 = (int) Math.round(p.color.y); 
-							b2 = (int) Math.round(p.color.z); 
-							if(r!=r2||g!=g2||b!=b2){
-								System.out.println();
-							}
+							int r,g,b;
+							r = (int) Math.round(p.color.x); 
+							g = (int) Math.round(p.color.y); 
+							b = (int) Math.round(p.color.z); 
 							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
 							objeto.setRGB(x1, y1, rgb);
 							try{
-								debug.write("x1: "+x1+"y1: "+y1+"\n");
-								debug.write("p: "+p+"\n");
-								debug.write("Pnormal: "+p.normal+"\n");
-								debug.write("L: "+L+"\n");
-								debug.write("V do Ponto: " + VdoPonto+"\n");
-								debug.write("R: "+R+"\n");
-								debug.write("Id: "+Id+"\n");
-								debug.write("Ie: "+Ie+"\n");
-								debug.write("I: "+I+"\n");
-								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
-								
+//								debug.write("x1: "+x1+"y1: "+y1+"\n");
+//								debug.write("p: "+p+"\n");
+//								debug.write("Pnormal: "+p.normal+"\n");
+//								debug.write("L: "+L+"\n");
+//								debug.write("V do Ponto: " + VdoPonto+"\n");
+//								debug.write("R: "+R+"\n");
+//								debug.write("Id: "+Id+"\n");
+//								debug.write("Ie: "+Ie+"\n");
+//								debug.write("I: "+I+"\n");
+//								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
+//								
 								
 							}catch(Exception e){
 								System.out.println(e.getStackTrace());
