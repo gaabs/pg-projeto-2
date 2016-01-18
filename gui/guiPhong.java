@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.Debug;
 import util.Util;
 import entidades.Camera;
 import entidades.Iluminacao;
@@ -31,15 +32,12 @@ public class guiPhong extends JFrame{
 	public static int ResX = 640; // Gio: isso não devia ser estático; Maia: Porquê? //Gio: pq não faz sentido outra classe chamar a GUI. A gui mandaria seus atributos
 	public static int ResY = 480;
 	int qtdPontos =0;
-	File debug;
-	BufferedWriter writer;
+	Debug debug;
 	
 	public guiPhong(ArrayList<Triangulo> t, ArrayList<Triangulo> t2,double d,double hx,double hy) throws IOException{
 		super("Phong");
 		
-		debug = new File("debug.txt");
-		writer = new BufferedWriter(new FileWriter(debug));
-		debug.createNewFile();
+		debug = new Debug("debugPhong.txt");
 
 		objeto = new BufferedImage(ResX+1, ResY+1, BufferedImage.TYPE_INT_ARGB); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,8 +59,7 @@ public class guiPhong extends JFrame{
 		this.hy=hy;
 
 		scanLine3D();
-		writer.flush();
-		writer.close();
+		debug.close();
 		
 		panel = new JPanel();
 		this.add(panel);
@@ -150,16 +147,16 @@ public class guiPhong extends JFrame{
 							//int rgb = Color.GREEN.getRGB();
 							objeto.setRGB(x1, y1, rgb);
 							try{
-								writer.append("x1: "+x1+"y1: "+y1+"\n");
-								writer.append("p: "+p+"\n");
-								writer.append("Pnormal: "+p.normal+"\n");
-								writer.append("L: "+L+"\n");
-								writer.append("V do Ponto: " + VdoPonto+"\n");
-								writer.append("R: "+R+"\n");
-								writer.append("Id: "+Id+"\n");
-								writer.append("Ie: "+Ie+"\n");
-								writer.append("I: "+I+"\n");
-								writer.append(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
+								debug.write("x1: "+x1+"y1: "+y1+"\n");
+								debug.write("p: "+p+"\n");
+								debug.write("Pnormal: "+p.normal+"\n");
+								debug.write("L: "+L+"\n");
+								debug.write("V do Ponto: " + VdoPonto+"\n");
+								debug.write("R: "+R+"\n");
+								debug.write("Id: "+Id+"\n");
+								debug.write("Ie: "+Ie+"\n");
+								debug.write("I: "+I+"\n");
+								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
 								
 								
 							}catch(Exception e){
