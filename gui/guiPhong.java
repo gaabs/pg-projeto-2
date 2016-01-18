@@ -113,11 +113,6 @@ public class guiPhong extends JFrame{
 
 							// Ka??
 							Point I = Iluminacao.Ia.add(Id).add(Ie);
-							//							if(lambda.x>255||lambda.y>255||lambda.z>255||lambda.x<0||lambda.y<0||lambda.z<0){
-							//								System.err.println("deu merda");
-							//							}
-
-							//						System.out.printf("Ia: %s Ie:%s Id:%s\n",Iluminacao.Ia, Ie, Id);
 							if(I.x>255){
 								I.x=255;
 							}
@@ -130,11 +125,17 @@ public class guiPhong extends JFrame{
 
 							//							System.out.printf("Il(%f,%f,%f) kd:%f Od.norma: %f rgb(%f,%f,%f) ", Iluminacao.Il.x, Iluminacao.Il.y, Iluminacao.Il.z, Iluminacao.kd, Iluminacao.Od.norma(), Id.x,Id.y,Id.z);
 							//							System.out.printf("Produto escalar <L,P.normal>: %f\n", L.dotProduct(p.normal));
-
-							int r,g,b;
+							p.color = p.getColor();
+							int r,g,b,r2,g2,b2;
 							r = (int) Math.round(I.x); 
 							g = (int) Math.round(I.y); 
 							b = (int) Math.round(I.z); 
+							r2 = (int) Math.round(p.color.x); 
+							g2 = (int) Math.round(p.color.y); 
+							b2 = (int) Math.round(p.color.z); 
+							if(r!=r2||g!=g2||b!=b2){
+								System.out.println();
+							}
 							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
