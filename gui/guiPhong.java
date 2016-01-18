@@ -89,30 +89,25 @@ public class guiPhong extends JFrame{
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
 							z_buffer[x1][y1] = p.z;
-
-							// Ka??
-							p.color = p.getColor();
-							p.trucateColor();
-									
-							Point I = p.color;
+							Point I = p.getColor();
 							int r,g,b;
-							r = (int) Math.round(p.color.x); 
-							g = (int) Math.round(p.color.y); 
-							b = (int) Math.round(p.color.z); 
+							r = (int) Math.round(I.x); 
+							g = (int) Math.round(I.y); 
+							b = (int) Math.round(I.z); 
 							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
 							objeto.setRGB(x1, y1, rgb);
 							try{
-								debug.write("x1: "+x1+"y1: "+y1+"\n");
+//								debug.write("x1: "+x1+"y1: "+y1+"\n");
 								debug.write("p: "+p+"\n");
-								debug.write("Pnormal: "+p.normal+"\n");
+//								debug.write("Pnormal: "+p.normal+"\n");
 //								debug.write("L: "+L+"\n");
 //								debug.write("V do Ponto: " + VdoPonto+"\n");
 //								debug.write("R: "+R+"\n");
 //								debug.write("Id: "+Id+"\n");
 //								debug.write("Ie: "+Ie+"\n");
-								debug.write("I: "+I+"\n");
+//								debug.write("I: "+I+"\n");
 								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
 								
 							}catch(Exception e){

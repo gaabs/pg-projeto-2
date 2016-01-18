@@ -92,32 +92,20 @@ public class Gouraud extends JFrame{
 //						System.out.println("v2: " + v2.color);
 //						System.out.println("v3: " + v3.color);
 						Point p = v1.add(v2).add(v3); 
+						debug.write("p: "+p+"\n");
+						debug.write("alfa: "+bary[0]+" beta: "+bary[1]+" gama: "+bary[2]+"\n");
 						int x1 = (int) Math.round(pixel.x);
 						int y1 = (int) Math.round(pixel.y);
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
 						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
 							z_buffer[x1][y1] = p.z;
 							Point I = p.color;
-
-							if(I.x>255)	I.x=255;
-							if(I.x<0)	I.x=0;
-							if(I.y>255)	I.y=255;
-							if(I.y<0)	I.y=0;
-							if(I.z>255)	I.z=255;
-							if(I.z<0)	I.z=0;
-							
-							if(I.y>255){
-								I.y=255;
-							}
-							if(I.z>255){
-								I.z=255;
-							}
-
 							int r,g,b;
+							I.trucateColor();
+							qtdPontos++;
 							r = (int) Math.round(I.x); 
 							g = (int) Math.round(I.y); 
 							b = (int) Math.round(I.z); 
-							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
 							objeto.setRGB(x1, y1, rgb);

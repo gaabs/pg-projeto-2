@@ -184,16 +184,17 @@ public class Main {
 					}
 				}
 				Triangulo t2 =  new Triangulo(vertices2DMapeados.get(v1),vertices2DMapeados.get(v2),vertices2DMapeados.get(v3),i);
-//				t2.ordenarY();
-//				triangulos.get(i).ordenarY();
+				//				t2.ordenarY();
+				//				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);
 			}
 			s.close();
 
 
 			for(int i=0;i<ver;i++){
-				vertices.get(i).normal=vertices.get(i).normal.normalize(); // n sei se precisa
-				//System.out.printf("Normal normalizada do vértice %d: %s\n",i,vertices.get(i).normal);
+				if(vertices.get(i).normal!=null){
+					vertices.get(i).normal=vertices.get(i).normal.normalize(); // n sei se precisa
+				}//System.out.printf("Normal normalizada do vértice %d: %s\n",i,vertices.get(i).normal);
 			}
 			//			System.exit(1);
 
@@ -230,11 +231,11 @@ public class Main {
 
 			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 			//Outra para Phong.
+			Gouraud frame2 = new Gouraud(triangulos,triangulos2D);
+			frame2.setVisible(true);
 			guiPhong frame = new guiPhong(triangulos,triangulos2D,d,hx,hy);
 
 			frame.setVisible(true);
-			Gouraud frame2 = new Gouraud(triangulos,triangulos2D);
-			frame2.setVisible(true);
 
 		}catch(Exception e){
 			e.printStackTrace();
