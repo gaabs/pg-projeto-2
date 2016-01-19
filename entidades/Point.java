@@ -138,8 +138,8 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
-		p.normal = p.normal.normalize();
-		Iluminacao.Od = Iluminacao.Od.normalize();
+//		p.normal = p.normal.normalize();
+//		Iluminacao.Od = Iluminacao.Od.normalize();
 		Point L = p.subtract(Iluminacao.Pl).normalize();
 		Point VdoPonto = p.subtract(Camera.C).normalize();
 		Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
@@ -151,10 +151,10 @@ public class Point {
 		if(RpV<0){
 			RpV=0;
 		}
-		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
-		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
-//		Point Id = Iluminacao.Il.multiply(LpP*Iluminacao.kd).kronecker(Iluminacao.Od);						
-//		Point Ie = Iluminacao.Il.multiply(RpV*Iluminacao.ks);
+//		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
+//		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
+		Point Id = Iluminacao.Il.multiply(LpP*Iluminacao.kd).kronecker(Iluminacao.Od);						
+		Point Ie = Iluminacao.Il.multiply(RpV*Iluminacao.ks);
 		// Ka??
 		Point I = Iluminacao.Ia.add(Id).add(Ie);
 		
