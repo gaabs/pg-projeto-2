@@ -6,6 +6,7 @@ import entidades.Triangulo;
 public class Util {
 
 	public static double[][] alfa;
+	final static double EPS = 1/1000000.0;
 
 	public static Point[] gramSchmidt(Point v1, Point v2, Point v3){
 		Point[] pontos = new Point[8];
@@ -112,33 +113,36 @@ public class Util {
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point[tam][2];
 
-		ret=aux(ret,t.v1,t.v2,t.v3);			
+		ret=getIntervalos(ret,t.v1,t.v2,t.v3);			
 
 		return ret;
 	}
 
-	public static Point[][] aux(Point[][] ret, Point L, Point M, Point S){
+	public static Point[][] getIntervalos(Point[][] ret, Point L, Point M, Point S){
 		double a = (M.y - L.y)/(M.x - L.x);
 		double b = M.y - a*M.x;
 		
-		
 		double a2 = (S.y - L.y)/(S.x - L.x);
 		double b2 = S.y - a2*S.x;
-
-
+		
+		double xi,xj;
+		
 		int k=0;
 		for(double i=M.y;i<=L.y;i++, k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
+			
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point(Math.ceil(xTemp2), i);				
-				ret[k][1] = new Point(Math.floor(xTemp), i);
+				xi = Math.ceil(xTemp2);
+				xj = Math.floor(xTemp);
 			}else{
-				ret[k][0] = new Point(Math.ceil(xTemp), i);				
-				ret[k][1] = new Point(Math.floor(xTemp2), i);
+				xi = Math.ceil(xTemp);
+				xj = Math.floor(xTemp2);
 			}
+			
+			ret[k][0] = new Point(xi, i);				
+			ret[k][1] = new Point(xj, i);
 		}
-
 
 		a = (M.y - S.y)/(M.x - S.x);
 		b = M.y - a*M.x;
@@ -146,15 +150,18 @@ public class Util {
 		for(double i=S.y;i<=M.y;i++,k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
+			
 			if(xTemp>xTemp2){
-				ret[k][0] = new Point(Math.ceil(xTemp2), i);				
-				ret[k][1] = new Point(Math.floor(xTemp), i);
+				xi = Math.ceil(xTemp2);
+				xj = Math.floor(xTemp);
 			}else{
-				ret[k][0] = new Point(Math.ceil(xTemp), i);				
-				ret[k][1] = new Point(Math.floor(xTemp2), i);
+				xi = Math.ceil(xTemp);
+				xj = Math.floor(xTemp2);
 			}
+			
+			ret[k][0] = new Point(xi, i);				
+			ret[k][1] = new Point(xj, i);
 		}
-
 
 		return ret;
 	}

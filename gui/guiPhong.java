@@ -50,22 +50,17 @@ public class guiPhong extends JFrame{
 			
 			public void keyTyped(KeyEvent e) {
 				if(e.getKeyChar()=='d'){
-					System.out.println(123);
 					Camera.d-=0.1;
-					Camera.setCamera();
-					Camera.convertObject();
-					Camera.setIntervalos();
-					scanLine3D();
-					repaint();
 				}else{
-					System.out.println(123);
 					Camera.d+=0.1;
-					Camera.setCamera();
-					Camera.convertObject();
-					Camera.setIntervalos();
-					scanLine3D();
-					repaint();
 				}
+				
+				System.out.println(123);
+				Camera.setCamera();
+				Camera.convertObject();
+				Camera.setIntervalos();
+				scanLine3D();
+				repaint();
 				
 			}
 			
@@ -98,6 +93,9 @@ public class guiPhong extends JFrame{
 		for(int i=0;i<t2.size();i++){
 			pinte(Camera.intervalos.get(i),t.get(i).indice, i);
 		}
+		
+		fix();
+		
 		long tempo = Main.tempo;
 		tempo = System.nanoTime() - tempo; 
 		System.out.println(qtdPontos);
@@ -148,6 +146,42 @@ public class guiPhong extends JFrame{
 							}
 						}
 					}
+				}
+			}
+		}
+	}
+	
+	private void fix() {
+		for (int x=1;x<ResX;x++){
+			for (int y=1;y<ResY;y++){
+				if (z_buffer[x][y] == Double.MAX_VALUE && z_buffer[x][y+1] != Double.MAX_VALUE && z_buffer[x][y-1] != Double.MAX_VALUE){
+					int r,g,b,r2,g2,b2;
+					Color color;
+					int rgb;
+					
+					rgb= objeto.getRGB(x, y+1);
+					color = new Color(rgb);
+					r2 = color.getRed()/2;
+					g2 = color.getGreen()/2;
+					b2 = color.getBlue()/2;
+					
+					rgb = objeto.getRGB(x, y-1);
+					color = new Color(rgb);
+					r2 += color.getRed()/2;
+					g2 += color.getGreen()/2;
+					b2 += color.getBlue()/2;
+					
+					rgb = objeto.getRGB(x, y);
+					r = color.getRed();
+					g = color.getGreen();
+					b = color.getBlue();
+					
+//					if (z_buffer[x][y] == Double.MAX_VALUE || Math.abs(r-r2) > 60 || Math.abs(g-g2) > 60 || Math.abs(b-b2) > 60){
+						color = new Color(r2,g2,b2);
+						rgb = color.getRGB();
+//					}
+					
+					objeto.setRGB(x, y, rgb);
 				}
 			}
 		}
