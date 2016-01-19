@@ -126,10 +126,11 @@ public class Point {
 	}
 
 	public Point kronecker(Point p2){
-		p2.x = this.x*p2.x;
-		p2.y = this.y*p2.y;
-		p2.z = this.z*p2.z;
-		return p2;
+		Point p = p2.copy();
+		p.x = this.x*p2.x;
+		p.y = this.y*p2.y;
+		p.z = this.z*p2.z;
+		return p;
 	}
 	
 	public String toString(){
@@ -138,29 +139,35 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
-		p.normal = p.normal.normalize();
+		Point N = p.normal.normalize();
 //		Iluminacao.Od = Iluminacao.Od.normalize();
 		Point L = Iluminacao.Pl.subtract(p).normalize(); // L = Pl - P
-		Point VdoPonto = p.multiply(-1).normalize(); // V = - P
-		Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
-		double LpP = L.dotProduct(p.normal);
+		Point VdoPonto = p.multiply(1).normalize(); // V = - P
+		Point R = N.multiply(2).multiply(N.dotProduct(L)).subtract(L).normalize();
+		double LpN = L.dotProduct(N);
 		double RpV = R.dotProduct(VdoPonto);
-		if(LpP<0){
-			LpP=0;
-		}
-		if(RpV<0){
-			RpV=0;
-		}
+		if(LpN<0) LpN=0;
+		if(RpV<0) RpV=0;
+		
 //		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
 //		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
-		Point Id = Iluminacao.Il.multiply(LpP*Iluminacao.kd).kronecker(Iluminacao.Od);						
+		Point Id = Iluminacao.Il.multiply(LpN*Iluminacao.kd).kronecker(Iluminacao.Od);						
 		Point Ie = Iluminacao.Il.multiply(Math.pow(RpV,Iluminacao.n)*Iluminacao.ks);
+		
+		if (LpN > 0){
+//			System.out.println("Il: " + Iluminacao.Il);
+//			System.out.println("Kd: " + Iluminacao.kd);
+			//System.out.println("Od: " + Iluminacao.Od);
+//			System.out.println(LpN);
+//			System.out.println("Parte1: " + Iluminacao.Il.multiply(LpN*Iluminacao.kd));
+			System.out.println(Id);
+		}
 		// Ka??
 		Point I = Iluminacao.Ia.add(Id).add(Ie);//.multiply(255);
-		System.out.println(Id);
-		System.out.println(Ie);
-		System.out.println(I);
-		System.out.println();
+//		System.out.println(Id);
+//		System.out.println(Ie);
+//		System.out.println(I);
+//		System.out.println();
 		
 		
 		I.truncateXYZ();
