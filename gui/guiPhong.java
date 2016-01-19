@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class guiPhong extends JFrame{
 	public guiPhong() throws IOException{
 		super("Phong");
 		
-		debug = new Debug("debugPhong.txt");
+//		debug = new Debug("debugPhong.txt");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(800, 0, ResX, ResY);
@@ -41,7 +43,34 @@ public class guiPhong extends JFrame{
 		this.t2 = Camera.triangulos2D;
 
 		scanLine3D();
-		debug.close();
+//		debug.close();
+		
+		
+		this.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println(123);
+				Camera.d++;
+				Camera.setCamera();
+				Camera.convertObject();
+				Camera.setIntervalos();
+				scanLine3D();
+				repaint();
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	@Override
@@ -93,7 +122,7 @@ public class guiPhong extends JFrame{
 							objeto.setRGB(x1, y1, rgb);
 							try{
 //								debug.write("x1: "+x1+"y1: "+y1+"\n");
-								debug.write("p: "+p+"\n");
+//								debug.write("p: "+p+"\n");
 //								debug.write("Pnormal: "+p.normal+"\n");
 //								debug.write("L: "+L+"\n");
 //								debug.write("V do Ponto: " + VdoPonto+"\n");
@@ -101,7 +130,7 @@ public class guiPhong extends JFrame{
 //								debug.write("Id: "+Id+"\n");
 //								debug.write("Ie: "+Ie+"\n");
 //								debug.write("I: "+I+"\n");
-								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
+//								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
 								
 							}catch(Exception e){
 								System.out.println(e.getStackTrace());

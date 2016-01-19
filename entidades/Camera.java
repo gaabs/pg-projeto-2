@@ -10,7 +10,7 @@ import util.ProjecaoPontos;
 import util.Util;
 
 public class Camera {
-	public static Point C, N, V, Vo, No, Vn, U;
+	public static Point C, Co, N, V, Vo, No, Vn, U;
 	public static double d, hx, hy;
 
 	public static ArrayList<Point> verticesConvertidos;
@@ -56,7 +56,7 @@ public class Camera {
 		// ortogonalizando V e N
 
 		Camera.Vo = Util.ortogonalizar(Camera.V, Camera.N);
-		Camera.No = Camera.N.divide(Math.sqrt(Camera.N.dotProduct(Camera.N)));
+		Camera.No = Camera.N.normalize();
 
 		//System.out.println("N ortogonalizado: " + No);
 
