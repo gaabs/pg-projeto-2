@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import util.Debug;
 import util.Util;
-import entidades.Objeto;
+import entidades.Camera;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -42,8 +42,8 @@ public class guiPhong extends JFrame{
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
-		this.t = Objeto.triangulos;
-		this.t2 = Objeto.triangulos2D;
+		this.t = Camera.triangulosConvertidos;
+		this.t2 = Camera.triangulos2D;
 
 		scanLine3D();
 		debug.close();

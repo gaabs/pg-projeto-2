@@ -1,22 +1,15 @@
 package gui;
-import entidades.*;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
-import util.ProjecaoPontos;
 import util.Util;
-
+import entidades.Camera;
+import entidades.Iluminacao;
+import entidades.Objeto;
 
 public class Main {
 	static long tempo = System.nanoTime();
 
 	public static void main(String[] args) {
-
 		
 		String cameraName,objectName;
 		
@@ -29,8 +22,8 @@ public class Main {
 			System.out.print("Nome da camera (sem extensão):");
 			Scanner scan = new Scanner(System.in);
 			//cameraName = scan.next();
-			Camera.setCamera("Entradas/Cameras/"+cameraName+".cfg");
-
+			Camera.initCamera("Entradas/Cameras/"+cameraName+".cfg");
+			Camera.setCamera();
 
 			//Setando matriz alfa
 			Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
@@ -41,11 +34,11 @@ public class Main {
 			//objectName = scan.next();
 
 			Objeto.setObjeto("Entradas/Objetos/"+objectName+".byu");
+			Camera.convertObject();
 			
 			Iluminacao.setIluminacao("Entradas/Iluminacao.txt");
 			
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);	
-
 
 			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 			//Outra para Phong.
@@ -58,8 +51,6 @@ public class Main {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
-
 
 		//calculam-se as cores dos vértices (utilizando as normais dos vértices,
 

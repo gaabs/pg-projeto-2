@@ -2,9 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +13,7 @@ import javax.swing.JPanel;
 
 import util.Debug;
 import util.Util;
-import entidades.Iluminacao;
-import entidades.Objeto;
+import entidades.Camera;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -48,8 +44,8 @@ public class Gouraud extends JFrame{
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
-		this.t = Objeto.triangulos;
-		this.t2 = Objeto.triangulos2D;
+		this.t = Camera.triangulosConvertidos;
+		this.t2 = Camera.triangulos2D;
 
 		scanLine3D();
 		debug.close();
