@@ -25,9 +25,6 @@ public class Main {
 			Camera.initCamera("Entradas/Cameras/"+cameraName+".cfg");
 			Camera.setCamera();
 
-			//Setando matriz alfa
-			Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
-
 			//abrindo objeto
 			//System.out.println("abrindo objeto");
 			System.out.print("Nome do objeto (sem extensão):");

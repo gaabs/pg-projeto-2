@@ -69,7 +69,9 @@ public class Camera {
 		//gerando U 
 
 		Camera.U = Camera.No.produtoVetorial(Camera.Vn);
-
+		
+		//Setando matriz alfa
+		Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
 	}
 
 
