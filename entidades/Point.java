@@ -140,35 +140,20 @@ public class Point {
 	public Point getColor(){
 		Point p = this;
 		Point N = p.normal.normalize();
-//		Iluminacao.Od = Iluminacao.Od.normalize();
-		Point L = Iluminacao.Pl.subtract(p).multiply(-1).normalize(); // L = Pl - P // -1
-		Point VdoPonto = p.multiply(1).normalize(); // V = - P
+		Point VdoPonto = p.multiply(-1).normalize(); // V = - P
+		double VpN = N.dotProduct(VdoPonto);
+		if (VpN < 0) N = N.multiply(-1);
+		Point L = Iluminacao.Pl.subtract(p).normalize(); // L = Pl - P
 		Point R = N.multiply(2).multiply(N.dotProduct(L)).subtract(L).normalize();
 		double LpN = L.dotProduct(N);
 		double RpV = R.dotProduct(VdoPonto);
 		if(LpN<0) LpN=0;
 		if(RpV<0) RpV=0;
 		
-//		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
-//		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
 		Point Id = Iluminacao.Il.multiply(LpN*Iluminacao.kd).kronecker(Iluminacao.Od);						
 		Point Ie = Iluminacao.Il.multiply(Math.pow(RpV,Iluminacao.n)*Iluminacao.ks);
 		
-		if (LpN > 0){
-//			System.out.println("Il: " + Iluminacao.Il);
-//			System.out.println("Kd: " + Iluminacao.kd);
-			//System.out.println("Od: " + Iluminacao.Od);
-//			System.out.println(LpN);
-//			System.out.println("Parte1: " + Iluminacao.Il.multiply(LpN*Iluminacao.kd));
-//			System.out.println(Id);
-		}
-		// Ka??
-		Point I = Iluminacao.Ia.add(Id).add(Ie);//.multiply(255);
-//		System.out.println(Id);
-//		System.out.println(Ie);
-//		System.out.println(I);
-//		System.out.println();
-		
+		Point I = Iluminacao.Ia.multiply(Iluminacao.ka).add(Id).add(Ie);//.multiply(255);
 		
 		I.truncateXYZ();
 		
