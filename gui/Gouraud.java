@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import util.Debug;
 import util.Util;
 import entidades.Iluminacao;
+import entidades.Objeto;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -34,7 +35,7 @@ public class Gouraud extends JFrame{
 	int qtdPontos =0;
 	Debug debug;
 	
-	public Gouraud(ArrayList<Triangulo> t, ArrayList<Triangulo> t2) throws IOException{
+	public Gouraud() throws IOException{
 		super("Gouraud");
 		
 		debug = new Debug("debugGouraud.txt");
@@ -47,8 +48,8 @@ public class Gouraud extends JFrame{
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
-		this.t=t;
-		this.t2=t2;
+		this.t = Objeto.triangulos;
+		this.t2 = Objeto.triangulos2D;
 
 		scanLine3D();
 		debug.close();
@@ -101,7 +102,7 @@ public class Gouraud extends JFrame{
 							z_buffer[x1][y1] = p.z;
 							Point I = p.color;
 							int r,g,b;
-							I.trucateColor();
+							I.truncateXYZ();
 							qtdPontos++;
 							r = (int) Math.round(I.x); 
 							g = (int) Math.round(I.y); 

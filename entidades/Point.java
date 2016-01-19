@@ -105,7 +105,7 @@ public class Point {
 		Point p = multiply(k);
 		
 		p.color = p.color.multiply(k);
-		p.color.trucateColor();
+		p.color.truncateXYZ();
 		return p;
 	}
 
@@ -126,10 +126,11 @@ public class Point {
 	}
 
 	public Point kronecker(Point p2){
-		p2.x = this.x*p2.x;
-		p2.y = this.y*p2.y;
-		p2.z = this.z*p2.z;
-		return p2;
+		Point p = p2.copy();
+		p.x = this.x*p2.x;
+		p.y = this.y*p2.y;
+		p.z = this.z*p2.z;
+		return p;
 	}
 	
 	public String toString(){
@@ -138,32 +139,28 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
-		p.normal = p.normal.normalize();
-		Iluminacao.Od = Iluminacao.Od.normalize();
-		Point L = p.subtract(Iluminacao.Pl).normalize();
-		Point VdoPonto = p.subtract(Camera.C).normalize();
-		Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
-		double LpP = L.dotProduct(p.normal);
+		Point N = p.normal.normalize();
+		Point VdoPonto = p.multiply(-1).normalize(); // V = - P
+		double VpN = N.dotProduct(VdoPonto);
+		if (VpN < 0) N = N.multiply(-1);
+		Point L = Iluminacao.Pl.subtract(p).normalize(); // L = Pl - P
+		Point R = N.multiply(2).multiply(N.dotProduct(L)).subtract(L).normalize();
+		double LpN = L.dotProduct(N);
 		double RpV = R.dotProduct(VdoPonto);
-		if(LpP<0){
-			LpP=0;
-		}
-		if(RpV<0){
-			RpV=0;
-		}
-		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
-		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
-//		Point Id = Iluminacao.Il.multiply(LpP*Iluminacao.kd).kronecker(Iluminacao.Od);						
-//		Point Ie = Iluminacao.Il.multiply(RpV*Iluminacao.ks);
-		// Ka??
-		Point I = Iluminacao.Ia.add(Id).add(Ie);
+		if(LpN<0) LpN=0;
+		if(RpV<0) RpV=0;
 		
-		I.trucateColor();
+		Point Id = Iluminacao.Il.multiply(LpN*Iluminacao.kd).kronecker(Iluminacao.Od);						
+		Point Ie = Iluminacao.Il.multiply(Math.pow(RpV,Iluminacao.n)*Iluminacao.ks);
+		
+		Point I = Iluminacao.Ia.multiply(Iluminacao.ka).add(Id).add(Ie);//.multiply(255);
+		
+		I.truncateXYZ();
 		
 		return I;
 	}
 	
-	public void trucateColor(){
+	public void truncateXYZ(){
 		Point I = this;
 		
 		if(I.x>255)	I.x=255;

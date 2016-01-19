@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import util.Debug;
 import util.Util;
+import entidades.Objeto;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -23,13 +24,12 @@ public class guiPhong extends JFrame{
 	BufferedImage objeto;
 	public ArrayList<Triangulo> t;
 	public ArrayList<Triangulo> t2;
-	public double d, hx, hy; // não estamos usando essas variáveis nessa classe
 	public static int ResX = 640; // Gio: isso não devia ser estático; Maia: Porquê? //Gio: pq não faz sentido outra classe chamar a GUI. A gui mandaria seus atributos
 	public static int ResY = 480;
 	int qtdPontos =0;
 	Debug debug;
 	
-	public guiPhong(ArrayList<Triangulo> t, ArrayList<Triangulo> t2,double d,double hx,double hy) throws IOException{
+	public guiPhong() throws IOException{
 		super("Phong");
 		
 		debug = new Debug("debugPhong.txt");
@@ -42,11 +42,8 @@ public class guiPhong extends JFrame{
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 
-		this.t=t;
-		this.t2=t2;
-		this.d=d;
-		this.hx=hx;
-		this.hy=hy;
+		this.t = Objeto.triangulos;
+		this.t2 = Objeto.triangulos2D;
 
 		scanLine3D();
 		debug.close();
