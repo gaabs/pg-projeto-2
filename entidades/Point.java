@@ -141,7 +141,7 @@ public class Point {
 		Point p = this;
 		Point N = p.normal.normalize();
 //		Iluminacao.Od = Iluminacao.Od.normalize();
-		Point L = Iluminacao.Pl.subtract(p).normalize(); // L = Pl - P
+		Point L = Iluminacao.Pl.subtract(p).multiply(-1).normalize(); // L = Pl - P // -1
 		Point VdoPonto = p.multiply(1).normalize(); // V = - P
 		Point R = N.multiply(2).multiply(N.dotProduct(L)).subtract(L).normalize();
 		double LpN = L.dotProduct(N);
@@ -160,7 +160,7 @@ public class Point {
 			//System.out.println("Od: " + Iluminacao.Od);
 //			System.out.println(LpN);
 //			System.out.println("Parte1: " + Iluminacao.Il.multiply(LpN*Iluminacao.kd));
-			System.out.println(Id);
+//			System.out.println(Id);
 		}
 		// Ka??
 		Point I = Iluminacao.Ia.add(Id).add(Ie);//.multiply(255);
