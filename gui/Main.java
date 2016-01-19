@@ -53,16 +53,17 @@ public class Main {
 		ArrayList<Point> Ntriangulos = new ArrayList<Point>();
 		ArrayList<Point> vertices2D = new ArrayList<Point>();
 		ArrayList<Point> vertices2DMapeados = new ArrayList<Point>();
+		
+		String cameraName,objectName;
 
 		/*O seu sistema começa preparando a câmera,
 		 * 
 		 *  ler arquivo cfg*/
 		try{
-			File camera = new File("camera.cfg");
-
-			if(!camera.exists()) {
-				camera.createNewFile();
-			}
+			System.out.print("Nome da camera (sem extensão):");
+			Scanner scan = new Scanner(System.in);
+			cameraName = scan.next();
+			File camera = new File("Entradas/Cameras/"+cameraName+".cfg");
 
 			BufferedReader reader = new BufferedReader(new FileReader(camera));
 
@@ -114,27 +115,27 @@ public class Main {
 
 			//abrindo objeto
 			//System.out.println("abrindo objeto");
-			File objeto = new File("objeto.byu");
-			if(!objeto.exists()) {
-				objeto.createNewFile();
-			}
+			System.out.print("Nome do objeto (sem extensão):");
+			objectName = scan.next();
+			File objeto = new File("Entradas/Objetos/"+objectName+".byu");
 
-			Scanner s = new Scanner(objeto);
-			s.useLocale(Locale.ENGLISH);
+			scan.close();
+			scan = new Scanner(objeto);
+			scan.useLocale(Locale.ENGLISH);
 
 			reader.close();
 			reader = new BufferedReader(new FileReader(objeto));
 
-			int ver = s.nextInt();
-			int tri = s.nextInt();
+			int ver = scan.nextInt();
+			int tri = scan.nextInt();
 
 			//fazer a mudança de coordenadas para o sistema de vista de todos os vértices
 			//do objeto
 
 			for(int i=0;i<ver;i++){
-				double d1 = s.nextDouble();
-				double d2 = s.nextDouble();
-				double d3 = s.nextDouble();
+				double d1 = scan.nextDouble();
+				double d2 = scan.nextDouble();
+				double d3 = scan.nextDouble();
 				Point p = new Point(d1,d2,d3);
 				//System.out.println("lendo ponto "+i+": "+p.toString());
 				p=Util.convert(Camera.C, p);
@@ -156,9 +157,9 @@ public class Main {
 			//lendo triangulos
 			for(int i=0;i<tri;i++){
 				int v1,v2,v3;
-				v1 = s.nextInt() -1;
-				v2 = s.nextInt() -1;
-				v3 = s.nextInt() -1;
+				v1 = scan.nextInt() -1;
+				v2 = scan.nextInt() -1;
+				v3 = scan.nextInt() -1;
 				int pontos[] = {v1,v2,v3};
 
 				Triangulo t = new Triangulo(vertices.get(v1),vertices.get(v2),vertices.get(v3),i);
@@ -188,7 +189,7 @@ public class Main {
 				//				triangulos.get(i).ordenarY();
 				triangulos2D.add(t2);
 			}
-			s.close();
+			scan.close();
 
 
 			for(int i=0;i<ver;i++){
@@ -198,7 +199,7 @@ public class Main {
 			}
 			//			System.exit(1);
 
-			File iluminacaoEntrada = new File("Iluminacao.txt");
+			File iluminacaoEntrada = new File("Entradas/Iluminacao.txt");
 
 			if(!iluminacaoEntrada.exists()) {
 				iluminacaoEntrada.createNewFile();
