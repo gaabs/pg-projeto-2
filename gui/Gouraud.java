@@ -101,7 +101,7 @@ public class Gouraud extends JFrame{
 							z_buffer[x1][y1] = p.z;
 							Point I = p.color;
 							int r,g,b;
-							I.trucateColor();
+							I.truncateXYZ();
 							qtdPontos++;
 							r = (int) Math.round(I.x); 
 							g = (int) Math.round(I.y); 

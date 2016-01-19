@@ -105,7 +105,7 @@ public class Point {
 		Point p = multiply(k);
 		
 		p.color = p.color.multiply(k);
-		p.color.trucateColor();
+		p.color.truncateXYZ();
 		return p;
 	}
 
@@ -158,12 +158,12 @@ public class Point {
 		// Ka??
 		Point I = Iluminacao.Ia.add(Id).add(Ie);
 		
-		I.trucateColor();
+		I.truncateXYZ();
 		
 		return I;
 	}
 	
-	public void trucateColor(){
+	public void truncateXYZ(){
 		Point I = this;
 		
 		if(I.x>255)	I.x=255;

@@ -201,10 +201,6 @@ public class Main {
 
 			File iluminacaoEntrada = new File("Entradas/Iluminacao.txt");
 
-			if(!iluminacaoEntrada.exists()) {
-				iluminacaoEntrada.createNewFile();
-			}
-
 			reader.close();
 			reader = new BufferedReader(new FileReader(iluminacaoEntrada));
 
@@ -215,7 +211,7 @@ public class Main {
 			Iluminacao.Ia = new Point(cor[0],cor[1],cor[2]);
 			Iluminacao.kd = Double.parseDouble(reader.readLine());
 			double[] dif = Util.extract(reader.readLine());
-			Iluminacao.Od = new Point(dif[0],dif[1],dif[2]).normalize();
+			Iluminacao.Od = new Point(dif[0],dif[1],dif[2]);
 			Iluminacao.ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
 			Iluminacao.Il = new Point(cor[0],cor[1],cor[2]);
