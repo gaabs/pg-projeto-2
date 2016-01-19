@@ -13,7 +13,8 @@ public class Main {
 		
 		String cameraName,objectName;
 		
-		cameraName = objectName = "calice2";
+		cameraName = "calice2";
+		objectName = "calice2";
 
 		/*O seu sistema começa preparando a câmera,
 		 * 

@@ -49,22 +49,31 @@ public class guiPhong extends JFrame{
 		this.addKeyListener(new KeyListener() {
 			
 			public void keyTyped(KeyEvent e) {
-				System.out.println(123);
-				Camera.d+=0.1;
-				Camera.setCamera();
-				Camera.convertObject();
-				Camera.setIntervalos();
-				scanLine3D();
-				repaint();
+				if(e.getKeyChar()=='d'){
+					System.out.println(123);
+					Camera.d-=0.1;
+					Camera.setCamera();
+					Camera.convertObject();
+					Camera.setIntervalos();
+					scanLine3D();
+					repaint();
+				}else{
+					System.out.println(123);
+					Camera.d+=0.1;
+					Camera.setCamera();
+					Camera.convertObject();
+					Camera.setIntervalos();
+					scanLine3D();
+					repaint();
+				}
+				
 			}
 			
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
