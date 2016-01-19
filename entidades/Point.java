@@ -138,10 +138,10 @@ public class Point {
 
 	public Point getColor(){
 		Point p = this;
-//		p.normal = p.normal.normalize();
+		p.normal = p.normal.normalize();
 //		Iluminacao.Od = Iluminacao.Od.normalize();
-		Point L = p.subtract(Iluminacao.Pl).normalize();
-		Point VdoPonto = p.subtract(Camera.C).normalize();
+		Point L = Iluminacao.Pl.subtract(p).normalize(); // L = Pl - P
+		Point VdoPonto = p.multiply(-1).normalize(); // V = - P
 		Point R = p.normal.multiply(2).multiply(p.normal.dotProduct(L)).subtract(L).normalize();
 		double LpP = L.dotProduct(p.normal);
 		double RpV = R.dotProduct(VdoPonto);
@@ -154,9 +154,14 @@ public class Point {
 //		Point Id = Iluminacao.Il.multiply(Math.abs(L.dotProduct(p.normal))*Iluminacao.kd).kronecker(Iluminacao.Od);						
 //		Point Ie = Iluminacao.Il.multiply(Math.pow(Math.abs(R.dotProduct(VdoPonto)), Iluminacao.n)*Iluminacao.ks);
 		Point Id = Iluminacao.Il.multiply(LpP*Iluminacao.kd).kronecker(Iluminacao.Od);						
-		Point Ie = Iluminacao.Il.multiply(RpV*Iluminacao.ks);
+		Point Ie = Iluminacao.Il.multiply(Math.pow(RpV,Iluminacao.n)*Iluminacao.ks);
 		// Ka??
-		Point I = Iluminacao.Ia.add(Id).add(Ie);
+		Point I = Iluminacao.Ia.add(Id).add(Ie);//.multiply(255);
+		System.out.println(Id);
+		System.out.println(Ie);
+		System.out.println(I);
+		System.out.println();
+		
 		
 		I.truncateXYZ();
 		

@@ -55,6 +55,8 @@ public class Main {
 		ArrayList<Point> vertices2DMapeados = new ArrayList<Point>();
 		
 		String cameraName,objectName;
+		
+		cameraName = objectName = "yoda";
 
 		/*O seu sistema começa preparando a câmera,
 		 * 
@@ -62,7 +64,7 @@ public class Main {
 		try{
 			System.out.print("Nome da camera (sem extensão):");
 			Scanner scan = new Scanner(System.in);
-			cameraName = scan.next();
+			//cameraName = scan.next();
 			File camera = new File("Entradas/Cameras/"+cameraName+".cfg");
 
 			BufferedReader reader = new BufferedReader(new FileReader(camera));
@@ -116,7 +118,7 @@ public class Main {
 			//abrindo objeto
 			//System.out.println("abrindo objeto");
 			System.out.print("Nome do objeto (sem extensão):");
-			objectName = scan.next();
+			//objectName = scan.next();
 			File objeto = new File("Entradas/Objetos/"+objectName+".byu");
 
 			scan.close();
@@ -215,7 +217,8 @@ public class Main {
 			Iluminacao.ks = Double.parseDouble(reader.readLine());
 			cor = Util.extract(reader.readLine());
 			Iluminacao.Il = new Point(cor[0],cor[1],cor[2]);
-			System.out.println(Iluminacao.Il);
+			//Iluminacao.Il = Iluminacao.Il.divide(255);
+			System.out.println("IL: " + Iluminacao.Il);
 			Iluminacao.n = Integer.parseInt(reader.readLine());
 			reader.close();
 
