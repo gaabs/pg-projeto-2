@@ -40,6 +40,7 @@ public class Main {
 			
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);	
 
+			Camera.setIntervalos();
 			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 			//Outra para Phong.
 			Gouraud frame2 = new Gouraud();

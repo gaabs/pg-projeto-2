@@ -57,9 +57,8 @@ public class guiPhong extends JFrame{
 	}
 
 	private void scanLine3D(){
-		//Collections.sort(t);
 		for(int i=0;i<t2.size();i++){
-			pinte(Util.scanLine(t2.get(t.get(i).indice)),t.get(i).indice, i);
+			pinte(Camera.intervalos.get(i),t.get(i).indice, i);
 		}
 		long tempo = Main.tempo;
 		tempo = System.nanoTime() - tempo; 

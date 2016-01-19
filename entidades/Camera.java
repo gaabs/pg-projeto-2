@@ -12,13 +12,14 @@ import util.Util;
 public class Camera {
 	public static Point C, N, V, Vo, No, Vn, U;
 	public static double d, hx, hy;
-	
+
 	public static ArrayList<Point> verticesConvertidos;
 	public static ArrayList<Triangulo> triangulosConvertidos;
 	public static ArrayList<Triangulo> triangulos2D;
 	public static ArrayList<Point> vertices2D;
 	public static ArrayList<Point> vertices2DMapeados;
-	
+	public static ArrayList<Point[][]> intervalos;
+
 	public static void initCamera(String filepath) throws IOException{
 		//cameraName = scan.next();
 		File camera = new File(filepath);
@@ -45,10 +46,10 @@ public class Camera {
 		d = xyz[0];
 		hx = xyz[1];
 		hy = xyz[2];
-		
+
 		reader.close();
 	}
-	
+
 	public static void setCamera() {
 		//processo gramSchmidt:
 
@@ -68,17 +69,17 @@ public class Camera {
 		//gerando U 
 
 		Camera.U = Camera.No.produtoVetorial(Camera.Vn);
-		
+
 	}
-	
-	
+
+
 	public static void convertObject(){
 		verticesConvertidos = new ArrayList<Point>();
 		triangulosConvertidos = new ArrayList<Triangulo>();
 		triangulos2D = new ArrayList<Triangulo>();
 		vertices2D = new ArrayList<Point>();
 		vertices2DMapeados = new ArrayList<Point>();
-		
+
 		ArrayList<Point> vertices = Objeto.vertices;
 		int verticesSize = vertices.size();
 		for(int i=0;i<verticesSize;i++){
@@ -95,11 +96,11 @@ public class Camera {
 			vertices2DMapeados.add(u);
 			//System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
 		}
-		
+
 		ArrayList<Triangulo> triangulos = Objeto.triangulos;
 		Triangulo triangulo;
 		int triangulosSize = triangulos.size();
-		
+
 		for(int i=0;i<triangulosSize;i++){
 			triangulo = triangulos.get(i);
 			int v1,v2,v3;
@@ -138,6 +139,14 @@ public class Camera {
 			if(verticesConvertidos.get(i).normal!=null){
 				verticesConvertidos.get(i).normal=verticesConvertidos.get(i).normal.normalize(); // n sei se precisa
 			}//System.out.printf("Normal normalizada do vértice %d: %s\n",i,vertices.get(i).normal);
+		}
+	}
+
+	public static void setIntervalos(){
+		intervalos = new ArrayList<Point[][]>();
+		int size = triangulos2D.size();
+		for(int i = 0; i < size; i++){
+			intervalos.add(Util.scanLine(triangulos2D.get(triangulosConvertidos.get(i).indice)));
 		}
 	}
 
