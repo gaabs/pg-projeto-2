@@ -48,10 +48,9 @@ public class guiPhong extends JFrame{
 		
 		this.addKeyListener(new KeyListener() {
 			
-			@Override
 			public void keyTyped(KeyEvent e) {
 				System.out.println(123);
-				Camera.d++;
+				Camera.d+=0.1;
 				Camera.setCamera();
 				Camera.convertObject();
 				Camera.setIntervalos();
@@ -59,13 +58,11 @@ public class guiPhong extends JFrame{
 				repaint();
 			}
 			
-			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 				
 			}
 			
-			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				
@@ -81,6 +78,11 @@ public class guiPhong extends JFrame{
 	
 	private void scanLine3D(){
 		objeto = new BufferedImage(ResX+1, ResY+1, BufferedImage.TYPE_INT_ARGB); 
+		z_buffer = new double[ResX+1][ResY+1];
+
+		this.t = Camera.triangulosConvertidos;
+		this.t2 = Camera.triangulos2D;
+
 		for (double[] row: z_buffer)
 			Arrays.fill(row, Double.MAX_VALUE);
 		
