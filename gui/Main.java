@@ -21,6 +21,7 @@ public class Main {
 		String cameraName,objectName;
 		
 		cameraName = objectName = "calice2";
+
 		/*O seu sistema começa preparando a câmera,
 		 * 
 		 *  ler arquivo cfg*/
@@ -29,6 +30,7 @@ public class Main {
 			Scanner scan = new Scanner(System.in);
 			//cameraName = scan.next();
 			Camera.setCamera("Entradas/Cameras/"+cameraName+".cfg");
+
 
 			//Setando matriz alfa
 			Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
@@ -43,6 +45,7 @@ public class Main {
 			Iluminacao.setIluminacao("Entradas/Iluminacao.txt");
 			
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);	
+
 
 			//Cria-se uma Janela para o objeto apresentado por Gouraud e 
 			//Outra para Phong.
