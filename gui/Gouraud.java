@@ -1,32 +1,26 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import util.Debug;
-import util.Util;
 import entidades.Camera;
 import entidades.Point;
 import entidades.Triangulo;
 
-
-
 public class Gouraud extends JFrame{
 
-	private JPanel panel;
 	public double[][] z_buffer;
 	BufferedImage objeto;
 	public ArrayList<Triangulo> t;
 	public ArrayList<Triangulo> t2;
-	public static int ResX = 640; // Gio: isso não devia ser estático; Maia: Porquê?
+	public static int ResX = 640;
 	public static int ResY = 480;
 	int qtdPontos =0;
 	Debug debug;
@@ -49,13 +43,12 @@ public class Gouraud extends JFrame{
 
 		scanLine3D();
 		debug.close();
-		
-		panel = new JPanel();
-		this.add(panel);
-
-		panel.add(new JLabel(new ImageIcon(objeto)));
-		pack();//não conheço esse metodo
-		//JOptionPane.showMessageDialog(null, new ImageIcon(objeto));
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(objeto, 0, 0, null);
 	}
 
 	private void scanLine3D(){
