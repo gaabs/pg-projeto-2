@@ -1,7 +1,6 @@
 package gui;
 import java.util.Scanner;
 
-import util.Util;
 import entidades.Camera;
 import entidades.Iluminacao;
 import entidades.Objeto;
@@ -13,8 +12,8 @@ public class Main {
 		
 		String cameraName,objectName;
 		
-		cameraName = "yoda";
-		objectName = "yoda";
+		cameraName = "calice2";
+		objectName = "calice2";
 
 		/*O seu sistema começa preparando a câmera,
 		 * 
@@ -34,7 +33,8 @@ public class Main {
 			Objeto.setObjeto("Entradas/Objetos/"+objectName+".byu");
 			Camera.convertObject();
 			
-			Iluminacao.setIluminacao("Entradas/Iluminacao.txt");
+			Iluminacao.initIluminacao("Entradas/Iluminacao.txt");
+			Iluminacao.setIluminacao();
 			
 			System.out.printf("Demorou %f segundos para ler e etc\n",(System.nanoTime() - tempo)/1000000000.0);	
 

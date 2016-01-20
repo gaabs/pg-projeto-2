@@ -27,6 +27,14 @@ public class Point {
 		this(x,y,0,null,null);
 		this.is3D = false;
 	}
+	
+	public double[] cordsToArray(){
+		double[] ans = new double[3];
+		ans[0] = x;
+		ans[1] = y;
+		ans[2] = z;
+		return ans;
+	}
 
 	public Point copy(){
 		Point p = new Point(x,y,z,normal,color);
@@ -35,8 +43,9 @@ public class Point {
 	}
 
 	public Point normalize(){
-		Point Vn=this.divide(this.norma());
-		return Vn;
+		Point vn=this.divide(this.norma());
+		vn.indice = this.indice;
+		return vn;
 	}
 
 	public double norma(){
@@ -101,7 +110,9 @@ public class Point {
 	}
 	
 	public Point multiplyWithColor(double k) {
-		if (this.color == null) this.color = getColor();
+		if (this.color == null){ 
+			this.color = getColor();
+		}
 		Point p = multiply(k);
 		
 		p.color = p.color.multiply(k);
@@ -147,6 +158,7 @@ public class Point {
 		Point R = N.multiply(2).multiply(N.dotProduct(L)).subtract(L).normalize();
 		double LpN = L.dotProduct(N);
 		double RpV = R.dotProduct(VdoPonto);
+		
 		if(LpN<0) LpN=0;
 		if(RpV<0) RpV=0;
 		
@@ -163,9 +175,15 @@ public class Point {
 	public void truncateXYZ(){
 		Point I = this;
 		
-		if(I.x>255)	I.x=255;
-		if(I.y>255)	I.y=255;
-		if(I.z>255)	I.z=255;
+		I.x = Math.min(255, I.x);
+//		I.x = Math.max(0, I.x);
+		
+		I.y = Math.min(255, I.y);
+//		I.y = Math.max(0, I.y);
+		
+		I.z = Math.min(255, I.z);
+//		I.z = Math.max(0, I.z);
+
 	}
 	
 

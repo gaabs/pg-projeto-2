@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 
 import util.Debug;
 import entidades.Camera;
+import entidades.Iluminacao;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -49,15 +50,23 @@ public class guiPhong extends JFrame{
 		this.addKeyListener(new KeyListener() {
 			
 			public void keyTyped(KeyEvent e) {
+				System.out.println(e.getKeyCode());
 				if(e.getKeyChar()=='d'){
 					Camera.d-=0.1;
-				}else{
+				} else if (e.getKeyChar()=='r'){
+					Camera.rotateX(60);
+				} else if (e.getKeyChar()=='t'){
+					Camera.rotateY(60);
+				} else if (e.getKeyChar()=='y'){
+					Camera.rotateZ(60);
+				} else{
 					Camera.d+=0.1;
 				}
+//				System.out.println("D: " + Camera.d);
 				
-				System.out.println(123);
 				Camera.setCamera();
 				Camera.convertObject();
+				Iluminacao.setIluminacao();
 				Camera.setIntervalos();
 				scanLine3D();
 				repaint();
@@ -82,7 +91,6 @@ public class guiPhong extends JFrame{
 	
 	private void scanLine3D(){
 		objeto = new BufferedImage(ResX+1, ResY+1, BufferedImage.TYPE_INT_ARGB); 
-		z_buffer = new double[ResX+1][ResY+1];
 
 		this.t = Camera.triangulosConvertidos;
 		this.t2 = Camera.triangulos2D;
@@ -106,20 +114,24 @@ public class guiPhong extends JFrame{
 		for(int i=0;i<intervalos.length;i++){
 			if(intervalos[i][0]!=null){
 				//System.out.println("x_min: "+ret[i][0].x+" x_max:"+ret[i][1].x+" y: "+ret[i][0].y);
-				for(double j=intervalos[i][0].x;j<=intervalos[i][1].x;j++){
+				for(int j= (int) intervalos[i][0].x;j<=intervalos[i][1].x;j++){
 					Point pixel = new Point(j, intervalos[i][0].y);
-					if(pixel.x>=0 && pixel.x<=ResX && pixel.y>=0 && pixel.y<=ResY ){
+					
+					int x = (int) pixel.x;
+					int y = (int) pixel.y;
+					
+					if(x>=0 && x<=ResX && y>=0 && y<=ResY ){
 						double[] bary = t2.get(indice).getBaryCoefs(pixel);
+						if (bary[0] < 0 || bary[1] < 0 || bary[2] < 0) continue;
 						
 						Point v1 = t.get(indice).v1;
 						Point v2 = t.get(indice).v2;
 						Point v3 = t.get(indice).v3;
 						Point p = v1.multiply(bary[0]).add(v2.multiply(bary[1])).add(v3.multiply(bary[2])); 
-						int x1 = (int) Math.round(pixel.x);
-						int y1 = (int) Math.round(pixel.y);
+
 						//System.out.println("x: "+pixel.x+" y: "+ pixel.y);
-						if(x1 <= ResX && y1 <= ResY && z_buffer[x1][y1]>p.z && p.z>=0){
-							z_buffer[x1][y1] = p.z;
+						if(x <= ResX && y <= ResY && z_buffer[x][y]>p.z && p.z>0){
+							z_buffer[x][y] = p.z;
 							Point I = p.getColor();
 							int r,g,b;
 							r = (int) Math.round(I.x); 
@@ -128,22 +140,7 @@ public class guiPhong extends JFrame{
 							qtdPontos++;
 							int rgb = new Color(r,g,b).getRGB();
 							//int rgb = Color.GREEN.getRGB();
-							objeto.setRGB(x1, y1, rgb);
-							try{
-//								debug.write("x1: "+x1+"y1: "+y1+"\n");
-//								debug.write("p: "+p+"\n");
-//								debug.write("Pnormal: "+p.normal+"\n");
-//								debug.write("L: "+L+"\n");
-//								debug.write("V do Ponto: " + VdoPonto+"\n");
-//								debug.write("R: "+R+"\n");
-//								debug.write("Id: "+Id+"\n");
-//								debug.write("Ie: "+Ie+"\n");
-//								debug.write("I: "+I+"\n");
-//								debug.write(String.format("alfa: %f beta: %f gama: %f\n", bary[0],bary[1],bary[2]));
-								
-							}catch(Exception e){
-								System.out.println(e.getStackTrace());
-							}
+							objeto.setRGB(x, y, rgb);
 						}
 					}
 				}

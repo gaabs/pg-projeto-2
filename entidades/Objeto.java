@@ -28,6 +28,7 @@ public class Objeto {
 			double d3 = scan.nextDouble();
 			Point p = new Point(d1,d2,d3);
 			p.indice=i;
+			
 			vertices.add(p);
 		}
 

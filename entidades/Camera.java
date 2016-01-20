@@ -10,7 +10,7 @@ import util.ProjecaoPontos;
 import util.Util;
 
 public class Camera {
-	public static Point C, Co, N, V, Vo, No, Vn, U;
+	public static Point C, N, V, Vo, No, Vn, U;
 	public static double d, hx, hy;
 
 	public static ArrayList<Point> verticesConvertidos;
@@ -74,7 +74,6 @@ public class Camera {
 		Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
 	}
 
-
 	public static void convertObject(){
 		verticesConvertidos = new ArrayList<Point>();
 		triangulosConvertidos = new ArrayList<Triangulo>();
@@ -87,6 +86,8 @@ public class Camera {
 		for(int i=0;i<verticesSize;i++){
 			Point p = vertices.get(i);
 			p = Util.convert(Camera.C, p);
+			p.indice = i;
+			
 			verticesConvertidos.add(p);
 
 			// calculam-se as projeções dos seus vértices,
@@ -139,8 +140,8 @@ public class Camera {
 
 		for(int i=0;i<verticesSize;i++){
 			if(verticesConvertidos.get(i).normal!=null){
-				verticesConvertidos.get(i).normal=verticesConvertidos.get(i).normal.normalize(); // n sei se precisa
-			}//System.out.printf("Normal normalizada do vértice %d: %s\n",i,vertices.get(i).normal);
+				verticesConvertidos.get(i).normal=verticesConvertidos.get(i).normal.normalize();
+			}
 		}
 	}
 
@@ -152,6 +153,24 @@ public class Camera {
 		}
 	}
 
+	public static void rotateX(double degrees){
+		Util.rotateX(Camera.V, degrees);
+		Util.rotateX(Camera.N, degrees);
+		Util.rotateX(Camera.C, degrees);
+	}
+	
+	public static void rotateY(double degrees){
+		Util.rotateY(Camera.V, degrees);
+		Util.rotateY(Camera.N, degrees);
+		Util.rotateY(Camera.C, degrees);
+	}
+	
+	public static void rotateZ(double degrees){
+		Util.rotateZ(Camera.V, degrees);
+		Util.rotateZ(Camera.N, degrees);
+		Util.rotateZ(Camera.C, degrees);
+		
+	}
 
 
 }

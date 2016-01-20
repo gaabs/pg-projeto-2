@@ -5,13 +5,13 @@ import gui.guiPhong;
 
 public class ProjecaoPontos extends MatrixUtil{
 	
-	public static Point projetar2D(Point p, double d, double  Hx,double  Hy){
+	public static Point projetar2D(Point p, double d, double Hx,double  Hy){
 		
 		double x = (d/Hx)*(p.x/p.z);
 		double y = (d/Hy)*(p.y/p.z);
 		
 		Point p2 = new Point(x,y);
-		
+		p2.indice = p.indice;
 		
 		return p2;
 	}
@@ -21,6 +21,7 @@ public class ProjecaoPontos extends MatrixUtil{
 		p2 = new Point(0,0);
 		p2.x = ((p.x+1)/2)*guiPhong.ResX;
 		p2.y = ((1-p.y)/2) *guiPhong.ResY;
+		p2.indice = p.indice;
 		
 		return p2;
 	}

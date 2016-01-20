@@ -1,4 +1,5 @@
 package util;
+import entidades.Camera;
 import entidades.Point;
 import entidades.Triangulo;
 
@@ -87,8 +88,8 @@ public class Util {
 		alfa[2][2]=N.z;
 	}
 
-	public static Point convert(Point C, Point p){
-
+	public static Point convert(Point C, Point p2){
+		Point p = p2.copy();
 		double[][] m = alfa;
 
 		double[][] m2 = new double [3][1];
@@ -113,8 +114,8 @@ public class Util {
 		int tam = (int)Math.ceil(t.v1.y - t.v3.y +1);
 		ret = new Point[tam][2];
 
-		ret=getIntervalos(ret,t.v1,t.v2,t.v3);			
-
+		ret=getIntervalos(ret,t.v1,t.v2,t.v3);	
+		
 		return ret;
 	}
 
@@ -125,20 +126,38 @@ public class Util {
 		double a2 = (S.y - L.y)/(S.x - L.x);
 		double b2 = S.y - a2*S.x;
 		
+		boolean vert1,vert2;
+		vert1 = (M.x - L.x) == 0;
+		vert2 = (S.x - L.x) == 0;
 		double xi,xj;
+		
+		if (L.y - S.y == 0){
+			xi = Math.min(M.x, Math.min(L.x, S.x));
+			xj = Math.max(M.x, Math.max(L.x, S.x));
+			ret[0][0] = new Point(xi,L.y);
+			ret[0][1] = new Point(xj,L.y);
+			
+			return ret;
+		}
 		
 		int k=0;
 		for(double i=M.y;i<=L.y;i++, k++){
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			
-			if(xTemp>xTemp2){
+			if (xTemp>xTemp2){
 				xi = Math.ceil(xTemp2);
 				xj = Math.floor(xTemp);
-			}else{
+			} else if (xTemp < xTemp2){
 				xi = Math.ceil(xTemp);
 				xj = Math.floor(xTemp2);
+			} else{
+				xi = Math.round(xTemp);
+				xj = Math.round(xTemp2);
 			}
+			
+			if (vert1) xi = Math.round(L.x);
+			if (vert2) xj = Math.round(L.x);
 			
 			ret[k][0] = new Point(xi, i);				
 			ret[k][1] = new Point(xj, i);
@@ -151,13 +170,19 @@ public class Util {
 			double xTemp = (i-b)/a;
 			double xTemp2 = (i-b2)/a2;
 			
-			if(xTemp>xTemp2){
+			if (xTemp>xTemp2){
 				xi = Math.ceil(xTemp2);
 				xj = Math.floor(xTemp);
-			}else{
+			} else if (xTemp < xTemp2){
 				xi = Math.ceil(xTemp);
 				xj = Math.floor(xTemp2);
+			} else{
+				xi = Math.round(xTemp);
+				xj = Math.round(xTemp2);
 			}
+			
+			if (vert1) xi = Math.round(L.x);
+			if (vert2) xj = Math.round(L.x);
 			
 			ret[k][0] = new Point(xi, i);				
 			ret[k][1] = new Point(xj, i);
@@ -204,6 +229,37 @@ public class Util {
 	    vetor=vetor.normalize();
 	    
 	    return vetor;
+	}
+	
+	public static void rotateX(Point p, double degrees){
+		degrees = Math.toRadians(degrees);
+		
+		double x,y,z;
+		
+		y = p.y * Math.cos(degrees) + p.z * -Math.sin(degrees);
+		z = p.y * Math.sin(degrees) + p.z * Math.cos(degrees);
+		p.y = y;
+		p.z = z;
+	}
+	
+	public static void rotateY(Point p, double degrees){
+		degrees = Math.toRadians(degrees);
+		double x,y,z;
+		
+		x = p.x * Math.cos(degrees) + p.z * -Math.sin(degrees);
+		z = p.x * Math.sin(degrees) + p.z * Math.cos(degrees);
+		p.x = x;
+		p.z = z;
+	}
+	
+	public static void rotateZ(Point p, double degrees){
+		degrees = Math.toRadians(degrees);
+		double x,y;
+		
+		x = p.x * Math.cos(degrees) + p.y * -Math.sin(degrees);
+		y = p.x * Math.sin(degrees) + p.y * Math.cos(degrees);
+		p.x = x;
+		p.y = y;
 	}
 	
 }
