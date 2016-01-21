@@ -74,7 +74,7 @@ public class Camera {
 		Util.setAlfa(Camera.U,Camera.Vn, Camera.No);
 	}
 
-	public static void convertObject(){
+	public static void convertObject(int resX, int resY){
 		verticesConvertidos = new ArrayList<Point>();
 		triangulosConvertidos = new ArrayList<Triangulo>();
 		triangulos2D = new ArrayList<Triangulo>();
@@ -95,7 +95,7 @@ public class Camera {
 			//System.out.println("lendo ponto "+i+" convertido em 2D: "+vertices2D.get(vertices2D.size()-1));
 			//Calcula-se o mapeamento dele para o frame
 
-			Point u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1));
+			Point u = ProjecaoPontos.map2Screen(vertices2D.get(vertices2D.size()-1), resX, resY);
 			vertices2DMapeados.add(u);
 			//System.out.println("lendo ponto "+i+" convertido em 2D e mapeado para o frame: "+vertices2DMapeados.get(vertices2D.size()-1));
 		}
@@ -168,8 +168,11 @@ public class Camera {
 	public static void rotateZ(double degrees){
 		Util.rotateZ(Camera.V, degrees);
 		Util.rotateZ(Camera.N, degrees);
-		Util.rotateZ(Camera.C, degrees);
-		
+		Util.rotateZ(Camera.C, degrees);	
+	}
+	
+	public static void moveZ(double z){
+		Camera.C.z += z;	
 	}
 
 

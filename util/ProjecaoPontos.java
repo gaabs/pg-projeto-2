@@ -1,7 +1,7 @@
 package util;
 
 import entidades.Point;
-import gui.guiPhong;
+import gui.Phong;
 
 public class ProjecaoPontos extends MatrixUtil{
 	
@@ -16,11 +16,11 @@ public class ProjecaoPontos extends MatrixUtil{
 		return p2;
 	}
 	
-	public static Point map2Screen(Point p){
+	public static Point map2Screen(Point p, int resX, int resY){
 		Point p2  = null;
 		p2 = new Point(0,0);
-		p2.x = ((p.x+1)/2)*guiPhong.ResX;
-		p2.y = ((1-p.y)/2) *guiPhong.ResY;
+		p2.x = ((p.x+1)/2)*resX;
+		p2.y = ((1-p.y)/2) *resY;
 		p2.indice = p.indice;
 		
 		return p2;

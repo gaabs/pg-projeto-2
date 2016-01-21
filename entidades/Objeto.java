@@ -7,10 +7,13 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Objeto {
-	public static ArrayList<Point> vertices = new ArrayList<Point>();
-	public static ArrayList<Triangulo> triangulos = new ArrayList<Triangulo>();
+	public static ArrayList<Point> vertices;
+	public static ArrayList<Triangulo> triangulos;
 	
 	public static void setObjeto(String filepath) throws IOException {
+		vertices = new ArrayList<Point>();
+		triangulos = new ArrayList<Triangulo>();
+		
 		File objeto = new File(filepath);
 
 		Scanner scan = new Scanner(objeto);

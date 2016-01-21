@@ -2,107 +2,36 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import util.Debug;
 import entidades.Camera;
-import entidades.Iluminacao;
 import entidades.Point;
 import entidades.Triangulo;
 
-public class guiPhong extends JFrame{
+public class Phong extends JFrame{
 
 	public double[][] z_buffer;
 	public ArrayList<Triangulo> t;
 	public ArrayList<Triangulo> t2;
-	public static int ResX = 640;
-	public static int ResY = 480;
+	public int ResX = 640;
+	public int ResY = 480;
 	int qtdPontos =0;
-	Debug debug;
 	BufferedImage objeto;
-	ImageIcon icon;
 
-	public guiPhong() throws IOException{
+	public Phong(int x, int y, int resX, int resY){
 		super("Phong");
 
-		//		debug = new Debug("debugPhong.txt");
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(800, 0, ResX, ResY);
+		setBounds(x, y, resX, resY);
+		this.ResX = resX;
+		this.ResY = resY;
 
 		z_buffer = new double[ResX+1][ResY+1];
 
-		this.t = Camera.triangulosConvertidos;
-		this.t2 = Camera.triangulos2D;
-
-		scanLine3D();
-		//		debug.close();
-
-
-		this.addKeyListener(new KeyListener() {
-
-			public void keyTyped(KeyEvent e) {
-				double degrees = 30;
-				switch(e.getKeyChar()){
-				case ('a'):{
-					Camera.d-=0.1;
-					break;
-				}
-				case ('q'):{
-					Camera.d+=0.1;
-					break;
-				}
-				case ('w'):{
-					Camera.rotateX(degrees);
-					break;
-				}
-				case ('s'):{
-					Camera.rotateX(-degrees);
-					break;
-				}
-
-				case ('e'):{
-					Camera.rotateY(degrees);
-					break;
-				}
-				case ('d'):{
-					Camera.rotateY(-degrees);
-					break;
-				}
-				case ('r'):{
-					Camera.rotateZ(degrees);
-					break;
-				}
-				case ('f'):{
-					Camera.rotateZ(-degrees);
-					break;
-				}
-
-				}
-
-				Camera.setCamera();
-				Camera.convertObject();
-				Iluminacao.setIluminacao();
-				Camera.setIntervalos();
-				scanLine3D();
-				repaint();
-			}
-
-			public void keyReleased(KeyEvent e) {
-
-			}
-
-			public void keyPressed(KeyEvent e) {
-			}
-		});
 	}
 
 	@Override
@@ -111,7 +40,7 @@ public class guiPhong extends JFrame{
 		g.drawImage(objeto, 0, 0, null);
 	}
 
-	private void scanLine3D(){
+	public void scanLine3D(){
 		objeto = new BufferedImage(ResX+1, ResY+1, BufferedImage.TYPE_INT_ARGB); 
 
 		this.t = Camera.triangulosConvertidos;
@@ -126,7 +55,7 @@ public class guiPhong extends JFrame{
 
 		fix();
 
-		long tempo = Main.tempo;
+		long tempo = NewMain.tempo;
 		tempo = System.nanoTime() - tempo; 
 		System.out.println(qtdPontos);
 		System.out.printf("Fim: %f segundos\n",tempo/1000000000.0);
