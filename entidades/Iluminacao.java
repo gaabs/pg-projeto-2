@@ -34,7 +34,6 @@ public class Iluminacao {
 		Iluminacao.ks = Double.parseDouble(reader.readLine());
 		cor = Util.extract(reader.readLine());
 		Iluminacao.Il = new Point(cor[0],cor[1],cor[2]);
-		System.out.println(Iluminacao.Il);
 		Iluminacao.n = Integer.parseInt(reader.readLine());
 		reader.close();	
 	}

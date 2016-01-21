@@ -55,10 +55,7 @@ public class Gouraud extends JFrame{
 		}
 		fix();
 		
-		long tempo = NewMain.tempo;
-		tempo = System.nanoTime() - tempo; 
-		System.out.println(qtdPontos);
-		System.out.printf("Fim: %f segundos\n",tempo/1000000000.0);
+//		System.out.println(qtdPontos);
 
 	}
 
